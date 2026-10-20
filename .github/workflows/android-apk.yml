@@ -15,6 +15,11 @@ on:
       - 'tool/**'
       - '.github/workflows/supabase-db-push.yml'
   workflow_dispatch:
+    inputs:
+      publish:
+        description: "Publish the release and the in-app update (off = build check only)"
+        type: boolean
+        default: true
 
 permissions:
   contents: write
@@ -133,6 +138,7 @@ jobs:
           retention-days: 14
 
       - name: Publish release
+        if: github.event_name == 'push' || inputs.publish
         env:
           GH_TOKEN: ${{ github.token }}
           TAG: build-${{ github.run_number }}
@@ -165,6 +171,7 @@ jobs:
           echo "::notice::arm64 APK: $(du -h detox-arm64-${{ github.run_number }}.apk | cut -f1)"
 
       - name: Publish in-app update (Supabase)
+        if: github.event_name == 'push' || inputs.publish
         env:
           SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
           SUPABASE_PROJECT_REF: ${{ secrets.SUPABASE_PROJECT_REF }}
