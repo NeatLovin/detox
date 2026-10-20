@@ -1,9 +1,176 @@
--- Detox V1 — cravings journal, SOS with squad support, daily quests,
+-- Detox V1 — community model (no squads), cravings journal, SOS, daily quests,
 -- morning pledge, badges and personal motivations.
+--
+-- Community: every signed-in player sees every other player. A private
+-- profile still appears in the leaderboard (username, level, XP) but its
+-- detailed profile, feed events and SOS stay hidden from others.
 --
 -- Same rules as V0: XP / HP / badges / feed are written ONLY by these functions
 -- and triggers; the client never writes them. Every XP source added here is
 -- capped per Europe/Zurich day so it cannot be farmed.
+
+
+-- ---------------------------------------------------------------------------
+-- Community model: squads are removed
+-- ---------------------------------------------------------------------------
+
+alter table public.profiles add column is_private boolean not null default false;
+
+-- True when other players may see this user's details, events and SOS.
+create or replace function public.is_public_player(p_user uuid)
+returns boolean
+language sql
+stable
+security definer
+set search_path = ''
+as $$
+  select coalesce((select not p.is_private from public.profiles p where p.id = p_user), false);
+$$;
+
+drop policy profiles_select on public.profiles;
+drop policy feed_events_select on public.feed_events;
+drop function public.create_squad(text);
+drop function public.join_squad(text);
+drop function public.leave_squad();
+drop function public.squad_leaderboard();
+delete from public.feed_events where type in ('joined_squad', 'left_squad');
+alter table public.feed_events drop column squad_id;
+
+drop table public.squad_members;
+drop table public.squads;
+drop function public.is_squad_member(uuid);
+drop function private.squad_of(uuid);
+create index feed_events_created_idx on public.feed_events (created_at desc);
+
+-- Global feed. The event is always stored; RLS hides private players' events.
+create or replace function private.push_feed(p_user_id uuid, p_type text, p_payload jsonb)
+returns void
+language plpgsql
+security definer
+set search_path = ''
+as $$
+declare
+  v_profile public.profiles%rowtype;
+begin
+  select * into v_profile from public.profiles where id = p_user_id;
+  if not found then
+    return;
+  end if;
+  insert into public.feed_events (user_id, type, payload)
+  values (
+    p_user_id,
+    p_type,
+    jsonb_build_object('username', v_profile.username, 'avatar_emoji', v_profile.avatar_emoji)
+      || coalesce(p_payload, '{}'::jsonb)
+  );
+end;
+$$;
+
+create or replace function private.on_profile_insert()
+returns trigger
+language plpgsql
+security definer
+set search_path = ''
+as $$
+begin
+  perform private.push_feed(new.id, 'joined', '{}'::jsonb);
+  return new;
+end;
+$$;
+
+create trigger on_profile_insert
+  after insert on public.profiles
+  for each row execute function private.on_profile_insert();
+
+-- All-time leaderboard (every player, private ones included: username, level
+-- and XP only). Rank ties share the same rank.
+create or replace function public.leaderboard()
+returns table (
+  rank bigint,
+  user_id uuid,
+  username text,
+  avatar_emoji text,
+  level int,
+  xp bigint,
+  is_private boolean
+)
+language sql
+stable
+security definer
+set search_path = ''
+as $$
+  select
+    rank() over (order by coalesce(s.xp, 0) desc),
+    p.id,
+    p.username,
+    p.avatar_emoji,
+    coalesce(s.level, 1),
+    coalesce(s.xp, 0),
+    p.is_private
+  from public.profiles p
+  left join public.player_stats s on s.user_id = p.id
+  where auth.uid() is not null
+  order by coalesce(s.xp, 0) desc, p.username;
+$$;
+
+-- Detailed profile of a player: level, XP, HP, badges and non-private active
+-- addictions. A private profile is only readable by its owner.
+create or replace function public.player_profile(p_user_id uuid)
+returns jsonb
+language plpgsql
+stable
+security definer
+set search_path = ''
+as $$
+declare
+  v_uid uuid := auth.uid();
+  v_profile public.profiles%rowtype;
+begin
+  if v_uid is null then
+    raise exception 'not_authenticated' using errcode = 'P0001';
+  end if;
+  select * into v_profile from public.profiles where id = p_user_id;
+  if not found then
+    raise exception 'player_not_found' using errcode = 'P0001';
+  end if;
+  if v_profile.is_private and p_user_id <> v_uid then
+    raise exception 'profile_private' using errcode = 'P0001';
+  end if;
+
+  return jsonb_build_object(
+    'user_id', v_profile.id,
+    'username', v_profile.username,
+    'avatar_emoji', v_profile.avatar_emoji,
+    'is_private', v_profile.is_private,
+    'joined_at', v_profile.created_at,
+    'level', coalesce((select s.level from public.player_stats s where s.user_id = p_user_id), 1),
+    'xp', coalesce((select s.xp from public.player_stats s where s.user_id = p_user_id), 0),
+    'hp', coalesce((select s.hp from public.player_stats s where s.user_id = p_user_id), 100),
+    'rank', (select r.rank from public.leaderboard() r where r.user_id = p_user_id),
+    'badges', coalesce((
+      select jsonb_agg(jsonb_build_object('key', b.key, 'unlocked_at', b.unlocked_at) order by b.unlocked_at)
+      from public.badges b where b.user_id = p_user_id
+    ), '[]'::jsonb),
+    'addictions', coalesce((
+      select jsonb_agg(jsonb_build_object(
+        'id', a.id,
+        'user_id', a.user_id,
+        'type', a.type,
+        'label', a.label,
+        'unit_label', a.unit_label,
+        'unit_cost', a.unit_cost,
+        'baseline_per_day', a.baseline_per_day,
+        'quit_started_at', a.quit_started_at,
+        'streak_started_at', a.streak_started_at,
+        'best_streak_seconds', a.best_streak_seconds,
+        'created_at', a.created_at
+      ) order by a.streak_started_at)
+      from public.addictions a
+      where a.user_id = p_user_id and a.archived_at is null and not a.is_private
+    ), '[]'::jsonb)
+  );
+end;
+$$;
 
 -- ---------------------------------------------------------------------------
 -- Helpers
@@ -92,7 +259,7 @@ alter table public.xp_ledger add constraint xp_ledger_reason_check check (reason
 
 alter table public.feed_events drop constraint feed_events_type_check;
 alter table public.feed_events add constraint feed_events_type_check check (type in (
-  'joined_squad', 'left_squad', 'milestone', 'level_up', 'relapse',
+  'joined', 'milestone', 'level_up', 'relapse',
   'pledge', 'badge', 'sos', 'sos_support', 'sos_resolved', 'quests_all_done'
 ));
 
@@ -112,7 +279,7 @@ create table public.badges (
   primary key (user_id, key)
 );
 
--- Unlocks a badge once and announces it to the squad. True if newly unlocked.
+-- Unlocks a badge once and announces it in the feed. True if newly unlocked.
 create or replace function private.award_badge(p_user uuid, p_key text)
 returns boolean
 language plpgsql
@@ -278,15 +445,14 @@ create trigger on_craving_insert
 create table public.sos_alerts (
   id uuid primary key default gen_random_uuid(),
   user_id uuid not null references auth.users (id) on delete cascade,
-  squad_id uuid references public.squads (id) on delete set null,
   addiction_id uuid references public.addictions (id) on delete set null,
-  -- Label safe to show to the squad (masked for a private addiction).
+  -- Label safe to show to others (masked for a private addiction).
   addiction_label text not null,
   created_at timestamptz not null default now(),
   resolved_at timestamptz,
   outcome text check (outcome in ('resisted', 'relapsed'))
 );
-create index sos_alerts_squad_created_idx on public.sos_alerts (squad_id, created_at desc);
+create index sos_alerts_created_idx on public.sos_alerts (created_at desc);
 create index sos_alerts_user_created_idx on public.sos_alerts (user_id, created_at desc);
 
 create table public.sos_supports (
@@ -297,7 +463,8 @@ create table public.sos_supports (
   primary key (alert_id, user_id)
 );
 
--- Starts an SOS for one of the caller's addictions and alerts the squad.
+-- Starts an SOS for one of the caller's addictions and alerts the community
+-- (not shown to others when the caller's profile is private).
 -- Idempotent: an open SOS for the same addiction from the last 30 minutes is reused.
 create or replace function public.start_sos(p_addiction_id uuid)
 returns uuid
@@ -335,8 +502,8 @@ begin
   end if;
 
   v_label := private.public_label(v_add.label, v_add.is_private);
-  insert into public.sos_alerts (user_id, squad_id, addiction_id, addiction_label)
-  values (v_uid, private.squad_of(v_uid), v_add.id, v_label)
+  insert into public.sos_alerts (user_id, addiction_id, addiction_label)
+  values (v_uid, v_add.id, v_label)
   returning id into v_id;
 
   perform private.push_feed(v_uid, 'sos', jsonb_build_object(
@@ -394,7 +561,7 @@ begin
 end;
 $$;
 
--- A squad mate sends support to an SOS (once per alert, within 24 h).
+-- A player sends support to someone's SOS (once per alert, within 24 h).
 create or replace function public.support_sos(p_alert_id uuid, p_emoji text)
 returns void
 language plpgsql
@@ -411,7 +578,7 @@ begin
     raise exception 'not_authenticated' using errcode = 'P0001';
   end if;
   select * into v_alert from public.sos_alerts where id = p_alert_id;
-  if not found or v_alert.squad_id is null or v_alert.squad_id is distinct from private.squad_of(v_uid) then
+  if not found or not public.is_public_player(v_alert.user_id) then
     raise exception 'sos_not_found' using errcode = 'P0001';
   end if;
   if v_alert.user_id = v_uid then
@@ -702,7 +869,13 @@ grant select, delete on public.motivations to authenticated;
 grant insert (text) on public.motivations to authenticated;
 grant update (text) on public.motivations to authenticated;
 
+grant insert (is_private) on public.profiles to authenticated;
+grant update (is_private) on public.profiles to authenticated;
+
 revoke execute on function
+  public.is_public_player(uuid),
+  public.leaderboard(),
+  public.player_profile(uuid),
   public.start_sos(uuid),
   public.resolve_sos(uuid, boolean, int, text),
   public.support_sos(uuid, text),
@@ -710,6 +883,9 @@ revoke execute on function
   public.make_pledge()
   from public, anon;
 grant execute on function
+  public.is_public_player(uuid),
+  public.leaderboard(),
+  public.player_profile(uuid),
   public.start_sos(uuid),
   public.resolve_sos(uuid, boolean, int, text),
   public.support_sos(uuid, text),
@@ -734,16 +910,20 @@ alter table public.pledges enable row level security;
 alter table public.motivations enable row level security;
 alter table private.reward_rules enable row level security;
 
--- Badges are visible to the squad (generic keys, no addiction details).
+-- Profiles: everyone signed in (the leaderboard shows private players too).
+create policy profiles_select on public.profiles
+  for select to authenticated
+  using (true);
+
+-- Global feed: own events and those of public players.
+create policy feed_events_select on public.feed_events
+  for select to authenticated
+  using (user_id = (select auth.uid()) or public.is_public_player(user_id));
+
+-- Badges: own and those of public players.
 create policy badges_select on public.badges
   for select to authenticated
-  using (
-    user_id = (select auth.uid())
-    or exists (
-      select 1 from public.squad_members m
-      where m.user_id = badges.user_id and public.is_squad_member(m.squad_id)
-    )
-  );
+  using (user_id = (select auth.uid()) or public.is_public_player(user_id));
 
 -- Owner-only data.
 create policy cravings_select on public.cravings
@@ -780,16 +960,16 @@ create policy motivations_update on public.motivations
 create policy motivations_delete on public.motivations
   for delete to authenticated using (user_id = (select auth.uid()));
 
--- SOS: the owner and the squad of the alert.
+-- SOS: the owner, and everyone when the owner's profile is public.
 create policy sos_alerts_select on public.sos_alerts
   for select to authenticated
-  using (user_id = (select auth.uid()) or public.is_squad_member(squad_id));
+  using (user_id = (select auth.uid()) or public.is_public_player(user_id));
 create policy sos_supports_select on public.sos_supports
   for select to authenticated
   using (exists (
     select 1 from public.sos_alerts a
     where a.id = sos_supports.alert_id
-      and (a.user_id = (select auth.uid()) or public.is_squad_member(a.squad_id))
+      and (a.user_id = (select auth.uid()) or public.is_public_player(a.user_id))
   ));
 
 -- ---------------------------------------------------------------------------

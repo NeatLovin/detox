@@ -6,14 +6,16 @@ import '../../../../core/utils/time_ago.dart';
 import '../../domain/feed_event.dart';
 
 class FeedTile extends StatelessWidget {
-  const FeedTile({super.key, required this.event, required this.now});
+  const FeedTile({super.key, required this.event, required this.now, this.onTap});
 
   final FeedEvent event;
   final DateTime now;
 
+  /// Opens the author's profile.
+  final VoidCallback? onTap;
+
   static (IconData, Color) _iconFor(FeedEventType type) => switch (type) {
-    FeedEventType.joinedSquad => (Icons.waving_hand, AppColors.money),
-    FeedEventType.leftSquad => (Icons.logout, AppColors.silver),
+    FeedEventType.joined => (Icons.waving_hand, AppColors.money),
     FeedEventType.milestone => (Icons.emoji_events, AppColors.gold),
     FeedEventType.levelUp => (Icons.keyboard_double_arrow_up, AppColors.xp),
     FeedEventType.relapse => (Icons.favorite, AppColors.hp),
@@ -29,8 +31,7 @@ class FeedTile extends StatelessWidget {
   static String textFor(AppLocalizations l10n, FeedEvent event) {
     final label = event.addictionLabel ?? '';
     return switch (event.type) {
-      FeedEventType.joinedSquad => l10n.feedJoined(event.username),
-      FeedEventType.leftSquad => l10n.feedLeft(event.username),
+      FeedEventType.joined => l10n.feedJoined(event.username),
       FeedEventType.milestone => l10n.feedMilestone(
         event.username,
         event.days ?? 0,
@@ -73,6 +74,7 @@ class FeedTile extends StatelessWidget {
     final bonus = event.type == FeedEventType.milestone ? event.bonusXp : null;
     return ListTile(
       contentPadding: EdgeInsets.zero,
+      onTap: onTap,
       leading: Stack(
         clipBehavior: Clip.none,
         children: [

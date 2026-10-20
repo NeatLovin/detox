@@ -9,9 +9,9 @@ import '../data/sos_repository.dart';
 import '../domain/sos.dart';
 import 'sos_providers.dart';
 
-/// Open SOS of squad mates, with one-tap support. Hidden when there is none.
-class SquadSosBanner extends ConsumerWidget {
-  const SquadSosBanner({super.key, required this.usernames});
+/// Open SOS of other players, with one-tap support. Hidden when there is none.
+class CommunitySosBanner extends ConsumerWidget {
+  const CommunitySosBanner({super.key, required this.usernames});
 
   /// user id → username, to name who needs help.
   final Map<String, String> usernames;
@@ -20,7 +20,7 @@ class SquadSosBanner extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final me = ref.watch(authStateProvider).value;
     final now = DateTime.now();
-    final alerts = (ref.watch(squadSosAlertsProvider).value ?? const <SosAlert>[])
+    final alerts = (ref.watch(sosAlertsProvider).value ?? const <SosAlert>[])
         .where((a) => a.userId != me && a.isActive(now))
         .toList();
     if (alerts.isEmpty) return const SizedBox.shrink();
@@ -62,7 +62,7 @@ class _SosCardState extends ConsumerState<_SosCard> {
         _sent = emoji;
         _busy = false;
       });
-      messenger.showSnackBar(SnackBar(content: Text(l10n.squadSosSent(emoji))));
+      messenger.showSnackBar(SnackBar(content: Text(l10n.sosCardSent(emoji))));
     } catch (error) {
       if (!mounted) return;
       setState(() => _busy = false);
@@ -93,7 +93,7 @@ class _SosCardState extends ConsumerState<_SosCard> {
                 const SizedBox(width: 8),
                 Expanded(
                   child: Text(
-                    l10n.squadSosTitle(widget.username, widget.alert.addictionLabel),
+                    l10n.sosCardTitle(widget.username, widget.alert.addictionLabel),
                     style: theme.textTheme.titleMedium,
                   ),
                 ),
@@ -101,9 +101,9 @@ class _SosCardState extends ConsumerState<_SosCard> {
             ),
             const SizedBox(height: 12),
             if (sent != null)
-              Text(l10n.squadSosSent(sent))
+              Text(l10n.sosCardSent(sent))
             else ...[
-              Text(l10n.squadSosSupport),
+              Text(l10n.sosCardSupport),
               const SizedBox(height: 8),
               Wrap(
                 spacing: 8,

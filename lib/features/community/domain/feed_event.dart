@@ -4,10 +4,8 @@ part 'feed_event.freezed.dart';
 part 'feed_event.g.dart';
 
 enum FeedEventType {
-  @JsonValue('joined_squad')
-  joinedSquad,
-  @JsonValue('left_squad')
-  leftSquad,
+  @JsonValue('joined')
+  joined,
   @JsonValue('milestone')
   milestone,
   @JsonValue('level_up')
@@ -29,15 +27,15 @@ enum FeedEventType {
   unknown,
 }
 
-/// Squad feed event. The payload is built server side; a private addiction
-/// never exposes its label here.
+/// Global feed event. The payload is built server side; a private addiction
+/// never exposes its label, and a private player's events are not readable
+/// by others (RLS).
 @freezed
 abstract class FeedEvent with _$FeedEvent {
   const FeedEvent._();
 
   const factory FeedEvent({
     required String id,
-    required String squadId,
     String? userId,
     @JsonKey(unknownEnumValue: FeedEventType.unknown)
     required FeedEventType type,

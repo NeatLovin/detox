@@ -125,7 +125,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
       await ref
           .read(addictionRepositoryProvider)
           .createAll(_drafts.values.toList());
-      // Refreshing the profile moves the router on to the squad setup.
+      // Refreshing the profile moves the router on to the home screen.
       ref.invalidate(currentProfileProvider);
     } catch (error) {
       if (!mounted) return;

@@ -6,15 +6,15 @@ import '../domain/sos.dart';
 
 part 'sos_providers.g.dart';
 
-/// Realtime SOS alerts of the squad (newest first).
+/// Realtime SOS alerts of every public player (newest first).
 @riverpod
-Stream<List<SosAlert>> squadSosAlerts(Ref ref) async* {
-  final squad = await ref.watch(currentSquadProvider.future);
-  if (squad == null) {
+Stream<List<SosAlert>> sosAlerts(Ref ref) async* {
+  final userId = await ref.watch(authStateProvider.future);
+  if (userId == null) {
     yield const [];
     return;
   }
-  yield* ref.watch(sosRepositoryProvider).watchSquadAlerts(squad.id);
+  yield* ref.watch(sosRepositoryProvider).watchAlerts();
 }
 
 /// Realtime supports received by one SOS.

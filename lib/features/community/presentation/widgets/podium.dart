@@ -3,14 +3,20 @@ import 'package:flutter_animate/flutter_animate.dart';
 
 import '../../../../core/l10n/l10n.dart';
 import '../../../../core/theme/app_theme.dart';
-import '../../domain/squad.dart';
+import '../../domain/leaderboard.dart';
 
-/// Top 3 of the week: 2nd · 1st · 3rd.
+/// All-time top 3: 2nd · 1st · 3rd. Tap a step to open the player.
 class Podium extends StatelessWidget {
-  const Podium({super.key, required this.entries, required this.currentUserId});
+  const Podium({
+    super.key,
+    required this.entries,
+    required this.currentUserId,
+    required this.onTap,
+  });
 
   final List<LeaderboardEntry> entries;
   final String? currentUserId;
+  final void Function(LeaderboardEntry entry) onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -26,12 +32,16 @@ class Podium extends StatelessWidget {
         for (final i in order)
           Expanded(
             child:
-                _PodiumStep(
+                InkWell(
+                      onTap: () => onTap(entries[i]),
+                      borderRadius: BorderRadius.circular(14),
+                      child: _PodiumStep(
                       entry: entries[i],
                       medal: medals[i],
                       color: colors[i],
                       height: heights[i],
                       isMe: entries[i].userId == currentUserId,
+                    ),
                     )
                     .animate()
                     .fadeIn(delay: (150 * (2 - i)).ms)
@@ -67,6 +77,7 @@ class _PodiumStep extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(entry.avatarEmoji, style: const TextStyle(fontSize: 36)),
+          if (entry.isPrivate) const Icon(Icons.lock, size: 14),
           Text(
             isMe
                 ? '${entry.username} (${l10n.leaderboardYou})'
@@ -78,7 +89,7 @@ class _PodiumStep extends StatelessWidget {
             ),
           ),
           Text(
-            l10n.leaderboardXp(entry.weeklyXp),
+            l10n.leaderboardXp(entry.xp),
             style: theme.textTheme.labelSmall?.copyWith(color: AppColors.xp),
           ),
           const SizedBox(height: 4),

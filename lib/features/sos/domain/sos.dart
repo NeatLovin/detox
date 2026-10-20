@@ -1,4 +1,4 @@
-/// Emojis a squad mate can send to an SOS. Must match the CHECK constraint
+/// Emojis another player can send to an SOS. Must match the CHECK constraint
 /// on `sos_supports.emoji`.
 const sosSupportEmojis = <String>['💪', '🔥', '🫂', '🧠', '🏆'];
 
@@ -9,7 +9,6 @@ class SosAlert {
   const SosAlert({
     required this.id,
     required this.userId,
-    this.squadId,
     this.addictionId,
     required this.addictionLabel,
     required this.createdAt,
@@ -20,7 +19,6 @@ class SosAlert {
   factory SosAlert.fromJson(Map<String, dynamic> json) => SosAlert(
     id: json['id'] as String,
     userId: json['user_id'] as String,
-    squadId: json['squad_id'] as String?,
     addictionId: json['addiction_id'] as String?,
     addictionLabel: json['addiction_label'] as String? ?? '',
     createdAt: DateTime.parse(json['created_at'] as String),
@@ -32,7 +30,6 @@ class SosAlert {
 
   final String id;
   final String userId;
-  final String? squadId;
   final String? addictionId;
   final String addictionLabel;
   final DateTime createdAt;
@@ -41,7 +38,7 @@ class SosAlert {
 
   bool get isOpen => resolvedAt == null;
 
-  /// Shown to the squad while open and recent enough to still matter.
+  /// Shown to others while open and recent enough to still matter.
   bool isActive(DateTime now) =>
       isOpen && now.difference(createdAt) < const Duration(hours: 2);
 }

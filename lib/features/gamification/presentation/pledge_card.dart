@@ -11,7 +11,7 @@ import '../data/engagement_repository.dart';
 import '../domain/rewards.dart';
 import 'engagement_providers.dart';
 
-/// Morning pledge: one tap, once a day, visible to the squad.
+/// Morning pledge: one tap, once a day, shown in the global feed.
 class PledgeCard extends ConsumerStatefulWidget {
   const PledgeCard({super.key});
 

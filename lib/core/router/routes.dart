@@ -4,11 +4,10 @@ abstract final class Routes {
   static const splash = '/splash';
   static const auth = '/auth';
   static const onboarding = '/onboarding';
-  static const squadSetup = '/squad-setup';
   static const home = '/home';
   static const quests = '/quests';
-  static const squad = '/squad';
-  static const squadSettings = '/squad/settings';
+  static const community = '/community';
+  static String player(String userId) => '/community/players/$userId';
   static const profile = '/profile';
   static const editProfile = '/profile/edit';
   static const newAddiction = '/profile/addictions/new';
@@ -17,7 +16,7 @@ abstract final class Routes {
   static String sos(String alertId, String addictionId) =>
       '/sos/$alertId?addiction=$addictionId';
 
-  static const _gateRoutes = {splash, auth, onboarding, squadSetup};
+  static const _gateRoutes = {splash, auth, onboarding};
 
   /// Pure redirect logic, unit tested.
   static String? redirect(SessionGate gate, String location) {
@@ -26,7 +25,6 @@ abstract final class Routes {
       SessionGate.loading || SessionGate.error => goTo(splash),
       SessionGate.signedOut => goTo(auth),
       SessionGate.needsProfile => goTo(onboarding),
-      SessionGate.needsSquad => goTo(squadSetup),
       SessionGate.ready => _gateRoutes.contains(location) ? home : null,
     };
   }

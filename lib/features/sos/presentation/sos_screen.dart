@@ -17,7 +17,7 @@ import '../domain/sos.dart';
 import 'sos_providers.dart';
 
 /// Full-screen SOS: countdown, paced breathing, the user's reasons, grounding
-/// exercise and live support from the squad.
+/// exercise and live support from the other players.
 class SosScreen extends ConsumerStatefulWidget {
   const SosScreen({super.key, required this.alertId, this.addictionId});
 
@@ -131,7 +131,7 @@ class _SosScreenState extends ConsumerState<SosScreen>
       BreathPhase.hold => l10n.sosBreathHold,
       BreathPhase.exhale => l10n.sosBreathOut,
     };
-    final squad = ref.watch(currentSquadProvider).value;
+    final isPrivate = ref.watch(currentProfileProvider).value?.isPrivate ?? false;
     final supports = ref.watch(sosSupportsProvider(widget.alertId)).value ?? const [];
     final motivations = ref.watch(myMotivationsProvider).value ?? const [];
 
@@ -191,12 +191,13 @@ class _SosScreenState extends ConsumerState<SosScreen>
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(
-                  squad == null ? Icons.person_outline : Icons.groups,
-                  size: 18,
-                ),
+                Icon(isPrivate ? Icons.lock : Icons.public, size: 18),
                 const SizedBox(width: 6),
-                Text(squad == null ? l10n.sosNoSquad : l10n.sosSquadNotified),
+                Flexible(
+                  child: Text(
+                    isPrivate ? l10n.sosPrivateNotShared : l10n.sosCommunityNotified,
+                  ),
+                ),
               ],
             ),
             if (supports.isNotEmpty) ...[

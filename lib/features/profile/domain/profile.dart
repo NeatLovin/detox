@@ -9,6 +9,7 @@ abstract class Profile with _$Profile {
     required String id,
     required String username,
     required String avatarEmoji,
+    @Default(false) bool isPrivate,
     required DateTime createdAt,
   }) = _Profile;
 

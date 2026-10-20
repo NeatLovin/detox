@@ -9,7 +9,7 @@ import '../../addictions/domain/addiction.dart';
 import '../../addictions/presentation/addiction_providers.dart';
 import '../data/sos_repository.dart';
 
-/// SOS button flow: pick the addiction (if several), alert the squad, then
+/// SOS button flow: pick the addiction (if several), alert everyone, then
 /// open the SOS screen.
 Future<void> launchSos(BuildContext context, WidgetRef ref) async {
   final l10n = context.l10n;

@@ -9,8 +9,7 @@ void main() {
     SessionGate gate(
       AsyncValue<String?> user, [
       AsyncValue<Object?> profile = loading,
-      AsyncValue<Object?> squad = loading,
-    ]) => computeSessionGate(userId: user, profile: profile, squad: squad);
+    ]) => computeSessionGate(userId: user, profile: profile);
 
     test('auth loading → loading', () {
       expect(gate(const AsyncLoading()), SessionGate.loading);
@@ -27,16 +26,9 @@ void main() {
       );
     });
 
-    test('no squad → squad setup', () {
+    test('profile done → ready', () {
       expect(
-        gate(const AsyncData('u'), const AsyncData('p'), const AsyncData(null)),
-        SessionGate.needsSquad,
-      );
-    });
-
-    test('everything ready', () {
-      expect(
-        gate(const AsyncData('u'), const AsyncData('p'), const AsyncData('s')),
+        gate(const AsyncData('u'), const AsyncData('p')),
         SessionGate.ready,
       );
     });
@@ -64,7 +56,6 @@ void main() {
     SessionGate current() => computeSessionGate(
       userId: AsyncData(container.read(userSource)),
       profile: container.read(profileProvider),
-      squad: const AsyncData('squad'),
     );
 
     setUp(() {
@@ -99,24 +90,18 @@ void main() {
       expect(Routes.redirect(SessionGate.signedOut, Routes.auth), isNull);
     });
 
-    test('onboarding then squad setup', () {
+    test('onboarding when the profile is missing', () {
       expect(
         Routes.redirect(SessionGate.needsProfile, Routes.auth),
         Routes.onboarding,
-      );
-      expect(
-        Routes.redirect(SessionGate.needsSquad, Routes.onboarding),
-        Routes.squadSetup,
       );
     });
 
     test('ready leaves gate screens for home', () {
       expect(Routes.redirect(SessionGate.ready, Routes.splash), Routes.home);
-      expect(
-        Routes.redirect(SessionGate.ready, Routes.squadSetup),
-        Routes.home,
-      );
-      expect(Routes.redirect(SessionGate.ready, Routes.squad), isNull);
+      expect(Routes.redirect(SessionGate.ready, Routes.onboarding), Routes.home);
+      expect(Routes.redirect(SessionGate.ready, Routes.community), isNull);
+      expect(Routes.redirect(SessionGate.ready, Routes.player('u1')), isNull);
       expect(Routes.redirect(SessionGate.ready, Routes.newAddiction), isNull);
     });
 

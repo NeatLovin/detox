@@ -12,7 +12,7 @@ class SosRepository {
 
   final SupabaseClient _client;
 
-  /// Opens an SOS (or reuses the open one) and alerts the squad. Returns its id.
+  /// Opens an SOS (or reuses the open one) and alerts everyone. Returns its id.
   Future<String> start(String addictionId) async {
     final id = await _client.rpc<dynamic>(
       'start_sos',
@@ -43,11 +43,10 @@ class SosRepository {
         params: {'p_alert_id': alertId, 'p_emoji': emoji},
       );
 
-  /// Realtime SOS alerts of the squad, newest first.
-  Stream<List<SosAlert>> watchSquadAlerts(String squadId) => _client
+  /// Realtime SOS alerts, newest first (RLS hides private players' alerts).
+  Stream<List<SosAlert>> watchAlerts() => _client
       .from('sos_alerts')
       .stream(primaryKey: ['id'])
-      .eq('squad_id', squadId)
       .order('created_at')
       .limit(20)
       .map((rows) => [for (final row in rows) SosAlert.fromJson(row)]);

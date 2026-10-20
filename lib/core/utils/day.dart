@@ -1,5 +1,5 @@
 /// Calendar-day helpers. Server-side days are Europe/Zurich; the app uses the
-/// device's local day, which is the same for a squad living in Switzerland.
+/// device's local day, which is the same for players living in Switzerland.
 DateTime dayOf(DateTime moment) {
   final local = moment.toLocal();
   return DateTime(local.year, local.month, local.day);

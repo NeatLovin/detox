@@ -65,9 +65,9 @@ class _HomeShellState extends ConsumerState<HomeShell> {
             label: l10n.navQuests,
           ),
           NavigationDestination(
-            icon: const Icon(Icons.groups_outlined),
-            selectedIcon: const Icon(Icons.groups),
-            label: l10n.navSquad,
+            icon: const Icon(Icons.leaderboard_outlined),
+            selectedIcon: const Icon(Icons.leaderboard),
+            label: l10n.navCommunity,
           ),
           NavigationDestination(
             icon: const Icon(Icons.person_outline),

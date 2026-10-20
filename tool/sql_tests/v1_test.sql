@@ -58,7 +58,7 @@ create function t1.today() returns date language sql security definer as $$
 $$;
 grant execute on all functions in schema t1 to authenticated, anon;
 
--- Fixtures: A and B in one squad, C alone, D for caps, E for streaks ----------
+-- Fixtures: A, B, C, D public players, E has a private profile --------------
 insert into auth.users (id, email) values
   ('bbbbbbbb-0000-0000-0000-00000000000a', 'a@test'),
   ('bbbbbbbb-0000-0000-0000-00000000000b', 'b@test'),
@@ -71,19 +71,16 @@ insert into public.profiles (id, username) values
   ('bbbbbbbb-0000-0000-0000-00000000000c', 'v1_carl'),
   ('bbbbbbbb-0000-0000-0000-00000000000d', 'v1_dana'),
   ('bbbbbbbb-0000-0000-0000-00000000000e', 'v1_eva');
+update public.profiles set is_private = true where id = 'bbbbbbbb-0000-0000-0000-00000000000e';
 
 set role authenticated;
 select t1.login('bbbbbbbb-0000-0000-0000-00000000000a');
-select public.create_squad('V1 squad');
 insert into public.addictions (type, label, unit_label) values ('snus', 'Snus', 'sachets');
 insert into public.addictions (type, label, unit_label, is_private) values ('porn', 'Porno', 'sessions', true);
 reset role;
 
 create table t1.ctx (key text primary key, id uuid);
 grant select on t1.ctx to authenticated;
-create table t1.code as
-  select invite_code from public.squads where created_by = 'bbbbbbbb-0000-0000-0000-00000000000a';
-grant select on t1.code to authenticated;
 insert into t1.ctx
   select 'a_snus', id from public.addictions
   where user_id = 'bbbbbbbb-0000-0000-0000-00000000000a' and type = 'snus';
@@ -93,7 +90,6 @@ insert into t1.ctx
 
 set role authenticated;
 select t1.login('bbbbbbbb-0000-0000-0000-00000000000b');
-select public.join_squad((select invite_code from t1.code));
 insert into public.addictions (type, label, unit_label) values ('cigarette', 'Clope', 'cigarettes');
 select t1.login('bbbbbbbb-0000-0000-0000-00000000000d');
 insert into public.addictions (type, label, unit_label) values ('sugar', 'Sucre', 'portions');
@@ -178,19 +174,18 @@ select t1.fails($$select public.start_sos((select id from t1.ctx where key = 'b_
   'addiction_not_found', 'cannot start an SOS on someone else''s addiction');
 
 select t1.login('bbbbbbbb-0000-0000-0000-00000000000b');
-select t1.eq((select count(*) from public.sos_alerts), 1::bigint, 'squad mate sees the SOS');
+select t1.eq((select count(*) from public.sos_alerts), 1::bigint, 'another player sees a public player''s SOS');
 select public.support_sos((select id from t1.sos), '💪');
 select public.support_sos((select id from t1.sos), '🔥');
-select t1.eq((select count(*) from public.sos_supports), 1::bigint, 'one support per mate per alert');
+select t1.eq((select count(*) from public.sos_supports), 1::bigint, 'one support per player per alert');
 select t1.eq(t1.ledger('bbbbbbbb-0000-0000-0000-00000000000b', 'sos_support'), 1::bigint, 'supporter earns XP once');
 select t1.eq(t1.feed('bbbbbbbb-0000-0000-0000-00000000000b', 'sos_support'), 1::bigint, 'support announced');
 select t1.fails($$select public.support_sos((select id from t1.sos), '🍺')$$, '23514',
   'only allowed emojis');
 
 select t1.login('bbbbbbbb-0000-0000-0000-00000000000c');
-select t1.eq((select count(*) from public.sos_alerts), 0::bigint, 'outsider does not see the SOS');
-select t1.fails($$select public.support_sos((select id from t1.sos), '💪')$$, 'sos_not_found',
-  'outsider cannot support');
+select t1.eq((select count(*) from public.sos_alerts), 1::bigint, 'everyone sees a public SOS');
+select t1.eq((select count(*) from public.sos_supports), 1::bigint, 'everyone sees its supports');
 
 select t1.login('bbbbbbbb-0000-0000-0000-00000000000b');
 select t1.fails($$select public.resolve_sos((select id from t1.sos), true)$$, 'sos_not_found',
@@ -250,8 +245,8 @@ select public.log_quest((select id from t1.ctx where key = 'c_sleep'), 8);
 select t1.eq(t1.ledger('bbbbbbbb-0000-0000-0000-00000000000c', 'quests_all_done'), 1::bigint,
   'all 3 quests done: bonus');
 select t1.eq(t1.xp('bbbbbbbb-0000-0000-0000-00000000000c'), 50::bigint, '3 quests + bonus = 50 XP');
-select t1.eq(t1.feed('bbbbbbbb-0000-0000-0000-00000000000c', 'quests_all_done'), 0::bigint,
-  'no squad: nothing pushed to a feed');
+select t1.eq(t1.feed('bbbbbbbb-0000-0000-0000-00000000000c', 'quests_all_done'), 1::bigint,
+  'all-done announced in the global feed');
 
 select public.log_quest((select id from t1.ctx where key = 'c_water'), 0);
 select public.log_quest((select id from t1.ctx where key = 'c_water'), 8);
@@ -321,14 +316,75 @@ values ('bbbbbbbb-0000-0000-0000-00000000000e', 1000, 'clean_day');
 select t1.eq(t1.has_badge('bbbbbbbb-0000-0000-0000-00000000000e', 'level_5'), true, 'level_5 badge at 1000 XP');
 select t1.eq(t1.has_badge('bbbbbbbb-0000-0000-0000-00000000000e', 'level_10'), false, 'no level_10 yet');
 
--- Badges: visible to the squad, not to outsiders.
+-- Badges: public players' badges are visible, a private player's are not.
 set role authenticated;
 select t1.login('bbbbbbbb-0000-0000-0000-00000000000a');
 select t1.eq((select count(*) > 0 from public.badges where user_id = 'bbbbbbbb-0000-0000-0000-00000000000b'),
-  true, 'squad mate sees badges');
-select t1.login('bbbbbbbb-0000-0000-0000-00000000000c');
-select t1.eq((select count(*) from public.badges where user_id = 'bbbbbbbb-0000-0000-0000-00000000000b'),
-  0::bigint, 'outsider does not see badges');
+  true, 'anyone sees a public player''s badges');
+select t1.eq((select count(*) from public.badges where user_id = 'bbbbbbbb-0000-0000-0000-00000000000e'),
+  0::bigint, 'a private player''s badges are hidden');
+select t1.login('bbbbbbbb-0000-0000-0000-00000000000e');
+select t1.eq((select count(*) > 0 from public.badges where user_id = 'bbbbbbbb-0000-0000-0000-00000000000e'),
+  true, 'a private player sees their own badges');
+
+-- 6b. Community: leaderboard, player profiles, global feed ---------------------
+select t1.login('bbbbbbbb-0000-0000-0000-00000000000a');
+select t1.eq((select count(*) from public.leaderboard()
+  where user_id::text like 'bbbbbbbb-%'), 5::bigint, 'leaderboard lists every player, private ones included');
+select t1.eq((select is_private from public.leaderboard() where user_id = 'bbbbbbbb-0000-0000-0000-00000000000e'),
+  true, 'leaderboard flags private players');
+select t1.eq((select username from public.leaderboard() order by rank limit 1), 'v1_eva',
+  'leaderboard is ordered by total XP');
+select t1.eq((select rank from public.leaderboard() where user_id = 'bbbbbbbb-0000-0000-0000-00000000000e'),
+  1::bigint, 'rank 1 for the top XP');
+
+select t1.eq((public.player_profile('bbbbbbbb-0000-0000-0000-00000000000b')->>'username'), 'v1_bob',
+  'a public profile opens');
+select t1.eq((jsonb_array_length(public.player_profile('bbbbbbbb-0000-0000-0000-00000000000b')->'badges') > 0),
+  true, 'public profile shows badges');
+select t1.eq((select count(*) from jsonb_array_elements(
+  public.player_profile('bbbbbbbb-0000-0000-0000-00000000000a')->'addictions')), 1::bigint,
+  'public profile hides private addictions');
+select t1.eq((public.player_profile('bbbbbbbb-0000-0000-0000-00000000000a')->'addictions'->0->>'label'), 'Snus',
+  'public profile shows non-private addictions');
+select t1.fails($$select public.player_profile('bbbbbbbb-0000-0000-0000-00000000000e')$$, 'profile_private',
+  'a private profile does not open for others');
+select t1.fails($$select public.player_profile(gen_random_uuid())$$, 'player_not_found',
+  'unknown player');
+
+select t1.eq((select count(*) from public.feed_events where user_id = 'bbbbbbbb-0000-0000-0000-00000000000e'),
+  0::bigint, 'a private player''s events are hidden from others');
+select t1.eq((select count(*) > 0 from public.feed_events where user_id = 'bbbbbbbb-0000-0000-0000-00000000000b'),
+  true, 'public events are in the global feed');
+select t1.eq((select count(*) from public.feed_events
+  where type = 'joined' and user_id = 'bbbbbbbb-0000-0000-0000-00000000000d'), 1::bigint,
+  'a new player is announced');
+select t1.login('bbbbbbbb-0000-0000-0000-00000000000e');
+select t1.eq((public.player_profile('bbbbbbbb-0000-0000-0000-00000000000e')->>'username'), 'v1_eva',
+  'a private player opens their own profile');
+select t1.eq((select count(*) > 0 from public.feed_events where user_id = 'bbbbbbbb-0000-0000-0000-00000000000e'),
+  true, 'a private player sees their own events');
+
+-- A private player's SOS is not shown to others.
+insert into public.addictions (type, label, unit_label) values ('vape', 'Vape', 'sessions');
+insert into t1.sos select public.start_sos((select id from public.addictions where type = 'vape'));
+select t1.login('bbbbbbbb-0000-0000-0000-00000000000b');
+select t1.eq((select count(*) from public.sos_alerts where user_id = 'bbbbbbbb-0000-0000-0000-00000000000e'),
+  0::bigint, 'a private player''s SOS is hidden');
+select t1.fails($$select public.support_sos(
+    (select id from t1.sos where id not in (select id from public.sos_alerts)), '💪')$$,
+  'sos_not_found', 'a private player''s SOS cannot be supported');
+
+-- Client can set its own privacy flag, nothing else changes hands.
+select t1.login('bbbbbbbb-0000-0000-0000-00000000000d');
+update public.profiles set is_private = true where id = auth.uid();
+update public.profiles set is_private = true where id = 'bbbbbbbb-0000-0000-0000-00000000000b';
+reset role;
+select t1.eq((select is_private from public.profiles where id = 'bbbbbbbb-0000-0000-0000-00000000000d'),
+  true, 'a player can make their profile private');
+select t1.eq((select is_private from public.profiles where id = 'bbbbbbbb-0000-0000-0000-00000000000b'),
+  false, 'a player cannot change someone else''s privacy');
+set role authenticated;
 
 -- 7. Motivations ----------------------------------------------------------------
 select t1.login('bbbbbbbb-0000-0000-0000-00000000000a');

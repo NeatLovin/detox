@@ -19,18 +19,14 @@
   "errorOtpRateLimit": "Trop de demandes. Attends un peu avant de redemander un code.",
   "errorUsernameTaken": "Ce pseudo est déjà pris.",
   "errorUsernameInvalid": "3 à 20 caractères : lettres, chiffres, . _ -",
-  "errorSquadFull": "Cette escouade est complète (10 max).",
-  "errorInvalidInviteCode": "Code d'invitation introuvable.",
-  "errorAlreadyInSquad": "Tu es déjà dans une escouade.",
   "errorRelapseInFuture": "La date ne peut pas être dans le futur.",
   "errorRelapseBeforeStreak": "Cette date est avant le début de ta série actuelle.",
   "errorQuitDateInFuture": "La date d'arrêt ne peut pas être dans le futur.",
   "errorAddictionArchived": "Cette addiction est archivée.",
   "errorTooManyAddictions": "Maximum 6 addictions actives, dont 2 perso. Archive-en une pour en ajouter une autre.",
   "navHome": "Accueil",
-  "navSquad": "Escouade",
   "navProfile": "Profil",
-  "authTagline": "Arrête avec ton escouade.\nLevel up chaque jour.",
+  "authTagline": "Arrête avec tes potes.\nLevel up chaque jour.",
   "authEmailLabel": "Ton email",
   "authEmailInvalid": "Email invalide",
   "authSendCode": "Recevoir mon code",
@@ -80,7 +76,7 @@
   "addictionUnitCostField": "Coût par unité (CHF)",
   "addictionBaselineField": "Conso de base par jour",
   "addictionPrivateToggle": "Privée",
-  "addictionPrivateHint": "Ton escouade ne verra jamais son nom.",
+  "addictionPrivateHint": "Les autres joueurs ne verront jamais cette addiction.",
   "addictionQuitDateField": "Date d'arrêt",
   "addictionXpPerDay": "+{xp} XP par jour clean",
   "@addictionXpPerDay": {
@@ -100,28 +96,6 @@
       }
     }
   },
-  "squadSetupTitle": "Ton escouade",
-  "squadSetupSubtitle": "Seul on va vite, ensemble on va loin.",
-  "squadCreateTab": "Créer",
-  "squadJoinTab": "Rejoindre",
-  "squadNameLabel": "Nom de l'escouade",
-  "squadCreateButton": "Créer l'escouade",
-  "squadCodeLabel": "Code d'invitation",
-  "squadJoinButton": "Rejoindre",
-  "squadCreatedTitle": "Escouade créée 🎉",
-  "squadCreatedBody": "Partage ce code à tes potes pour qu'ils te rejoignent (10 max).",
-  "squadShareMessage": "Rejoins mon escouade « {name} » sur Detox ! Code : {code}",
-  "@squadShareMessage": {
-    "placeholders": {
-      "name": {
-        "type": "String"
-      },
-      "code": {
-        "type": "String"
-      }
-    }
-  },
-  "squadEnter": "Entrer dans l'escouade",
   "homeGreeting": "Salut {username} 👋",
   "@homeGreeting": {
     "placeholders": {
@@ -228,11 +202,11 @@
   "relapseWhen": "Quand ?",
   "relapseNoteLabel": "Note (optionnelle)",
   "relapseNoteHint": "Ce qui s'est passé, ce que tu retiens…",
-  "relapseShareToggle": "Partager à l'escouade",
-  "relapseSharePrivateHint": "Addiction privée : l'escouade verra seulement « une addiction privée ».",
+  "relapseShareToggle": "Partager dans le feed",
+  "relapseSharePrivateHint": "Addiction privée : le feed affichera seulement « une addiction privée ».",
   "relapseConfirm": "Valider",
   "relapseKindMessage": "Ça arrive. Ton XP et ton niveau restent. On repart. 💪",
-  "leaderboardTitle": "Classement de la semaine",
+  "leaderboardTitle": "Classement général",
   "leaderboardXp": "{xp} XP",
   "@leaderboardXp": {
     "placeholders": {
@@ -244,16 +218,8 @@
   "leaderboardYou": "toi",
   "feedTitle": "Le feed",
   "feedEmpty": "Rien pour l'instant. Le premier palier arrive vite !",
-  "feedJoined": "{username} a rejoint l'escouade",
+  "feedJoined": "{username} a rejoint Detox 👋",
   "@feedJoined": {
-    "placeholders": {
-      "username": {
-        "type": "String"
-      }
-    }
-  },
-  "feedLeft": "{username} a quitté l'escouade",
-  "@feedLeft": {
     "placeholders": {
       "username": {
         "type": "String"
@@ -329,19 +295,6 @@
       }
     }
   },
-  "squadSettingsTitle": "Réglages de l'escouade",
-  "squadMembersTitle": "Membres ({count}/10)",
-  "@squadMembersTitle": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "squadOwner": "Chef",
-  "squadLeave": "Quitter l'escouade",
-  "squadLeaveConfirmTitle": "Quitter l'escouade ?",
-  "squadLeaveConfirmBody": "Tu gardes ton XP, ton niveau et tes addictions. Tu pourras en rejoindre une autre.",
   "profileEdit": "Modifier le profil",
   "profileUpdated": "Profil mis à jour ✅",
   "profileAddictionsTitle": "Mes addictions",
@@ -382,7 +335,7 @@
   "homeSosButton": "SOS",
   "homeLogCraving": "Noter une envie",
   "pledgeTitle": "Engagement du jour",
-  "pledgeBody": "Engage-toi devant ton escouade à tenir aujourd’hui.",
+  "pledgeBody": "Engage-toi devant tout le monde à tenir aujourd’hui.",
   "pledgeButton": "Je m’engage 🤝",
   "pledgeDone": "Engagé pour aujourd’hui ✅",
   "xpGain": "+{xp} XP",
@@ -475,16 +428,14 @@
   "sosGrounding3": "3 sons que tu entends",
   "sosGrounding2": "2 odeurs que tu sens",
   "sosGrounding1": "1 goût dans ta bouche",
-  "sosSquadNotified": "Ton escouade est prévenue",
-  "sosNoSquad": "Pas d’escouade : personne n’est prévenu.",
   "sosSupportsReceived": "Soutien reçu",
   "sosResisted": "J’ai tenu 💪",
   "sosGaveIn": "J’ai craqué",
   "sosVictory": "Victoire ! Envie résistée 🏆",
   "sosLeaveConfirmTitle": "Quitter le SOS ?",
   "sosLeaveConfirmBody": "Dis-nous comment ça s’est fini : ça compte pour ton journal.",
-  "squadSosTitle": "{username} traverse une envie ({label})",
-  "@squadSosTitle": {
+  "sosCardTitle": "{username} traverse une envie ({label})",
+  "@sosCardTitle": {
     "placeholders": {
       "username": {
         "type": "String"
@@ -494,9 +445,9 @@
       }
     }
   },
-  "squadSosSupport": "Envoie-lui de la force",
-  "squadSosSent": "Soutien envoyé {emoji}",
-  "@squadSosSent": {
+  "sosCardSupport": "Envoie-lui de la force",
+  "sosCardSent": "Soutien envoyé {emoji}",
+  "@sosCardSent": {
     "placeholders": {
       "emoji": {
         "type": "String"
@@ -671,5 +622,36 @@
   "motivationsHint": "Ex : avoir du souffle au foot",
   "motivationsEmpty": "Aucune raison pour l’instant.",
   "commonDelete": "Supprimer",
-  "commonEdit": "Modifier"
+  "commonEdit": "Modifier",
+  "navCommunity": "Classement",
+  "leaderboardEmpty": "Personne dans le classement pour l’instant.",
+  "errorProfilePrivate": "Ce profil est privé.",
+  "errorPlayerNotFound": "Joueur introuvable.",
+  "sosCommunityNotified": "Tout le monde est prévenu",
+  "sosPrivateNotShared": "Profil privé : personne n’est prévenu",
+  "playerPrivate": "Le profil de {username} est privé 🔒",
+  "@playerPrivate": {
+    "placeholders": {
+      "username": {
+        "type": "String"
+      }
+    }
+  },
+  "playerPrivateBody": "Ce profil est privé. Seuls son pseudo, son niveau et son XP apparaissent dans le classement.",
+  "playerSince": "Sur Detox depuis le {date}",
+  "@playerSince": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "playerRankLabel": "Rang",
+  "playerLevelLabel": "Niveau",
+  "playerNoBadges": "Aucun badge pour l’instant.",
+  "playerAddictionsTitle": "Ses défis",
+  "playerNoAddictions": "Aucune addiction publique.",
+  "profilePrivateToggle": "Profil privé",
+  "profilePrivateOn": "Tu restes dans le classement (pseudo, niveau, XP), mais personne ne peut ouvrir ton profil ni voir ton feed ou tes SOS.",
+  "profilePrivateOff": "Tout le monde peut voir ton niveau, tes badges et tes addictions non privées."
 }

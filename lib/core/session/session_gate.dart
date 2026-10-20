@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// Where the user stands in the app lifecycle. Drives the router redirects.
-enum SessionGate { loading, error, signedOut, needsProfile, needsSquad, ready }
+enum SessionGate { loading, error, signedOut, needsProfile, ready }
 
 /// Pure gate computation.
 ///
@@ -12,7 +12,6 @@ enum SessionGate { loading, error, signedOut, needsProfile, needsSquad, ready }
 SessionGate computeSessionGate({
   required AsyncValue<String?> userId,
   required AsyncValue<Object?> profile,
-  required AsyncValue<Object?> squad,
 }) {
   final userPending = _pending(userId);
   if (userPending != null) return userPending;
@@ -21,10 +20,6 @@ SessionGate computeSessionGate({
   final profilePending = _pending(profile);
   if (profilePending != null) return profilePending;
   if (profile.value == null) return SessionGate.needsProfile;
-
-  final squadPending = _pending(squad);
-  if (squadPending != null) return squadPending;
-  if (squad.value == null) return SessionGate.needsSquad;
 
   return SessionGate.ready;
 }
