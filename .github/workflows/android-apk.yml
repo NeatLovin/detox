@@ -92,10 +92,25 @@ jobs:
       - run: flutter pub get
 
       - name: Analyze
-        run: flutter analyze --no-fatal-infos
+        run: |
+          set -o pipefail
+          if ! flutter analyze --no-fatal-infos 2>&1 | tee analyze.log; then
+            # Surface analyzer errors as annotations (raw logs are not always reachable).
+            grep -E '^\s*(error|warning) •' analyze.log | head -10 | while IFS= read -r l; do
+              echo "::error::$(echo "$l" | tr -s ' ')"
+            done
+            exit 1
+          fi
 
       - name: Tests
-        run: flutter test
+        run: |
+          set -o pipefail
+          if ! flutter test --reporter expanded 2>&1 | tee test.log; then
+            grep -E '\[E\]|Error:|Expected:|Actual:' test.log | head -10 | while IFS= read -r l; do
+              echo "::error::${l:0:300}"
+            done
+            exit 1
+          fi
 
       - name: Build APK
         run: |

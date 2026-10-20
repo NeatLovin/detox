@@ -39,7 +39,7 @@ void main() {
     });
 
     test('truncates long messages', () {
-      final detail = errorDetail(const AuthException('x' * 500, statusCode: '500'));
+      final detail = errorDetail(AuthException('x' * 500, statusCode: '500'));
       expect(detail!.length, lessThan(200));
     });
   });

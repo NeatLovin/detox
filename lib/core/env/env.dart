@@ -39,7 +39,7 @@ String? validateConfig({required String url, required String anonKey}) {
   if (uri == null || uri.scheme != 'https' || uri.host.isEmpty) {
     return 'SUPABASE_URL invalide : attendu https://<ref>.supabase.co '
         '(reçu ${normalizedUrl.length} caractères commençant par '
-        '"${normalizedUrl.substring(0, normalizedUrl.length.clamp(0, 12))}").';
+        '"${normalizedUrl.length <= 12 ? normalizedUrl : normalizedUrl.substring(0, 12)}").';
   }
   if (RegExp(r'\s').hasMatch(key)) {
     return 'SUPABASE_ANON_KEY contient des espaces ou des retours à la ligne.';
