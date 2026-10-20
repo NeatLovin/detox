@@ -127,7 +127,7 @@ class StatsScreen extends ConsumerWidget {
                       ),
                       if (riskiest != null)
                         l10n.statsRiskiest(
-                          l10n.statsWeekday(riskiest.$1),
+                          l10n.statsWeekday('${riskiest.$1}'),
                           '${riskiest.$2 * 4}h-${riskiest.$2 * 4 + 4}h',
                         ),
                     ].join('\n'),
@@ -248,7 +248,7 @@ class Heatmap extends StatelessWidget {
               children: [
                 SizedBox(
                   width: 36,
-                  child: Text(l10n.statsWeekdayShort(d), style: theme.textTheme.labelSmall),
+                  child: Text(l10n.statsWeekdayShort('$d'), style: theme.textTheme.labelSmall),
                 ),
                 for (var s = 0; s < 6; s++)
                   Expanded(

@@ -727,7 +727,7 @@
   "@statsWeekday": {
     "placeholders": {
       "day": {
-        "type": "int"
+        "type": "String"
       }
     }
   },
@@ -735,7 +735,7 @@
   "@statsWeekdayShort": {
     "placeholders": {
       "day": {
-        "type": "int"
+        "type": "String"
       }
     }
   },
