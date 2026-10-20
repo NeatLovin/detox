@@ -61,7 +61,8 @@ insert into auth.users (id, email) values
   ('aaaaaaaa-0000-0000-0000-000000000003', 'backdate@test'),
   ('aaaaaaaa-0000-0000-0000-000000000004', 'cap@test'),
   ('aaaaaaaa-0000-0000-0000-000000000005', 'custom@test'),
-  ('aaaaaaaa-0000-0000-0000-000000000006', 'batch@test');
+  ('aaaaaaaa-0000-0000-0000-000000000006', 'batch@test'),
+  ('aaaaaaaa-0000-0000-0000-000000000007', 'fraction@test');
 
 -- 1. Un-archiving -------------------------------------------------------------
 set role authenticated;
@@ -152,6 +153,52 @@ reset role;
 select tests.logout();
 select tests.eq((select awarded_clean_days from public.addictions where id = :'backdate_id'), 0,
   'relapse now: awarded_clean_days back to 0');
+
+-- Relapse at a fraction of a day (migration 20261020110000_relapse_ceil.sql):
+-- 14 days paid, relapse at day 0.5. ceil(13.5) = 14 days are carried over, so
+-- neither day 14 nor its milestone can be paid again.
+insert into public.addictions (user_id, type, label, unit_label, quit_started_at)
+values ('aaaaaaaa-0000-0000-0000-000000000007', 'snus', 'Snus', 'sachets', now() - interval '14 days');
+update public.addictions set awarded_clean_days = 0
+where user_id = 'aaaaaaaa-0000-0000-0000-000000000007';
+select private.award_clean_days();
+select tests.eq(tests.xp('aaaaaaaa-0000-0000-0000-000000000007'), (14 * 30 + 20 + 50 + 100 + 150)::bigint,
+  'fraction: 14 days + milestones 1, 3, 7, 14 credited');
+select id as fraction_id, streak_started_at as fraction_start from public.addictions
+where user_id = 'aaaaaaaa-0000-0000-0000-000000000007' \gset
+
+set role authenticated;
+select tests.login('aaaaaaaa-0000-0000-0000-000000000007');
+insert into public.relapses (addiction_id, occurred_at)
+values (:'fraction_id', :'fraction_start'::timestamptz + interval '12 hours');
+reset role;
+select tests.logout();
+
+select tests.eq((select awarded_clean_days from public.addictions where id = :'fraction_id'), 14,
+  'fraction: ceil(13.5) = 14 paid days carried over');
+select private.award_clean_days();
+select tests.eq(tests.ledger_count('aaaaaaaa-0000-0000-0000-000000000007', 'clean_day'), 14::bigint,
+  'fraction: no clean day right after the relapse');
+
+-- "Now" is day 14 of the old streak. Move time to day 15.5 minus 1 minute…
+update public.addictions set streak_started_at = streak_started_at - interval '1 day 11 hours 59 minutes'
+where id = :'fraction_id';
+select private.award_clean_days();
+select tests.eq(tests.ledger_count('aaaaaaaa-0000-0000-0000-000000000007', 'clean_day'), 14::bigint,
+  'fraction: still no clean day just before day 15.5');
+select tests.eq(tests.ledger_count('aaaaaaaa-0000-0000-0000-000000000007', 'milestone'), 4::bigint,
+  'fraction: milestone 14 not paid again before day 15.5');
+
+-- …then past day 15.5 (day 15 of the new streak): exactly one more clean day.
+update public.addictions set streak_started_at = streak_started_at - interval '2 minutes'
+where id = :'fraction_id';
+select private.award_clean_days();
+select tests.eq(tests.ledger_count('aaaaaaaa-0000-0000-0000-000000000007', 'clean_day'), 15::bigint,
+  'fraction: day 15 of the new streak credited at day 15.5');
+select tests.eq(tests.ledger_count('aaaaaaaa-0000-0000-0000-000000000007', 'milestone'), 4::bigint,
+  'fraction: milestone 14 is never paid twice');
+select tests.eq(tests.xp('aaaaaaaa-0000-0000-0000-000000000007'), (740 + 30)::bigint,
+  'fraction: XP = 740 + one day');
 
 -- 3. Addiction cap ------------------------------------------------------------
 set role authenticated;
