@@ -13,7 +13,7 @@ on:
       mode:
         description: "dry-run = show pending migrations only, apply = push them"
         type: choice
-        options: [dry-run, apply, verify]
+        options: [dry-run, apply, verify, auth-logs]
         default: dry-run
 
 concurrency:
@@ -42,11 +42,34 @@ jobs:
           fi
           exit $missing
 
+      - name: Auth logs, last 2 hours (read-only)
+        if: inputs.mode == 'auth-logs'
+        run: |
+          sql="select timestamp, event_message from auth_logs order by timestamp desc limit 25"
+          start=$(date -u -d '-2 hours' +%Y-%m-%dT%H:%M:%SZ)
+          end=$(date -u +%Y-%m-%dT%H:%M:%SZ)
+          curl -sS -G "https://api.supabase.com/v1/projects/$SUPABASE_PROJECT_REF/analytics/endpoints/logs.all" \
+            -H "Authorization: Bearer $SUPABASE_ACCESS_TOKEN" \
+            --data-urlencode "sql=$sql" \
+            --data-urlencode "iso_timestamp_start=$start" \
+            --data-urlencode "iso_timestamp_end=$end" > logs.json
+          jq -r '.error // empty' logs.json | while IFS= read -r e; do echo "::error::logs api: $e"; done
+          # Keep only error-ish entries, then the most recent ones; emails are masked.
+          jq -r '.result[]?.event_message' logs.json \
+            | jq -rR 'fromjson? // {msg: .} | [(.level // ""), (.status // ""), (.path // ""), (.msg // ""), (.error // "")] | map(tostring) | join(" | ")' \
+            | sed -E 's/[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+/<email>/g' \
+            | grep -iE 'error|fail|smtp|5[0-9][0-9]|mail' | head -10 \
+            | while IFS= read -r line; do echo "::notice::${line:0:400}"; done || true
+          echo "::notice::entries fetched: $(jq '.result | length' logs.json 2>/dev/null)"
+          exit 0
+
       - uses: supabase/setup-cli@v1
+        if: inputs.mode != 'auth-logs'
         with:
           version: latest
 
       - name: Link project
+        if: inputs.mode != 'auth-logs'
         run: |
           if ! supabase link --project-ref "$SUPABASE_PROJECT_REF" > link.log 2>&1; then
             cat link.log
