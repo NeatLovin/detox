@@ -18,12 +18,21 @@ class QuestRepository {
     return [for (final row in rows) DailyQuest.fromJson(row)];
   }
 
-  Future<void> create(QuestDraft draft) => _client.from('daily_quests').insert({
-    'type': draft.type.dbValue,
-    'label': draft.label.trim(),
-    'unit_label': draft.unitLabel.trim(),
-    'target': draft.target,
-  });
+  Future<void> create(QuestDraft draft) => createAll([draft]);
+
+  /// One insert for all drafts (the cap of 8 is checked per row server side).
+  Future<void> createAll(List<QuestDraft> drafts) async {
+    if (drafts.isEmpty) return;
+    await _client.from('daily_quests').insert([
+      for (final draft in drafts)
+        {
+          'type': draft.type.dbValue,
+          'label': draft.label.trim(),
+          'unit_label': draft.unitLabel.trim(),
+          'target': draft.target,
+        },
+    ]);
+  }
 
   Future<void> update(String id, QuestDraft draft) => _client
       .from('daily_quests')

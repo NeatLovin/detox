@@ -106,6 +106,17 @@ abstract final class QuestCatalog {
   static QuestPreset of(QuestType type) =>
       presets.firstWhere((p) => p.type == type);
 
+  /// Default draft of a preset (used by the onboarding).
+  static QuestDraft draftFor(QuestType type, {String customLabel = ''}) {
+    final preset = of(type);
+    return QuestDraft(
+      type: type,
+      label: type == QuestType.custom ? customLabel : preset.label,
+      unitLabel: preset.unitLabel,
+      target: preset.target,
+    );
+  }
+
   /// Input mode of a quest: a custom quest with target 1 behaves as a toggle.
   static QuestInput inputFor(DailyQuest quest) {
     final preset = of(quest.type);

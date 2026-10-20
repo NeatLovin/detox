@@ -653,5 +653,13 @@
   "playerNoAddictions": "Aucune addiction publique.",
   "profilePrivateToggle": "Profil privé",
   "profilePrivateOn": "Tu restes dans le classement (pseudo, niveau, XP), mais personne ne peut ouvrir ton profil ni voir ton feed ou tes SOS.",
-  "profilePrivateOff": "Tout le monde peut voir ton niveau, tes badges et tes addictions non privées."
+  "profilePrivateOff": "Tout le monde peut voir ton niveau, tes badges et tes addictions non privées.",
+  "onboardingQuestsTitle": "Tes défis du jour",
+  "onboardingQuestsSubtitle": "Les habitudes que tu veux tenir chaque jour. Chaque défi bouclé rapporte de l’XP, et tous les boucler donne un bonus.",
+  "onboardingQuestsNone": "Aucun défi choisi : tu pourras en ajouter plus tard dans l’onglet Quêtes.",
+  "onboardingCustomQuestHint": "Ex : prendre l’air 15 min",
+  "onboardingQuestToggleHint": "À cocher une fois par jour.",
+  "onboardingPrefsTitle": "Tes préférences",
+  "onboardingPrefsSubtitle": "Tout reste modifiable plus tard dans ton profil.",
+  "onboardingMotivationsSubtitle": "Pourquoi tu arrêtes ? Elles s’afficheront quand tu appuieras sur SOS. Optionnel."
 }

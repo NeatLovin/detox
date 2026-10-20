@@ -32,6 +32,7 @@ class ProfileRepository {
     required String userId,
     required String username,
     required String avatarEmoji,
+    bool isPrivate = false,
   }) async {
     final row = await _client
         .from('profiles')
@@ -39,6 +40,7 @@ class ProfileRepository {
           'id': userId,
           'username': username.trim(),
           'avatar_emoji': avatarEmoji,
+          'is_private': isPrivate,
         })
         .select()
         .single();
