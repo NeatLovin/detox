@@ -31,7 +31,7 @@ jobs:
         run: |
           set -o pipefail
           if ! flutter pub get 2>&1 | tee pub.log; then
-            grep -v '^\s*$' pub.log | tail -12 | while IFS= read -r l; do echo "::error::${l:0:300}"; done
+            grep -iE 'error|because|incompatible|requires|version solving|depends on|sdk' pub.log | head -15 | while IFS= read -r l; do echo "::error::${l:0:300}"; done
             exit 1
           fi
 
