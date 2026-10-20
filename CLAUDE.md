@@ -25,6 +25,6 @@ Flutter / Dart 3 · Riverpod (codegen) · go_router · freezed · Supabase (Auth
 
 ## Commandes
 - Codegen : dart run build_runner build -d
-- Qualité : flutter analyze && flutter test
+- Qualité : flutter analyze && dart analyze && flutter test (dart analyze exécute riverpod_lint)
 - Run : flutter run --dart-define-from-file=env.json
 - DB locale : supabase start / supabase db reset

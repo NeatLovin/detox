@@ -1,4 +1,370 @@
 {
   "@@locale": "fr",
-  "appTitle": "Detox"
+  "appTitle": "Detox",
+  "envMissingTitle": "Configuration manquante",
+  "envMissingBody": "SUPABASE_URL et SUPABASE_ANON_KEY sont vides.\n\nCrée env.json à partir de env.example.json puis lance :\nflutter run --dart-define-from-file=env.json",
+  "commonRetry": "Réessayer",
+  "commonCancel": "Annuler",
+  "commonSave": "Enregistrer",
+  "commonContinue": "Continuer",
+  "commonBack": "Retour",
+  "commonCopy": "Copier",
+  "commonCopied": "Copié !",
+  "commonShare": "Partager",
+  "commonRequired": "Requis",
+  "commonInvalidNumber": "Nombre invalide",
+  "errorGeneric": "Oups, quelque chose a coincé. Réessaie.",
+  "errorNetwork": "Pas de connexion. Vérifie ton réseau.",
+  "errorInvalidOtp": "Code invalide ou expiré.",
+  "errorOtpRateLimit": "Trop de demandes. Attends un peu avant de redemander un code.",
+  "errorUsernameTaken": "Ce pseudo est déjà pris.",
+  "errorUsernameInvalid": "3 à 20 caractères : lettres, chiffres, . _ -",
+  "errorSquadFull": "Cette escouade est complète (10 max).",
+  "errorInvalidInviteCode": "Code d'invitation introuvable.",
+  "errorAlreadyInSquad": "Tu es déjà dans une escouade.",
+  "errorRelapseInFuture": "La date ne peut pas être dans le futur.",
+  "errorRelapseBeforeStreak": "Cette date est avant le début de ta série actuelle.",
+  "errorQuitDateInFuture": "La date d'arrêt ne peut pas être dans le futur.",
+  "errorAddictionArchived": "Cette addiction est archivée.",
+  "navHome": "Accueil",
+  "navSquad": "Escouade",
+  "navProfile": "Profil",
+  "authTagline": "Arrête avec ton escouade.\nLevel up chaque jour.",
+  "authEmailLabel": "Ton email",
+  "authEmailInvalid": "Email invalide",
+  "authSendCode": "Recevoir mon code",
+  "authCodeSentTo": "Code envoyé à {email}",
+  "@authCodeSentTo": {
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "authCodeLabel": "Code à 6 chiffres",
+  "authCodeInvalidFormat": "Le code fait 6 chiffres",
+  "authVerify": "Valider",
+  "authResend": "Renvoyer le code",
+  "authResendIn": "Renvoyer dans {seconds} s",
+  "@authResendIn": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "authCodeResent": "Nouveau code envoyé 📬",
+  "authChangeEmail": "Changer d'email",
+  "onboardingStep": "Étape {current}/{total}",
+  "@onboardingStep": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "onboardingProfileTitle": "Crée ton perso",
+  "onboardingUsernameLabel": "Pseudo",
+  "onboardingUsernameAvailable": "Dispo ✅",
+  "onboardingAvatarTitle": "Choisis ton avatar",
+  "onboardingAddictionsTitle": "Tu arrêtes quoi ?",
+  "onboardingAddictionsSubtitle": "Choisis une ou plusieurs addictions. Tout reste modifiable plus tard.",
+  "onboardingSelectAtLeastOne": "Choisis au moins une addiction.",
+  "onboardingFinish": "C'est parti 🚀",
+  "addictionLabelField": "Nom",
+  "addictionUnitField": "Unité",
+  "addictionUnitCostField": "Coût par unité (CHF)",
+  "addictionBaselineField": "Conso de base par jour",
+  "addictionPrivateToggle": "Privée",
+  "addictionPrivateHint": "Ton escouade ne verra jamais son nom.",
+  "addictionQuitDateField": "Date d'arrêt",
+  "addictionXpPerDay": "+{xp} XP par jour clean",
+  "@addictionXpPerDay": {
+    "placeholders": {
+      "xp": {
+        "type": "int"
+      }
+    }
+  },
+  "addictionFormNewTitle": "Nouvelle addiction",
+  "addictionFormEditTitle": "Modifier l'addiction",
+  "addictionTypeLabel": "{type, select, porn{Porno} snus{Snus} cigarette{Cigarette} vape{Vape} weed{Beuh} alcohol{Alcool} sugar{Sucre} other{Autre}}",
+  "@addictionTypeLabel": {
+    "placeholders": {
+      "type": {
+        "type": "String"
+      }
+    }
+  },
+  "squadSetupTitle": "Ton escouade",
+  "squadSetupSubtitle": "Seul on va vite, ensemble on va loin.",
+  "squadCreateTab": "Créer",
+  "squadJoinTab": "Rejoindre",
+  "squadNameLabel": "Nom de l'escouade",
+  "squadCreateButton": "Créer l'escouade",
+  "squadCodeLabel": "Code d'invitation",
+  "squadJoinButton": "Rejoindre",
+  "squadCreatedTitle": "Escouade créée 🎉",
+  "squadCreatedBody": "Partage ce code à tes potes pour qu'ils te rejoignent (10 max).",
+  "squadShareMessage": "Rejoins mon escouade « {name} » sur Detox ! Code : {code}",
+  "@squadShareMessage": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "squadEnter": "Entrer dans l'escouade",
+  "homeGreeting": "Salut {username} 👋",
+  "@homeGreeting": {
+    "placeholders": {
+      "username": {
+        "type": "String"
+      }
+    }
+  },
+  "playerLevel": "Niv. {level}",
+  "@playerLevel": {
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
+  },
+  "playerXpProgress": "{current} / {total} XP",
+  "@playerXpProgress": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "playerHp": "{hp} HP",
+  "@playerHp": {
+    "placeholders": {
+      "hp": {
+        "type": "int"
+      }
+    }
+  },
+  "playerKo": "KO 😵 Chaque jour clean te rend +5 HP. Tu vas te relever.",
+  "playerLevelUp": "Niveau {level} ! ⬆️",
+  "@playerLevelUp": {
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
+  },
+  "homeNoAddictions": "Aucune addiction suivie pour l'instant.",
+  "homeAddAddiction": "Ajouter une addiction",
+  "cardCleanFor": "Clean depuis",
+  "cardSaved": "Économisés",
+  "cardAvoided": "Évités",
+  "cardRecord": "Record",
+  "cardNextMilestone": "Prochain palier : {days} j",
+  "@cardNextMilestone": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "cardMilestoneBonus": "+{xp} XP",
+  "@cardMilestoneBonus": {
+    "placeholders": {
+      "xp": {
+        "type": "int"
+      }
+    }
+  },
+  "cardAllMilestones": "Tous les paliers atteints 👑",
+  "cardPrivate": "Privée",
+  "durationCompact": "{days}j {hours}h {minutes}m {seconds}s",
+  "@durationCompact": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      },
+      "hours": {
+        "type": "int"
+      },
+      "minutes": {
+        "type": "int"
+      },
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "durationDays": "{count, plural, =0{0 jour} =1{1 jour} other{{count} jours}}",
+  "@durationDays": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "relapseButton": "J'ai rechuté",
+  "relapseSheetTitle": "Rechute · {label}",
+  "@relapseSheetTitle": {
+    "placeholders": {
+      "label": {
+        "type": "String"
+      }
+    }
+  },
+  "relapseSheetSubtitle": "Pas de jugement ici. On note et on repart.",
+  "relapseWhen": "Quand ?",
+  "relapseNoteLabel": "Note (optionnelle)",
+  "relapseNoteHint": "Ce qui s'est passé, ce que tu retiens…",
+  "relapseShareToggle": "Partager à l'escouade",
+  "relapseSharePrivateHint": "Addiction privée : l'escouade verra seulement « une addiction privée ».",
+  "relapseConfirm": "Valider",
+  "relapseKindMessage": "Ça arrive. Ton XP et ton niveau restent. On repart. 💪",
+  "leaderboardTitle": "Classement de la semaine",
+  "leaderboardXp": "{xp} XP",
+  "@leaderboardXp": {
+    "placeholders": {
+      "xp": {
+        "type": "int"
+      }
+    }
+  },
+  "leaderboardYou": "toi",
+  "feedTitle": "Le feed",
+  "feedEmpty": "Rien pour l'instant. Le premier palier arrive vite !",
+  "feedJoined": "{username} a rejoint l'escouade",
+  "@feedJoined": {
+    "placeholders": {
+      "username": {
+        "type": "String"
+      }
+    }
+  },
+  "feedLeft": "{username} a quitté l'escouade",
+  "@feedLeft": {
+    "placeholders": {
+      "username": {
+        "type": "String"
+      }
+    }
+  },
+  "feedMilestone": "{username} : {days, plural, =1{1 jour clean} other{{days} jours clean}} ({label})",
+  "@feedMilestone": {
+    "placeholders": {
+      "username": {
+        "type": "String"
+      },
+      "days": {
+        "type": "int"
+      },
+      "label": {
+        "type": "String"
+      }
+    }
+  },
+  "feedLevelUp": "{username} passe niveau {level}",
+  "@feedLevelUp": {
+    "placeholders": {
+      "username": {
+        "type": "String"
+      },
+      "level": {
+        "type": "int"
+      }
+    }
+  },
+  "feedRelapse": "{username} a rechuté ({label}). Envoie-lui de la force 💪",
+  "@feedRelapse": {
+    "placeholders": {
+      "username": {
+        "type": "String"
+      },
+      "label": {
+        "type": "String"
+      }
+    }
+  },
+  "feedUnknown": "{username} a fait un truc",
+  "@feedUnknown": {
+    "placeholders": {
+      "username": {
+        "type": "String"
+      }
+    }
+  },
+  "timeAgoNow": "à l'instant",
+  "timeAgoMinutes": "il y a {n} min",
+  "@timeAgoMinutes": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "timeAgoHours": "il y a {n} h",
+  "@timeAgoHours": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "timeAgoDays": "il y a {n} j",
+  "@timeAgoDays": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "squadSettingsTitle": "Réglages de l'escouade",
+  "squadMembersTitle": "Membres ({count}/10)",
+  "@squadMembersTitle": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "squadOwner": "Chef",
+  "squadLeave": "Quitter l'escouade",
+  "squadLeaveConfirmTitle": "Quitter l'escouade ?",
+  "squadLeaveConfirmBody": "Tu gardes ton XP, ton niveau et tes addictions. Tu pourras en rejoindre une autre.",
+  "profileEdit": "Modifier le profil",
+  "profileUpdated": "Profil mis à jour ✅",
+  "profileAddictionsTitle": "Mes addictions",
+  "profileArchivedTitle": "Archivées",
+  "profileArchive": "Archiver",
+  "profileArchiveConfirmTitle": "Archiver « {label} » ?",
+  "@profileArchiveConfirmTitle": {
+    "placeholders": {
+      "label": {
+        "type": "String"
+      }
+    }
+  },
+  "profileArchiveConfirmBody": "Le suivi s'arrête. Ton XP et ton niveau restent.",
+  "profileSignOut": "Se déconnecter",
+  "profileStats": "Niv. {level} · {xp} XP",
+  "@profileStats": {
+    "placeholders": {
+      "level": {
+        "type": "int"
+      },
+      "xp": {
+        "type": "int"
+      }
+    }
+  }
 }
