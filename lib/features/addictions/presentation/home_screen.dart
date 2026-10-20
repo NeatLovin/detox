@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../core/l10n/l10n.dart';
+import '../../../core/router/routes.dart';
 import '../../../core/session/session_providers.dart';
 import '../../../shared/widgets/empty_state.dart';
 import '../../gamification/presentation/player_card.dart';
@@ -54,7 +56,17 @@ class HomeScreen extends ConsumerWidget {
             const SizedBox(height: 16),
             ...addictions.when(
               data: (items) => items.isEmpty
-                  ? [EmptyState(emoji: '🌱', message: l10n.homeNoAddictions)]
+                  ? [
+                      EmptyState(
+                        emoji: '🌱',
+                        message: l10n.homeNoAddictions,
+                        action: FilledButton.icon(
+                          onPressed: () => context.push(Routes.newAddiction),
+                          icon: const Icon(Icons.add),
+                          label: Text(l10n.homeAddAddiction),
+                        ),
+                      ),
+                    ]
                   : [
                       for (final (index, addiction) in items.indexed) ...[
                         AddictionCard(

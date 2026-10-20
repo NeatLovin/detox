@@ -52,6 +52,47 @@ void main() {
     });
   });
 
+  group('computeSessionGate with real provider transitions', () {
+    late ProviderContainer container;
+    final userSource = NotifierProvider<_User, String?>(_User.new);
+    final profileProvider = FutureProvider<String?>((ref) async {
+      final user = ref.watch(userSource);
+      await Future<void>.delayed(const Duration(milliseconds: 5));
+      return user == 'alice' ? 'profile-alice' : null;
+    });
+
+    SessionGate current() => computeSessionGate(
+      userId: AsyncData(container.read(userSource)),
+      profile: container.read(profileProvider),
+      squad: const AsyncData('squad'),
+    );
+
+    setUp(() {
+      container = ProviderContainer();
+      container.listen(profileProvider, (_, _) {});
+    });
+    tearDown(() => container.dispose());
+
+    test('switching user shows loading, not the previous user state', () async {
+      container.read(userSource.notifier).set('bob');
+      await container.read(profileProvider.future);
+      expect(current(), SessionGate.needsProfile);
+
+      container.read(userSource.notifier).set('alice');
+      expect(current(), SessionGate.loading);
+      await container.read(profileProvider.future);
+      expect(current(), SessionGate.ready);
+    });
+
+    test('a manual refresh keeps the previous value', () async {
+      container.read(userSource.notifier).set('alice');
+      await container.read(profileProvider.future);
+      container.invalidate(profileProvider);
+      expect(container.read(profileProvider).isRefreshing, isTrue);
+      expect(current(), SessionGate.ready);
+    });
+  });
+
   group('Routes.redirect', () {
     test('signed out goes to auth, stays there', () {
       expect(Routes.redirect(SessionGate.signedOut, Routes.home), Routes.auth);
@@ -84,4 +125,11 @@ void main() {
       expect(Routes.redirect(SessionGate.loading, Routes.splash), isNull);
     });
   });
+}
+
+class _User extends Notifier<String?> {
+  @override
+  String? build() => null;
+
+  void set(String? value) => state = value;
 }

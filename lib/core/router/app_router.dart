@@ -5,6 +5,8 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../../features/addictions/presentation/home_screen.dart';
 import '../../features/auth/presentation/auth_screen.dart';
 import '../../features/onboarding/presentation/onboarding_screen.dart';
+import '../../features/profile/presentation/addiction_form_screen.dart';
+import '../../features/profile/presentation/edit_profile_screen.dart';
 import '../../features/profile/presentation/profile_screen.dart';
 import '../../features/squad/presentation/squad_screen.dart';
 import '../../features/squad/presentation/squad_settings_screen.dart';
@@ -74,6 +76,22 @@ GoRouter appRouter(Ref ref) {
               GoRoute(
                 path: Routes.profile,
                 builder: (context, state) => const ProfileScreen(),
+                routes: [
+                  GoRoute(
+                    path: 'edit',
+                    builder: (context, state) => const EditProfileScreen(),
+                  ),
+                  GoRoute(
+                    path: 'addictions/new',
+                    builder: (context, state) => const AddictionFormScreen(),
+                  ),
+                  GoRoute(
+                    path: 'addictions/:id',
+                    builder: (context, state) => AddictionFormScreen(
+                      addictionId: state.pathParameters['id'],
+                    ),
+                  ),
+                ],
               ),
             ],
           ),

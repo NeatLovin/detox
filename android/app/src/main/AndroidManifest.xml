@@ -1,6 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Required in release builds to reach Supabase. -->
+    <uses-permission android:name="android.permission.INTERNET" />
     <application
-        android:label="detox"
+        android:label="Detox"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
