@@ -85,6 +85,8 @@ jobs:
           q "select jobname || ' ' || schedule from cron.job" "cron jobs"
           q "select tablename from pg_publication_tables where pubname='supabase_realtime'" "realtime tables"
           q "select count(*) from public.profiles" "profiles"
+          q "select string_agg(version, ' ' order by version) from supabase_migrations.schema_migrations" "applied migrations"
+          q "select (position('ceil(' in prosrc) > 0)::text from pg_proc where proname = 'on_relapse_insert'" "relapse uses ceil"
 
       - name: Push migrations
         if: inputs.mode == 'apply'
