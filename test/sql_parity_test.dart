@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:detox/features/addictions/domain/addiction.dart';
 import 'package:detox/features/addictions/domain/addiction_catalog.dart';
+import 'package:detox/features/addictions/domain/addiction_limits.dart';
 import 'package:detox/features/gamification/domain/leveling.dart';
 import 'package:detox/features/gamification/domain/milestones.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -70,6 +71,15 @@ void main() {
         .map((m) => m.group(1))
         .toSet();
     expect(sqlTypes, AddictionType.values.map((t) => t.dbValue).toSet());
+  });
+
+  test('Addiction cap: Dart == SQL on_addiction_cap_before_insert', () {
+    final sql = File('supabase/migrations/20261020100000_anticheat.sql')
+        .readAsStringSync();
+    final active = RegExp(r'v_active >= (\d+)').firstMatch(sql)!.group(1);
+    final custom = RegExp(r'v_custom >= (\d+)').firstMatch(sql)!.group(1);
+    expect(int.parse(active!), AddictionLimits.maxActive);
+    expect(int.parse(custom!), AddictionLimits.maxCustom);
   });
 
   // Same values verified against public.level_for_xp on Postgres.

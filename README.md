@@ -60,6 +60,7 @@ flutter test
 flutter run --dart-define-from-file=env.json
 
 supabase start && supabase db reset     # DB locale + seed (Docker requis)
+tool/sql_tests/run.sh                   # tests SQL anti-triche (Postgres local, vars PG*)
 ```
 
 ## Roadmap

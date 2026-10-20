@@ -26,6 +26,7 @@
   "errorRelapseBeforeStreak": "Cette date est avant le début de ta série actuelle.",
   "errorQuitDateInFuture": "La date d'arrêt ne peut pas être dans le futur.",
   "errorAddictionArchived": "Cette addiction est archivée.",
+  "errorTooManyAddictions": "Maximum 6 addictions actives, dont 2 perso. Archive-en une pour en ajouter une autre.",
   "navHome": "Accueil",
   "navSquad": "Escouade",
   "navProfile": "Profil",

@@ -10,6 +10,7 @@ import '../../../shared/widgets/button_spinner.dart';
 import '../../addictions/data/addiction_repository.dart';
 import '../../addictions/domain/addiction.dart';
 import '../../addictions/domain/addiction_catalog.dart';
+import '../../addictions/domain/addiction_limits.dart';
 import '../../addictions/presentation/widgets/addiction_draft_form.dart';
 import '../../addictions/presentation/widgets/addiction_type_label.dart';
 import '../../profile/data/profile_repository.dart';
@@ -269,7 +270,14 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                   avatar: Text(preset.emoji),
                   label: Text(addictionTypeLabel(l10n, preset.type)),
                   selected: _drafts.containsKey(preset.type),
-                  onSelected: _busy
+                  // Unselected chips are disabled once the cap is reached.
+                  onSelected:
+                      _busy ||
+                          (!_drafts.containsKey(preset.type) &&
+                              !AddictionLimits.canAdd(
+                                _drafts.keys,
+                                preset.type,
+                              ))
                       ? null
                       : (value) => _toggle(preset.type, value),
                 ),

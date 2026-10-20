@@ -36,5 +36,6 @@ String errorMessage(AppLocalizations l10n, Object? error) =>
       'relapse_before_streak' => l10n.errorRelapseBeforeStreak,
       'quit_date_in_future' => l10n.errorQuitDateInFuture,
       'addiction_archived' => l10n.errorAddictionArchived,
+      'too_many_addictions' => l10n.errorTooManyAddictions,
       _ => l10n.errorGeneric,
     };

@@ -93,6 +93,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get errorAddictionArchived => 'Cette addiction est archivée.';
 
   @override
+  String get errorTooManyAddictions =>
+      'Maximum 6 addictions actives, dont 2 perso. Archive-en une pour en ajouter une autre.';
+
+  @override
   String get navHome => 'Accueil';
 
   @override

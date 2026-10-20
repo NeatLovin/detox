@@ -28,3 +28,4 @@ Flutter / Dart 3 · Riverpod (codegen) · go_router · freezed · Supabase (Auth
 - Qualité : flutter analyze && dart analyze && flutter test (dart analyze exécute riverpod_lint)
 - Run : flutter run --dart-define-from-file=env.json
 - DB locale : supabase start / supabase db reset
+- Tests SQL (Postgres local, sans Docker) : PGHOST=/tmp PGUSER=postgres tool/sql_tests/run.sh

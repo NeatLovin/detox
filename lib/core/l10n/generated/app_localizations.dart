@@ -250,6 +250,12 @@ abstract class AppLocalizations {
   /// **'Cette addiction est archivée.'**
   String get errorAddictionArchived;
 
+  /// No description provided for @errorTooManyAddictions.
+  ///
+  /// In fr, this message translates to:
+  /// **'Maximum 6 addictions actives, dont 2 perso. Archive-en une pour en ajouter une autre.'**
+  String get errorTooManyAddictions;
+
   /// No description provided for @navHome.
   ///
   /// In fr, this message translates to:

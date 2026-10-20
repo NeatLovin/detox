@@ -38,10 +38,10 @@ class AddictionRepository {
       })
       .eq('id', id);
 
-  Future<void> archive(String id) => _client
-      .from('addictions')
-      .update({'archived_at': DateTime.now().toUtc().toIso8601String()})
-      .eq('id', id);
+  /// Archiving goes through an RPC: archived_at is not client-writable and an
+  /// archived addiction is frozen server side.
+  Future<void> archive(String id) =>
+      _client.rpc<void>('archive_addiction', params: {'p_id': id});
 
   /// The SQL trigger resets the streak, costs 25 HP and posts to the feed if shared.
   Future<void> declareRelapse(RelapseInput input) =>

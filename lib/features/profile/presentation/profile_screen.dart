@@ -10,6 +10,7 @@ import '../../../shared/widgets/empty_state.dart';
 import '../../addictions/data/addiction_repository.dart';
 import '../../addictions/domain/addiction.dart';
 import '../../addictions/domain/addiction_catalog.dart';
+import '../../addictions/domain/addiction_limits.dart';
 import '../../addictions/presentation/addiction_providers.dart';
 import '../../auth/data/auth_repository.dart';
 
@@ -57,6 +58,11 @@ class ProfileScreen extends ConsumerWidget {
     final profile = ref.watch(currentProfileProvider).value;
     final stats = ref.watch(playerStatsProvider).value;
     final addictions = ref.watch(myAddictionsProvider);
+    final canAdd =
+        addictions.hasValue &&
+        AddictionLimits.canAddAny(
+          AddictionLimits.activeTypes(addictions.requireValue),
+        );
 
     return Scaffold(
       appBar: AppBar(title: Text(l10n.navProfile)),
@@ -94,9 +100,13 @@ class ProfileScreen extends ConsumerWidget {
                 ),
               ),
               IconButton.filledTonal(
-                tooltip: l10n.homeAddAddiction,
+                tooltip: canAdd
+                    ? l10n.homeAddAddiction
+                    : l10n.errorTooManyAddictions,
                 icon: const Icon(Icons.add),
-                onPressed: () => context.push(Routes.newAddiction),
+                onPressed: canAdd
+                    ? () => context.push(Routes.newAddiction)
+                    : null,
               ),
             ],
           ),
@@ -108,6 +118,14 @@ class ProfileScreen extends ConsumerWidget {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
+                  if (!canAdd)
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 8),
+                      child: Text(
+                        l10n.errorTooManyAddictions,
+                        style: theme.textTheme.bodySmall,
+                      ),
+                    ),
                   if (active.isEmpty)
                     EmptyState(emoji: '🌱', message: l10n.homeNoAddictions),
                   for (final addiction in active)

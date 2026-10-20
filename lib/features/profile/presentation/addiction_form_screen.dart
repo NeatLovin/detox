@@ -8,6 +8,7 @@ import '../../../shared/widgets/empty_state.dart';
 import '../../addictions/data/addiction_repository.dart';
 import '../../addictions/domain/addiction.dart';
 import '../../addictions/domain/addiction_catalog.dart';
+import '../../addictions/domain/addiction_limits.dart';
 import '../../addictions/domain/addiction_progress.dart';
 import '../../addictions/presentation/addiction_providers.dart';
 import '../../addictions/presentation/widgets/addiction_draft_form.dart';
@@ -81,9 +82,18 @@ class _AddictionFormState extends ConsumerState<_AddictionForm> {
     );
   }
 
+  /// Types of the user's active addictions (for the anti-farming cap).
+  List<AddictionType> get _activeTypes => AddictionLimits.activeTypes(
+    ref.read(myAddictionsProvider).value ?? const [],
+  ).toList();
+
   Future<void> _save() async {
     if (!_formKey.currentState!.validate()) return;
     final l10n = context.l10n;
+    if (!_isEdit && !AddictionLimits.canAdd(_activeTypes, _draft.type)) {
+      setState(() => _error = l10n.errorTooManyAddictions);
+      return;
+    }
     if (!_isEdit &&
         !AddictionProgress.isValidQuitDate(
           _draft.quitStartedAt,
@@ -120,6 +130,10 @@ class _AddictionFormState extends ConsumerState<_AddictionForm> {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final theme = Theme.of(context);
+    final activeTypes = AddictionLimits.activeTypes(
+      ref.watch(myAddictionsProvider).value ?? const [],
+    ).toList();
+    final atLimit = !_isEdit && !AddictionLimits.canAddAny(activeTypes);
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -141,9 +155,14 @@ class _AddictionFormState extends ConsumerState<_AddictionForm> {
                       avatar: Text(preset.emoji),
                       label: Text(addictionTypeLabel(l10n, preset.type)),
                       selected: _draft.type == preset.type,
-                      onSelected: (_) => setState(
-                        () => _draft = AddictionCatalog.draftFor(preset.type),
-                      ),
+                      onSelected:
+                          AddictionLimits.canAdd(activeTypes, preset.type)
+                          ? (_) => setState(
+                              () => _draft = AddictionCatalog.draftFor(
+                                preset.type,
+                              ),
+                            )
+                          : null,
                     ),
                 ],
               ),
@@ -156,6 +175,14 @@ class _AddictionFormState extends ConsumerState<_AddictionForm> {
               showQuitDate: !_isEdit,
               onChanged: (draft) => setState(() => _draft = draft),
             ),
+            if (atLimit) ...[
+              const SizedBox(height: 16),
+              Text(
+                l10n.errorTooManyAddictions,
+                textAlign: TextAlign.center,
+                style: TextStyle(color: theme.colorScheme.error),
+              ),
+            ],
             if (_error != null) ...[
               const SizedBox(height: 16),
               Text(
@@ -166,7 +193,7 @@ class _AddictionFormState extends ConsumerState<_AddictionForm> {
             ],
             const SizedBox(height: 24),
             FilledButton(
-              onPressed: _busy ? null : _save,
+              onPressed: _busy || atLimit ? null : _save,
               child: _busy ? const ButtonSpinner() : Text(l10n.commonSave),
             ),
           ],
