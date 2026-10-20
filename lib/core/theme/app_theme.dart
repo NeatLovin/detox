@@ -31,15 +31,15 @@ abstract final class AppTheme {
     );
 
     return base.copyWith(
-      textTheme: base.textTheme.apply(fontFamily: null).copyWith(
-            headlineMedium: base.textTheme.headlineMedium?.copyWith(
-              fontWeight: FontWeight.w800,
-              letterSpacing: -0.5,
-            ),
-            titleLarge: base.textTheme.titleLarge?.copyWith(
-              fontWeight: FontWeight.w700,
-            ),
-          ),
+      textTheme: base.textTheme.copyWith(
+        headlineMedium: base.textTheme.headlineMedium?.copyWith(
+          fontWeight: FontWeight.w800,
+          letterSpacing: -0.5,
+        ),
+        titleLarge: base.textTheme.titleLarge?.copyWith(
+          fontWeight: FontWeight.w700,
+        ),
+      ),
       cardTheme: CardThemeData(
         color: AppColors.surface,
         elevation: 0,
@@ -90,7 +90,9 @@ abstract final class AppTheme {
         backgroundColor: AppColors.surface,
         showDragHandle: true,
       ),
-      snackBarTheme: const SnackBarThemeData(behavior: SnackBarBehavior.floating),
+      snackBarTheme: const SnackBarThemeData(
+        behavior: SnackBarBehavior.floating,
+      ),
     );
   }
 }

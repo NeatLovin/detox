@@ -68,14 +68,13 @@ class SquadRepository {
   }
 
   /// Realtime feed of the squad, newest first.
-  Stream<List<FeedEvent>> watchFeed(String squadId, {int limit = 50}) =>
-      _client
-          .from('feed_events')
-          .stream(primaryKey: ['id'])
-          .eq('squad_id', squadId)
-          .order('created_at')
-          .limit(limit)
-          .map((rows) => [for (final row in rows) FeedEvent.fromJson(row)]);
+  Stream<List<FeedEvent>> watchFeed(String squadId, {int limit = 50}) => _client
+      .from('feed_events')
+      .stream(primaryKey: ['id'])
+      .eq('squad_id', squadId)
+      .order('created_at')
+      .limit(limit)
+      .map((rows) => [for (final row in rows) FeedEvent.fromJson(row)]);
 }
 
 @Riverpod(keepAlive: true)

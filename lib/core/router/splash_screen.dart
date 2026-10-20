@@ -47,9 +47,9 @@ class SplashScreen extends ConsumerWidget {
                     Text(
                       l10n.appTitle,
                       style: Theme.of(context).textTheme.displaySmall?.copyWith(
-                            fontWeight: FontWeight.w900,
-                            color: Theme.of(context).colorScheme.primary,
-                          ),
+                        fontWeight: FontWeight.w900,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
                     ),
                     const SizedBox(height: 24),
                     const CircularProgressIndicator(),

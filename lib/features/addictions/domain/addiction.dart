@@ -17,9 +17,9 @@ enum AddictionType {
   String get dbValue => name;
 
   static AddictionType fromDb(String value) => AddictionType.values.firstWhere(
-        (t) => t.name == value,
-        orElse: () => AddictionType.custom,
-      );
+    (t) => t.name == value,
+    orElse: () => AddictionType.custom,
+  );
 }
 
 @freezed
@@ -29,7 +29,8 @@ abstract class Addiction with _$Addiction {
   const factory Addiction({
     required String id,
     required String userId,
-    @JsonKey(unknownEnumValue: AddictionType.custom) required AddictionType type,
+    @JsonKey(unknownEnumValue: AddictionType.custom)
+    required AddictionType type,
     required String label,
     required String unitLabel,
     required double unitCost,

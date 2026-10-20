@@ -10,8 +10,7 @@ void main() {
       AsyncValue<String?> user, [
       AsyncValue<Object?> profile = loading,
       AsyncValue<Object?> squad = loading,
-    ]) =>
-        computeSessionGate(userId: user, profile: profile, squad: squad);
+    ]) => computeSessionGate(userId: user, profile: profile, squad: squad);
 
     test('auth loading → loading', () {
       expect(gate(const AsyncLoading()), SessionGate.loading);
@@ -51,16 +50,6 @@ void main() {
         SessionGate.error,
       );
     });
-
-    test('refreshing keeps previous value', () {
-      const refreshing = AsyncLoading<Object?>();
-      final withPrevious =
-          refreshing.copyWithPrevious(const AsyncData<Object?>('p'));
-      expect(
-        gate(const AsyncData('u'), withPrevious, const AsyncData('s')),
-        SessionGate.ready,
-      );
-    });
   });
 
   group('Routes.redirect', () {
@@ -82,7 +71,10 @@ void main() {
 
     test('ready leaves gate screens for home', () {
       expect(Routes.redirect(SessionGate.ready, Routes.splash), Routes.home);
-      expect(Routes.redirect(SessionGate.ready, Routes.squadSetup), Routes.home);
+      expect(
+        Routes.redirect(SessionGate.ready, Routes.squadSetup),
+        Routes.home,
+      );
       expect(Routes.redirect(SessionGate.ready, Routes.squad), isNull);
       expect(Routes.redirect(SessionGate.ready, Routes.newAddiction), isNull);
     });

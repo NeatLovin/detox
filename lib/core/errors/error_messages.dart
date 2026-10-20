@@ -8,19 +8,19 @@ import '../l10n/l10n.dart';
 /// Extracts a stable error code from Supabase errors. SQL functions raise
 /// snake_case codes (e.g. `squad_full`) as the exception message.
 String? errorCode(Object? error) => switch (error) {
-      PostgrestException(code: '23505') => 'unique_violation',
-      PostgrestException(code: '23514') => 'check_violation',
-      PostgrestException(:final message) => message,
-      AuthException(:final code, :final statusCode)
-          when code == 'otp_expired' || statusCode == '403' =>
-        'invalid_otp',
-      AuthException(:final code, :final statusCode)
-          when code == 'over_email_send_rate_limit' || statusCode == '429' =>
-        'otp_rate_limit',
-      SocketException() || TimeoutException() => 'network',
-      AuthRetryableFetchException() => 'network',
-      _ => null,
-    };
+  PostgrestException(code: '23505') => 'unique_violation',
+  PostgrestException(code: '23514') => 'check_violation',
+  PostgrestException(:final message) => message,
+  AuthException(:final code, :final statusCode)
+      when code == 'otp_expired' || statusCode == '403' =>
+    'invalid_otp',
+  AuthException(:final code, :final statusCode)
+      when code == 'over_email_send_rate_limit' || statusCode == '429' =>
+    'otp_rate_limit',
+  SocketException() || TimeoutException() => 'network',
+  AuthRetryableFetchException() => 'network',
+  _ => null,
+};
 
 String errorMessage(AppLocalizations l10n, Object? error) =>
     switch (errorCode(error)) {

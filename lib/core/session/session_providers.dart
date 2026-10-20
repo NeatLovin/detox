@@ -40,7 +40,7 @@ Stream<PlayerStats> playerStats(Ref ref) async* {
 
 @Riverpod(keepAlive: true)
 SessionGate sessionGate(Ref ref) => computeSessionGate(
-      userId: ref.watch(authStateProvider),
-      profile: ref.watch(currentProfileProvider),
-      squad: ref.watch(currentSquadProvider),
-    );
+  userId: ref.watch(authStateProvider),
+  profile: ref.watch(currentProfileProvider),
+  squad: ref.watch(currentSquadProvider),
+);
