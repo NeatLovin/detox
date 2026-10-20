@@ -8,14 +8,14 @@ part of 'sos_providers.dart';
 
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
-/// Realtime SOS alerts of the squad (newest first).
+/// Realtime SOS alerts of every public player (newest first).
 
-@ProviderFor(squadSosAlerts)
-final squadSosAlertsProvider = SquadSosAlertsProvider._();
+@ProviderFor(sosAlerts)
+final sosAlertsProvider = SosAlertsProvider._();
 
-/// Realtime SOS alerts of the squad (newest first).
+/// Realtime SOS alerts of every public player (newest first).
 
-final class SquadSosAlertsProvider
+final class SosAlertsProvider
     extends
         $FunctionalProvider<
           AsyncValue<List<SosAlert>>,
@@ -23,20 +23,20 @@ final class SquadSosAlertsProvider
           Stream<List<SosAlert>>
         >
     with $FutureModifier<List<SosAlert>>, $StreamProvider<List<SosAlert>> {
-  /// Realtime SOS alerts of the squad (newest first).
-  SquadSosAlertsProvider._()
+  /// Realtime SOS alerts of every public player (newest first).
+  SosAlertsProvider._()
     : super(
         from: null,
         argument: null,
         retry: null,
-        name: r'squadSosAlertsProvider',
+        name: r'sosAlertsProvider',
         isAutoDispose: true,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
 
   @override
-  String debugGetCreateSourceHash() => _$squadSosAlertsHash();
+  String debugGetCreateSourceHash() => _$sosAlertsHash();
 
   @$internal
   @override
@@ -46,11 +46,11 @@ final class SquadSosAlertsProvider
 
   @override
   Stream<List<SosAlert>> create(Ref ref) {
-    return squadSosAlerts(ref);
+    return sosAlerts(ref);
   }
 }
 
-String _$squadSosAlertsHash() => r'b4b054d0ecebdcb0c6eb4aec7337655725a498a5';
+String _$sosAlertsHash() => r'758aaa209ec2fa181a9b119741d0833f4b67b6be';
 
 /// Realtime supports received by one SOS.
 

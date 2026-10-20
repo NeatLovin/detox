@@ -208,24 +208,6 @@ abstract class AppLocalizations {
   /// **'3 à 20 caractères : lettres, chiffres, . _ -'**
   String get errorUsernameInvalid;
 
-  /// No description provided for @errorSquadFull.
-  ///
-  /// In fr, this message translates to:
-  /// **'Cette escouade est complète (10 max).'**
-  String get errorSquadFull;
-
-  /// No description provided for @errorInvalidInviteCode.
-  ///
-  /// In fr, this message translates to:
-  /// **'Code d\'invitation introuvable.'**
-  String get errorInvalidInviteCode;
-
-  /// No description provided for @errorAlreadyInSquad.
-  ///
-  /// In fr, this message translates to:
-  /// **'Tu es déjà dans une escouade.'**
-  String get errorAlreadyInSquad;
-
   /// No description provided for @errorRelapseInFuture.
   ///
   /// In fr, this message translates to:
@@ -262,12 +244,6 @@ abstract class AppLocalizations {
   /// **'Accueil'**
   String get navHome;
 
-  /// No description provided for @navSquad.
-  ///
-  /// In fr, this message translates to:
-  /// **'Escouade'**
-  String get navSquad;
-
   /// No description provided for @navProfile.
   ///
   /// In fr, this message translates to:
@@ -277,7 +253,7 @@ abstract class AppLocalizations {
   /// No description provided for @authTagline.
   ///
   /// In fr, this message translates to:
-  /// **'Arrête avec ton escouade.\nLevel up chaque jour.'**
+  /// **'Arrête avec tes potes.\nLevel up chaque jour.'**
   String get authTagline;
 
   /// No description provided for @authEmailLabel.
@@ -433,7 +409,7 @@ abstract class AppLocalizations {
   /// No description provided for @addictionPrivateHint.
   ///
   /// In fr, this message translates to:
-  /// **'Ton escouade ne verra jamais son nom.'**
+  /// **'Les autres joueurs ne verront jamais cette addiction.'**
   String get addictionPrivateHint;
 
   /// No description provided for @addictionQuitDateField.
@@ -465,78 +441,6 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'{type, select, porn{Porno} snus{Snus} cigarette{Cigarette} vape{Vape} weed{Beuh} alcohol{Alcool} sugar{Sucre} other{Autre}}'**
   String addictionTypeLabel(String type);
-
-  /// No description provided for @squadSetupTitle.
-  ///
-  /// In fr, this message translates to:
-  /// **'Ton escouade'**
-  String get squadSetupTitle;
-
-  /// No description provided for @squadSetupSubtitle.
-  ///
-  /// In fr, this message translates to:
-  /// **'Seul on va vite, ensemble on va loin.'**
-  String get squadSetupSubtitle;
-
-  /// No description provided for @squadCreateTab.
-  ///
-  /// In fr, this message translates to:
-  /// **'Créer'**
-  String get squadCreateTab;
-
-  /// No description provided for @squadJoinTab.
-  ///
-  /// In fr, this message translates to:
-  /// **'Rejoindre'**
-  String get squadJoinTab;
-
-  /// No description provided for @squadNameLabel.
-  ///
-  /// In fr, this message translates to:
-  /// **'Nom de l\'escouade'**
-  String get squadNameLabel;
-
-  /// No description provided for @squadCreateButton.
-  ///
-  /// In fr, this message translates to:
-  /// **'Créer l\'escouade'**
-  String get squadCreateButton;
-
-  /// No description provided for @squadCodeLabel.
-  ///
-  /// In fr, this message translates to:
-  /// **'Code d\'invitation'**
-  String get squadCodeLabel;
-
-  /// No description provided for @squadJoinButton.
-  ///
-  /// In fr, this message translates to:
-  /// **'Rejoindre'**
-  String get squadJoinButton;
-
-  /// No description provided for @squadCreatedTitle.
-  ///
-  /// In fr, this message translates to:
-  /// **'Escouade créée 🎉'**
-  String get squadCreatedTitle;
-
-  /// No description provided for @squadCreatedBody.
-  ///
-  /// In fr, this message translates to:
-  /// **'Partage ce code à tes potes pour qu\'ils te rejoignent (10 max).'**
-  String get squadCreatedBody;
-
-  /// No description provided for @squadShareMessage.
-  ///
-  /// In fr, this message translates to:
-  /// **'Rejoins mon escouade « {name} » sur Detox ! Code : {code}'**
-  String squadShareMessage(String name, String code);
-
-  /// No description provided for @squadEnter.
-  ///
-  /// In fr, this message translates to:
-  /// **'Entrer dans l\'escouade'**
-  String get squadEnter;
 
   /// No description provided for @homeGreeting.
   ///
@@ -685,13 +589,13 @@ abstract class AppLocalizations {
   /// No description provided for @relapseShareToggle.
   ///
   /// In fr, this message translates to:
-  /// **'Partager à l\'escouade'**
+  /// **'Partager dans le feed'**
   String get relapseShareToggle;
 
   /// No description provided for @relapseSharePrivateHint.
   ///
   /// In fr, this message translates to:
-  /// **'Addiction privée : l\'escouade verra seulement « une addiction privée ».'**
+  /// **'Addiction privée : le feed affichera seulement « une addiction privée ».'**
   String get relapseSharePrivateHint;
 
   /// No description provided for @relapseConfirm.
@@ -709,7 +613,7 @@ abstract class AppLocalizations {
   /// No description provided for @leaderboardTitle.
   ///
   /// In fr, this message translates to:
-  /// **'Classement de la semaine'**
+  /// **'Classement général'**
   String get leaderboardTitle;
 
   /// No description provided for @leaderboardXp.
@@ -739,14 +643,8 @@ abstract class AppLocalizations {
   /// No description provided for @feedJoined.
   ///
   /// In fr, this message translates to:
-  /// **'{username} a rejoint l\'escouade'**
+  /// **'{username} a rejoint Detox 👋'**
   String feedJoined(String username);
-
-  /// No description provided for @feedLeft.
-  ///
-  /// In fr, this message translates to:
-  /// **'{username} a quitté l\'escouade'**
-  String feedLeft(String username);
 
   /// No description provided for @feedMilestone.
   ///
@@ -795,42 +693,6 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'il y a {n} j'**
   String timeAgoDays(int n);
-
-  /// No description provided for @squadSettingsTitle.
-  ///
-  /// In fr, this message translates to:
-  /// **'Réglages de l\'escouade'**
-  String get squadSettingsTitle;
-
-  /// No description provided for @squadMembersTitle.
-  ///
-  /// In fr, this message translates to:
-  /// **'Membres ({count}/10)'**
-  String squadMembersTitle(int count);
-
-  /// No description provided for @squadOwner.
-  ///
-  /// In fr, this message translates to:
-  /// **'Chef'**
-  String get squadOwner;
-
-  /// No description provided for @squadLeave.
-  ///
-  /// In fr, this message translates to:
-  /// **'Quitter l\'escouade'**
-  String get squadLeave;
-
-  /// No description provided for @squadLeaveConfirmTitle.
-  ///
-  /// In fr, this message translates to:
-  /// **'Quitter l\'escouade ?'**
-  String get squadLeaveConfirmTitle;
-
-  /// No description provided for @squadLeaveConfirmBody.
-  ///
-  /// In fr, this message translates to:
-  /// **'Tu gardes ton XP, ton niveau et tes addictions. Tu pourras en rejoindre une autre.'**
-  String get squadLeaveConfirmBody;
 
   /// No description provided for @profileEdit.
   ///
@@ -973,7 +835,7 @@ abstract class AppLocalizations {
   /// No description provided for @pledgeBody.
   ///
   /// In fr, this message translates to:
-  /// **'Engage-toi devant ton escouade à tenir aujourd’hui.'**
+  /// **'Engage-toi devant tout le monde à tenir aujourd’hui.'**
   String get pledgeBody;
 
   /// No description provided for @pledgeButton.
@@ -1198,18 +1060,6 @@ abstract class AppLocalizations {
   /// **'1 goût dans ta bouche'**
   String get sosGrounding1;
 
-  /// No description provided for @sosSquadNotified.
-  ///
-  /// In fr, this message translates to:
-  /// **'Ton escouade est prévenue'**
-  String get sosSquadNotified;
-
-  /// No description provided for @sosNoSquad.
-  ///
-  /// In fr, this message translates to:
-  /// **'Pas d’escouade : personne n’est prévenu.'**
-  String get sosNoSquad;
-
   /// No description provided for @sosSupportsReceived.
   ///
   /// In fr, this message translates to:
@@ -1246,23 +1096,23 @@ abstract class AppLocalizations {
   /// **'Dis-nous comment ça s’est fini : ça compte pour ton journal.'**
   String get sosLeaveConfirmBody;
 
-  /// No description provided for @squadSosTitle.
+  /// No description provided for @sosCardTitle.
   ///
   /// In fr, this message translates to:
   /// **'{username} traverse une envie ({label})'**
-  String squadSosTitle(String username, String label);
+  String sosCardTitle(String username, String label);
 
-  /// No description provided for @squadSosSupport.
+  /// No description provided for @sosCardSupport.
   ///
   /// In fr, this message translates to:
   /// **'Envoie-lui de la force'**
-  String get squadSosSupport;
+  String get sosCardSupport;
 
-  /// No description provided for @squadSosSent.
+  /// No description provided for @sosCardSent.
   ///
   /// In fr, this message translates to:
   /// **'Soutien envoyé {emoji}'**
-  String squadSosSent(String emoji);
+  String sosCardSent(String emoji);
 
   /// No description provided for @feedPledge.
   ///
@@ -1479,6 +1329,108 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Modifier'**
   String get commonEdit;
+
+  /// No description provided for @navCommunity.
+  ///
+  /// In fr, this message translates to:
+  /// **'Classement'**
+  String get navCommunity;
+
+  /// No description provided for @leaderboardEmpty.
+  ///
+  /// In fr, this message translates to:
+  /// **'Personne dans le classement pour l’instant.'**
+  String get leaderboardEmpty;
+
+  /// No description provided for @errorProfilePrivate.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ce profil est privé.'**
+  String get errorProfilePrivate;
+
+  /// No description provided for @errorPlayerNotFound.
+  ///
+  /// In fr, this message translates to:
+  /// **'Joueur introuvable.'**
+  String get errorPlayerNotFound;
+
+  /// No description provided for @sosCommunityNotified.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tout le monde est prévenu'**
+  String get sosCommunityNotified;
+
+  /// No description provided for @sosPrivateNotShared.
+  ///
+  /// In fr, this message translates to:
+  /// **'Profil privé : personne n’est prévenu'**
+  String get sosPrivateNotShared;
+
+  /// No description provided for @playerPrivate.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le profil de {username} est privé 🔒'**
+  String playerPrivate(String username);
+
+  /// No description provided for @playerPrivateBody.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ce profil est privé. Seuls son pseudo, son niveau et son XP apparaissent dans le classement.'**
+  String get playerPrivateBody;
+
+  /// No description provided for @playerSince.
+  ///
+  /// In fr, this message translates to:
+  /// **'Sur Detox depuis le {date}'**
+  String playerSince(String date);
+
+  /// No description provided for @playerRankLabel.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rang'**
+  String get playerRankLabel;
+
+  /// No description provided for @playerLevelLabel.
+  ///
+  /// In fr, this message translates to:
+  /// **'Niveau'**
+  String get playerLevelLabel;
+
+  /// No description provided for @playerNoBadges.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun badge pour l’instant.'**
+  String get playerNoBadges;
+
+  /// No description provided for @playerAddictionsTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ses défis'**
+  String get playerAddictionsTitle;
+
+  /// No description provided for @playerNoAddictions.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune addiction publique.'**
+  String get playerNoAddictions;
+
+  /// No description provided for @profilePrivateToggle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Profil privé'**
+  String get profilePrivateToggle;
+
+  /// No description provided for @profilePrivateOn.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tu restes dans le classement (pseudo, niveau, XP), mais personne ne peut ouvrir ton profil ni voir ton feed ou tes SOS.'**
+  String get profilePrivateOn;
+
+  /// No description provided for @profilePrivateOff.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tout le monde peut voir ton niveau, tes badges et tes addictions non privées.'**
+  String get profilePrivateOff;
 }
 
 class _AppLocalizationsDelegate

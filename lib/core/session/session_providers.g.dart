@@ -80,39 +80,6 @@ final class CurrentProfileProvider
 
 String _$currentProfileHash() => r'197a2730d1244cd66be16b43d8934be6ae47d00c';
 
-@ProviderFor(currentSquad)
-final currentSquadProvider = CurrentSquadProvider._();
-
-final class CurrentSquadProvider
-    extends $FunctionalProvider<AsyncValue<Squad?>, Squad?, FutureOr<Squad?>>
-    with $FutureModifier<Squad?>, $FutureProvider<Squad?> {
-  CurrentSquadProvider._()
-    : super(
-        from: null,
-        argument: null,
-        retry: null,
-        name: r'currentSquadProvider',
-        isAutoDispose: false,
-        dependencies: null,
-        $allTransitiveDependencies: null,
-      );
-
-  @override
-  String debugGetCreateSourceHash() => _$currentSquadHash();
-
-  @$internal
-  @override
-  $FutureProviderElement<Squad?> $createElement($ProviderPointer pointer) =>
-      $FutureProviderElement(pointer);
-
-  @override
-  FutureOr<Squad?> create(Ref ref) {
-    return currentSquad(ref);
-  }
-}
-
-String _$currentSquadHash() => r'd6fcf94baab922cf2305baaf47e190da4e877f9c';
-
 /// Realtime XP / HP / level of the signed-in user.
 
 @ProviderFor(playerStats)
@@ -196,4 +163,4 @@ final class SessionGateProvider
   }
 }
 
-String _$sessionGateHash() => r'99573dd3b0b4a231a53db774e258117d60ef32af';
+String _$sessionGateHash() => r'88379fc8b294952c15a310d3b930f51b9c8f8f88';

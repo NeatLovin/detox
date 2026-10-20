@@ -70,15 +70,6 @@ class AppLocalizationsFr extends AppLocalizations {
       '3 à 20 caractères : lettres, chiffres, . _ -';
 
   @override
-  String get errorSquadFull => 'Cette escouade est complète (10 max).';
-
-  @override
-  String get errorInvalidInviteCode => 'Code d\'invitation introuvable.';
-
-  @override
-  String get errorAlreadyInSquad => 'Tu es déjà dans une escouade.';
-
-  @override
   String get errorRelapseInFuture => 'La date ne peut pas être dans le futur.';
 
   @override
@@ -100,13 +91,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get navHome => 'Accueil';
 
   @override
-  String get navSquad => 'Escouade';
-
-  @override
   String get navProfile => 'Profil';
 
   @override
-  String get authTagline => 'Arrête avec ton escouade.\nLevel up chaque jour.';
+  String get authTagline => 'Arrête avec tes potes.\nLevel up chaque jour.';
 
   @override
   String get authEmailLabel => 'Ton email';
@@ -191,7 +179,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get addictionPrivateToggle => 'Privée';
 
   @override
-  String get addictionPrivateHint => 'Ton escouade ne verra jamais son nom.';
+  String get addictionPrivateHint =>
+      'Les autres joueurs ne verront jamais cette addiction.';
 
   @override
   String get addictionQuitDateField => 'Date d\'arrêt';
@@ -221,45 +210,6 @@ class AppLocalizationsFr extends AppLocalizations {
     });
     return '$_temp0';
   }
-
-  @override
-  String get squadSetupTitle => 'Ton escouade';
-
-  @override
-  String get squadSetupSubtitle => 'Seul on va vite, ensemble on va loin.';
-
-  @override
-  String get squadCreateTab => 'Créer';
-
-  @override
-  String get squadJoinTab => 'Rejoindre';
-
-  @override
-  String get squadNameLabel => 'Nom de l\'escouade';
-
-  @override
-  String get squadCreateButton => 'Créer l\'escouade';
-
-  @override
-  String get squadCodeLabel => 'Code d\'invitation';
-
-  @override
-  String get squadJoinButton => 'Rejoindre';
-
-  @override
-  String get squadCreatedTitle => 'Escouade créée 🎉';
-
-  @override
-  String get squadCreatedBody =>
-      'Partage ce code à tes potes pour qu\'ils te rejoignent (10 max).';
-
-  @override
-  String squadShareMessage(String name, String code) {
-    return 'Rejoins mon escouade « $name » sur Detox ! Code : $code';
-  }
-
-  @override
-  String get squadEnter => 'Entrer dans l\'escouade';
 
   @override
   String homeGreeting(String username) {
@@ -363,11 +313,11 @@ class AppLocalizationsFr extends AppLocalizations {
   String get relapseNoteHint => 'Ce qui s\'est passé, ce que tu retiens…';
 
   @override
-  String get relapseShareToggle => 'Partager à l\'escouade';
+  String get relapseShareToggle => 'Partager dans le feed';
 
   @override
   String get relapseSharePrivateHint =>
-      'Addiction privée : l\'escouade verra seulement « une addiction privée ».';
+      'Addiction privée : le feed affichera seulement « une addiction privée ».';
 
   @override
   String get relapseConfirm => 'Valider';
@@ -377,7 +327,7 @@ class AppLocalizationsFr extends AppLocalizations {
       'Ça arrive. Ton XP et ton niveau restent. On repart. 💪';
 
   @override
-  String get leaderboardTitle => 'Classement de la semaine';
+  String get leaderboardTitle => 'Classement général';
 
   @override
   String leaderboardXp(int xp) {
@@ -396,12 +346,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String feedJoined(String username) {
-    return '$username a rejoint l\'escouade';
-  }
-
-  @override
-  String feedLeft(String username) {
-    return '$username a quitté l\'escouade';
+    return '$username a rejoint Detox 👋';
   }
 
   @override
@@ -447,27 +392,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String timeAgoDays(int n) {
     return 'il y a $n j';
   }
-
-  @override
-  String get squadSettingsTitle => 'Réglages de l\'escouade';
-
-  @override
-  String squadMembersTitle(int count) {
-    return 'Membres ($count/10)';
-  }
-
-  @override
-  String get squadOwner => 'Chef';
-
-  @override
-  String get squadLeave => 'Quitter l\'escouade';
-
-  @override
-  String get squadLeaveConfirmTitle => 'Quitter l\'escouade ?';
-
-  @override
-  String get squadLeaveConfirmBody =>
-      'Tu gardes ton XP, ton niveau et tes addictions. Tu pourras en rejoindre une autre.';
 
   @override
   String get profileEdit => 'Modifier le profil';
@@ -548,7 +472,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get pledgeBody =>
-      'Engage-toi devant ton escouade à tenir aujourd’hui.';
+      'Engage-toi devant tout le monde à tenir aujourd’hui.';
 
   @override
   String get pledgeButton => 'Je m’engage 🤝';
@@ -691,12 +615,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String get sosGrounding1 => '1 goût dans ta bouche';
 
   @override
-  String get sosSquadNotified => 'Ton escouade est prévenue';
-
-  @override
-  String get sosNoSquad => 'Pas d’escouade : personne n’est prévenu.';
-
-  @override
   String get sosSupportsReceived => 'Soutien reçu';
 
   @override
@@ -716,15 +634,15 @@ class AppLocalizationsFr extends AppLocalizations {
       'Dis-nous comment ça s’est fini : ça compte pour ton journal.';
 
   @override
-  String squadSosTitle(String username, String label) {
+  String sosCardTitle(String username, String label) {
     return '$username traverse une envie ($label)';
   }
 
   @override
-  String get squadSosSupport => 'Envoie-lui de la force';
+  String get sosCardSupport => 'Envoie-lui de la force';
 
   @override
-  String squadSosSent(String emoji) {
+  String sosCardSent(String emoji) {
     return 'Soutien envoyé $emoji';
   }
 
@@ -910,4 +828,62 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get commonEdit => 'Modifier';
+
+  @override
+  String get navCommunity => 'Classement';
+
+  @override
+  String get leaderboardEmpty => 'Personne dans le classement pour l’instant.';
+
+  @override
+  String get errorProfilePrivate => 'Ce profil est privé.';
+
+  @override
+  String get errorPlayerNotFound => 'Joueur introuvable.';
+
+  @override
+  String get sosCommunityNotified => 'Tout le monde est prévenu';
+
+  @override
+  String get sosPrivateNotShared => 'Profil privé : personne n’est prévenu';
+
+  @override
+  String playerPrivate(String username) {
+    return 'Le profil de $username est privé 🔒';
+  }
+
+  @override
+  String get playerPrivateBody =>
+      'Ce profil est privé. Seuls son pseudo, son niveau et son XP apparaissent dans le classement.';
+
+  @override
+  String playerSince(String date) {
+    return 'Sur Detox depuis le $date';
+  }
+
+  @override
+  String get playerRankLabel => 'Rang';
+
+  @override
+  String get playerLevelLabel => 'Niveau';
+
+  @override
+  String get playerNoBadges => 'Aucun badge pour l’instant.';
+
+  @override
+  String get playerAddictionsTitle => 'Ses défis';
+
+  @override
+  String get playerNoAddictions => 'Aucune addiction publique.';
+
+  @override
+  String get profilePrivateToggle => 'Profil privé';
+
+  @override
+  String get profilePrivateOn =>
+      'Tu restes dans le classement (pseudo, niveau, XP), mais personne ne peut ouvrir ton profil ni voir ton feed ou tes SOS.';
+
+  @override
+  String get profilePrivateOff =>
+      'Tout le monde peut voir ton niveau, tes badges et tes addictions non privées.';
 }
