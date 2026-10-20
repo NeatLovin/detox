@@ -133,6 +133,8 @@ jobs:
           q "select string_agg(tablename, ' ' order by tablename) from pg_publication_tables where pubname='supabase_realtime'" "realtime"
           q "select count(*) || ' rules' from private.reward_rules" "reward rules"
           q "select count(*) || ' releases' from public.app_releases" "app releases"
+          q "select (select count(*) from private.push_config) || ' config, pg_net=' || exists(select 1 from pg_extension where extname='pg_net')::text" "push"
+          q "select string_agg(jobname, ' ') from cron.job" "cron"
           q "select coalesce(string_agg(id || ':' || public::text, ' '), 'none') from storage.buckets" "buckets"
 
       # Deploys the push Edge Function and points the database at it. The
