@@ -49,10 +49,15 @@ class ProfileRepository {
     required String userId,
     required String username,
     required String avatarEmoji,
+    required bool isPrivate,
   }) async {
     final row = await _client
         .from('profiles')
-        .update({'username': username.trim(), 'avatar_emoji': avatarEmoji})
+        .update({
+          'username': username.trim(),
+          'avatar_emoji': avatarEmoji,
+          'is_private': isPrivate,
+        })
         .eq('id', userId)
         .select()
         .single();

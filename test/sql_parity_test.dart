@@ -4,7 +4,14 @@ import 'package:detox/features/addictions/domain/addiction.dart';
 import 'package:detox/features/addictions/domain/addiction_catalog.dart';
 import 'package:detox/features/addictions/domain/addiction_limits.dart';
 import 'package:detox/features/gamification/domain/leveling.dart';
+import 'package:detox/features/gamification/domain/badges.dart';
 import 'package:detox/features/gamification/domain/milestones.dart';
+import 'package:detox/features/gamification/domain/rewards.dart';
+import 'package:detox/features/cravings/domain/craving.dart';
+import 'package:detox/features/profile/data/motivation_repository.dart';
+import 'package:detox/features/quests/domain/quest.dart';
+import 'package:detox/features/quests/domain/quest_catalog.dart';
+import 'package:detox/features/sos/domain/sos.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 /// Returns the content of the latest `-- @rules:<name>:begin … end` block
@@ -87,6 +94,55 @@ void main() {
     const expected = {0: 1, 99: 1, 100: 2, 299: 2, 300: 3, 1000: 5, 10000: 14};
     expected.forEach((xp, level) {
       expect(levelForXp(xp), level, reason: 'xp=$xp');
+    });
+  });
+
+  group('V1 parity (migration 20261020120000_v1.sql)', () {
+    final v1 = File('supabase/migrations/20261020120000_v1.sql').readAsStringSync();
+
+    Set<String> checkValues(String column) {
+      final match = RegExp(
+        '$column text not null(?: default [^ ]+)? check \\($column in \\(([^)]*)\\)',
+        dotAll: true,
+      ).firstMatch(v1);
+      expect(match, isNotNull, reason: 'CHECK on $column not found');
+      return RegExp(r"'([^']+)'").allMatches(match!.group(1)!).map((m) => m.group(1)!).toSet();
+    }
+
+    test('Rewards: Dart == SQL private.reward_rules', () {
+      final block = latestRulesBlock('rewards');
+      final sql = [
+        for (final m in RegExp(r"\('(\w+)',\s*'(\w+)',\s*(\d+),\s*(\d+)\)").allMatches(block))
+          RewardRule(
+            key: m.group(1)!,
+            reason: m.group(2)!,
+            xp: int.parse(m.group(3)!),
+            dailyCap: int.parse(m.group(4)!),
+          ),
+      ];
+      expect(sql, Rewards.all);
+      expect(v1, contains('v_active >= ${Rewards.minQuestsForAllDoneBonus} and'));
+    });
+
+    test('Badge keys == SQL CHECK', () {
+      expect(checkValues('key'), BadgeKey.values.map((b) => b.dbValue).toSet());
+    });
+
+    test('Quest types == SQL CHECK', () {
+      expect(checkValues('type'), QuestType.values.map((t) => t.dbValue).toSet());
+    });
+
+    test('Craving triggers == SQL CHECK', () {
+      expect(checkValues('trigger'), CravingTrigger.values.map((t) => t.dbValue).toSet());
+    });
+
+    test('SOS emojis == SQL CHECK', () {
+      expect(checkValues('emoji'), sosSupportEmojis.toSet());
+    });
+
+    test('Caps: quests and motivations', () {
+      expect(v1, contains('if v_active >= ${QuestLimits.maxActive} then'));
+      expect(v1, contains('where user_id = new.user_id) >= $maxMotivations then'));
     });
   });
 }

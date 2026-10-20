@@ -19,18 +19,14 @@
   "errorOtpRateLimit": "Trop de demandes. Attends un peu avant de redemander un code.",
   "errorUsernameTaken": "Ce pseudo est déjà pris.",
   "errorUsernameInvalid": "3 à 20 caractères : lettres, chiffres, . _ -",
-  "errorSquadFull": "Cette escouade est complète (10 max).",
-  "errorInvalidInviteCode": "Code d'invitation introuvable.",
-  "errorAlreadyInSquad": "Tu es déjà dans une escouade.",
   "errorRelapseInFuture": "La date ne peut pas être dans le futur.",
   "errorRelapseBeforeStreak": "Cette date est avant le début de ta série actuelle.",
   "errorQuitDateInFuture": "La date d'arrêt ne peut pas être dans le futur.",
   "errorAddictionArchived": "Cette addiction est archivée.",
   "errorTooManyAddictions": "Maximum 6 addictions actives, dont 2 perso. Archive-en une pour en ajouter une autre.",
   "navHome": "Accueil",
-  "navSquad": "Escouade",
   "navProfile": "Profil",
-  "authTagline": "Arrête avec ton escouade.\nLevel up chaque jour.",
+  "authTagline": "Arrête avec tes potes.\nLevel up chaque jour.",
   "authEmailLabel": "Ton email",
   "authEmailInvalid": "Email invalide",
   "authSendCode": "Recevoir mon code",
@@ -80,7 +76,7 @@
   "addictionUnitCostField": "Coût par unité (CHF)",
   "addictionBaselineField": "Conso de base par jour",
   "addictionPrivateToggle": "Privée",
-  "addictionPrivateHint": "Ton escouade ne verra jamais son nom.",
+  "addictionPrivateHint": "Les autres joueurs ne verront jamais cette addiction.",
   "addictionQuitDateField": "Date d'arrêt",
   "addictionXpPerDay": "+{xp} XP par jour clean",
   "@addictionXpPerDay": {
@@ -100,28 +96,6 @@
       }
     }
   },
-  "squadSetupTitle": "Ton escouade",
-  "squadSetupSubtitle": "Seul on va vite, ensemble on va loin.",
-  "squadCreateTab": "Créer",
-  "squadJoinTab": "Rejoindre",
-  "squadNameLabel": "Nom de l'escouade",
-  "squadCreateButton": "Créer l'escouade",
-  "squadCodeLabel": "Code d'invitation",
-  "squadJoinButton": "Rejoindre",
-  "squadCreatedTitle": "Escouade créée 🎉",
-  "squadCreatedBody": "Partage ce code à tes potes pour qu'ils te rejoignent (10 max).",
-  "squadShareMessage": "Rejoins mon escouade « {name} » sur Detox ! Code : {code}",
-  "@squadShareMessage": {
-    "placeholders": {
-      "name": {
-        "type": "String"
-      },
-      "code": {
-        "type": "String"
-      }
-    }
-  },
-  "squadEnter": "Entrer dans l'escouade",
   "homeGreeting": "Salut {username} 👋",
   "@homeGreeting": {
     "placeholders": {
@@ -228,11 +202,11 @@
   "relapseWhen": "Quand ?",
   "relapseNoteLabel": "Note (optionnelle)",
   "relapseNoteHint": "Ce qui s'est passé, ce que tu retiens…",
-  "relapseShareToggle": "Partager à l'escouade",
-  "relapseSharePrivateHint": "Addiction privée : l'escouade verra seulement « une addiction privée ».",
+  "relapseShareToggle": "Partager dans le feed",
+  "relapseSharePrivateHint": "Addiction privée : le feed affichera seulement « une addiction privée ».",
   "relapseConfirm": "Valider",
   "relapseKindMessage": "Ça arrive. Ton XP et ton niveau restent. On repart. 💪",
-  "leaderboardTitle": "Classement de la semaine",
+  "leaderboardTitle": "Classement général",
   "leaderboardXp": "{xp} XP",
   "@leaderboardXp": {
     "placeholders": {
@@ -244,16 +218,8 @@
   "leaderboardYou": "toi",
   "feedTitle": "Le feed",
   "feedEmpty": "Rien pour l'instant. Le premier palier arrive vite !",
-  "feedJoined": "{username} a rejoint l'escouade",
+  "feedJoined": "{username} a rejoint Detox 👋",
   "@feedJoined": {
-    "placeholders": {
-      "username": {
-        "type": "String"
-      }
-    }
-  },
-  "feedLeft": "{username} a quitté l'escouade",
-  "@feedLeft": {
     "placeholders": {
       "username": {
         "type": "String"
@@ -329,19 +295,6 @@
       }
     }
   },
-  "squadSettingsTitle": "Réglages de l'escouade",
-  "squadMembersTitle": "Membres ({count}/10)",
-  "@squadMembersTitle": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "squadOwner": "Chef",
-  "squadLeave": "Quitter l'escouade",
-  "squadLeaveConfirmTitle": "Quitter l'escouade ?",
-  "squadLeaveConfirmBody": "Tu gardes ton XP, ton niveau et tes addictions. Tu pourras en rejoindre une autre.",
   "profileEdit": "Modifier le profil",
   "profileUpdated": "Profil mis à jour ✅",
   "profileAddictionsTitle": "Mes addictions",
@@ -367,5 +320,338 @@
         "type": "int"
       }
     }
-  }
+  },
+  "navQuests": "Quêtes",
+  "errorTooManyQuests": "Maximum 8 quêtes actives. Archive-en une pour en ajouter une autre.",
+  "errorQuestDayOutOfRange": "Tu peux seulement noter aujourd’hui ou hier.",
+  "errorQuestArchived": "Cette quête est archivée.",
+  "errorCravingInFuture": "L’envie ne peut pas être dans le futur.",
+  "errorCravingTooOld": "Tu peux noter les envies des 7 derniers jours seulement.",
+  "errorSosNotFound": "Ce SOS n’existe plus.",
+  "errorSosOwnAlert": "Tu ne peux pas soutenir ton propre SOS.",
+  "errorSosExpired": "Ce SOS est trop ancien.",
+  "errorSosAlreadyResolved": "Ce SOS est déjà terminé.",
+  "errorTooManyMotivations": "5 raisons maximum.",
+  "homeSosButton": "SOS",
+  "homeLogCraving": "Noter une envie",
+  "pledgeTitle": "Engagement du jour",
+  "pledgeBody": "Engage-toi devant tout le monde à tenir aujourd’hui.",
+  "pledgeButton": "Je m’engage 🤝",
+  "pledgeDone": "Engagé pour aujourd’hui ✅",
+  "xpGain": "+{xp} XP",
+  "@xpGain": {
+    "placeholders": {
+      "xp": {
+        "type": "int"
+      }
+    }
+  },
+  "cravingSheetTitle": "Une envie ?",
+  "cravingSheetSubtitle": "La noter aide à repérer tes moments à risque.",
+  "cravingAddictionLabel": "Envie de quoi ?",
+  "cravingIntensity": "Intensité : {value}/5",
+  "@cravingIntensity": {
+    "placeholders": {
+      "value": {
+        "type": "int"
+      }
+    }
+  },
+  "cravingTriggerTitle": "Déclencheur",
+  "cravingTriggerLabel": "{trigger, select, stress{Stress} boredom{Ennui} party{Soirée} after_meal{Après le repas} morning{Réveil} screen{Écran} social{Avec des potes} tired{Fatigue} other{Autre}}",
+  "@cravingTriggerLabel": {
+    "placeholders": {
+      "trigger": {
+        "type": "String"
+      }
+    }
+  },
+  "cravingNoteLabel": "Note (optionnel)",
+  "cravingResisted": "J’ai résisté 💪",
+  "cravingGaveIn": "J’ai craqué",
+  "cravingSavedXp": "Bien joué ! +{xp} XP",
+  "@cravingSavedXp": {
+    "placeholders": {
+      "xp": {
+        "type": "int"
+      }
+    }
+  },
+  "cravingSaved": "Envie notée 📝",
+  "cravingJournalTitle": "Journal des envies",
+  "cravingJournalEmpty": "Aucune envie notée pour l’instant. Note la prochaine : c’est comme ça qu’on repère ses pièges.",
+  "cravingStats": "{resisted}/{total} envies résistées ({percent} %)",
+  "@cravingStats": {
+    "placeholders": {
+      "resisted": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      },
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "cravingTopTrigger": "Ton déclencheur n°1 : {trigger}",
+  "@cravingTopTrigger": {
+    "placeholders": {
+      "trigger": {
+        "type": "String"
+      }
+    }
+  },
+  "cravingResistedTag": "Résistée",
+  "cravingGaveInTag": "Craquée",
+  "cravingDelete": "Supprimer",
+  "sosPickAddiction": "SOS : envie de quoi ?",
+  "sosTitle": "Tiens bon",
+  "sosSubtitle": "Une envie dure rarement plus de quelques minutes. Respire avec le cercle.",
+  "sosBreathIn": "Inspire",
+  "sosBreathHold": "Bloque",
+  "sosBreathOut": "Expire",
+  "sosTimeLeft": "Encore {time}",
+  "@sosTimeLeft": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "sosTimeUp": "Le plus dur est passé 💪",
+  "sosReasonsTitle": "Tes raisons",
+  "sosNoReasons": "Ajoute tes raisons d’arrêter dans ton profil : elles s’afficheront ici.",
+  "sosGroundingTitle": "Ancrage 5-4-3-2-1",
+  "sosGrounding5": "5 choses que tu vois",
+  "sosGrounding4": "4 choses que tu peux toucher",
+  "sosGrounding3": "3 sons que tu entends",
+  "sosGrounding2": "2 odeurs que tu sens",
+  "sosGrounding1": "1 goût dans ta bouche",
+  "sosSupportsReceived": "Soutien reçu",
+  "sosResisted": "J’ai tenu 💪",
+  "sosGaveIn": "J’ai craqué",
+  "sosVictory": "Victoire ! Envie résistée 🏆",
+  "sosLeaveConfirmTitle": "Quitter le SOS ?",
+  "sosLeaveConfirmBody": "Dis-nous comment ça s’est fini : ça compte pour ton journal.",
+  "sosCardTitle": "{username} traverse une envie ({label})",
+  "@sosCardTitle": {
+    "placeholders": {
+      "username": {
+        "type": "String"
+      },
+      "label": {
+        "type": "String"
+      }
+    }
+  },
+  "sosCardSupport": "Envoie-lui de la force",
+  "sosCardSent": "Soutien envoyé {emoji}",
+  "@sosCardSent": {
+    "placeholders": {
+      "emoji": {
+        "type": "String"
+      }
+    }
+  },
+  "feedPledge": "{username} s’engage pour aujourd’hui 🤝",
+  "@feedPledge": {
+    "placeholders": {
+      "username": {
+        "type": "String"
+      }
+    }
+  },
+  "feedBadge": "{username} débloque le badge « {badge} »",
+  "@feedBadge": {
+    "placeholders": {
+      "username": {
+        "type": "String"
+      },
+      "badge": {
+        "type": "String"
+      }
+    }
+  },
+  "feedSos": "{username} lance un SOS ({label}). Envoie-lui de la force !",
+  "@feedSos": {
+    "placeholders": {
+      "username": {
+        "type": "String"
+      },
+      "label": {
+        "type": "String"
+      }
+    }
+  },
+  "feedSosSupport": "{username} envoie {emoji} à {to}",
+  "@feedSosSupport": {
+    "placeholders": {
+      "username": {
+        "type": "String"
+      },
+      "emoji": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "feedSosResolved": "{username} a résisté à son envie ({label}) 🏆",
+  "@feedSosResolved": {
+    "placeholders": {
+      "username": {
+        "type": "String"
+      },
+      "label": {
+        "type": "String"
+      }
+    }
+  },
+  "feedQuestsAllDone": "{username} a bouclé toutes ses quêtes du jour ✅",
+  "@feedQuestsAllDone": {
+    "placeholders": {
+      "username": {
+        "type": "String"
+      }
+    }
+  },
+  "badgesTitle": "Badges",
+  "badgesProgress": "{unlocked}/{total} débloqués",
+  "@badgesProgress": {
+    "placeholders": {
+      "unlocked": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "badgeName": "{badge, select, first_pledge{Premier engagement} pledge_streak_7{Parole tenue} first_resist{Première victoire} resist_10{Mur de briques} sos_first{Appel à l'aide} helper{Pote en or} streak_7{Une semaine} streak_30{Un mois} streak_90{Trois mois} comeback{Comeback} quest_streak_7{Régulier} level_5{Niveau 5} level_10{Niveau 10} other{Badge}}",
+  "@badgeName": {
+    "placeholders": {
+      "badge": {
+        "type": "String"
+      }
+    }
+  },
+  "badgeDescription": "{badge, select, first_pledge{Faire ton premier engagement du matin.} pledge_streak_7{T'engager 7 jours d'affilée.} first_resist{Résister à ta première envie.} resist_10{Résister à 10 envies.} sos_first{Tenir bon grâce au SOS.} helper{Soutenir 5 fois un pote en SOS.} streak_7{7 jours clean sur une addiction.} streak_30{30 jours clean sur une addiction.} streak_90{90 jours clean sur une addiction.} comeback{30 jours clean après une rechute.} quest_streak_7{Boucler une quête 7 jours d'affilée.} level_5{Atteindre le niveau 5.} level_10{Atteindre le niveau 10.} other{}}",
+  "@badgeDescription": {
+    "placeholders": {
+      "badge": {
+        "type": "String"
+      }
+    }
+  },
+  "badgeLocked": "Pas encore débloqué",
+  "badgeUnlockedOn": "Débloqué le {date}",
+  "@badgeUnlockedOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "questsTitle": "Quêtes du jour",
+  "questsSummary": "{done}/{total} quêtes",
+  "@questsSummary": {
+    "placeholders": {
+      "done": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "questsAllDoneHint": "Boucle toutes tes quêtes (3 min.) : +{xp} XP bonus",
+  "@questsAllDoneHint": {
+    "placeholders": {
+      "xp": {
+        "type": "int"
+      }
+    }
+  },
+  "questsAllDone": "Journée bouclée ✅",
+  "questsEmpty": "Ajoute tes premières quêtes : eau, sport, sommeil…",
+  "questsAdd": "Ajouter une quête",
+  "questStreak": "🔥 {days} j",
+  "@questStreak": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "questTypeLabel": "{type, select, water{Eau} sport{Sport} sleep{Sommeil} steps{Pas} meditation{Méditation} reading{Lecture} no_screen{Sans écran} other{Perso}}",
+  "@questTypeLabel": {
+    "placeholders": {
+      "type": {
+        "type": "String"
+      }
+    }
+  },
+  "questFormNewTitle": "Nouvelle quête",
+  "questFormEditTitle": "Modifier la quête",
+  "questLabelField": "Nom",
+  "questUnitField": "Unité",
+  "questTargetField": "Objectif par jour",
+  "questArchive": "Archiver la quête",
+  "questSetValueTitle": "{label} aujourd’hui",
+  "@questSetValueTitle": {
+    "placeholders": {
+      "label": {
+        "type": "String"
+      }
+    }
+  },
+  "questDone": "Fait",
+  "questsLimit": "Maximum {max} quêtes actives.",
+  "@questsLimit": {
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "motivationsTitle": "Mes raisons d’arrêter",
+  "motivationsSubtitle": "Elles s’affichent pendant un SOS.",
+  "motivationsAdd": "Ajouter une raison",
+  "motivationsHint": "Ex : avoir du souffle au foot",
+  "motivationsEmpty": "Aucune raison pour l’instant.",
+  "commonDelete": "Supprimer",
+  "commonEdit": "Modifier",
+  "navCommunity": "Classement",
+  "leaderboardEmpty": "Personne dans le classement pour l’instant.",
+  "errorProfilePrivate": "Ce profil est privé.",
+  "errorPlayerNotFound": "Joueur introuvable.",
+  "sosCommunityNotified": "Tout le monde est prévenu",
+  "sosPrivateNotShared": "Profil privé : personne n’est prévenu",
+  "playerPrivate": "Le profil de {username} est privé 🔒",
+  "@playerPrivate": {
+    "placeholders": {
+      "username": {
+        "type": "String"
+      }
+    }
+  },
+  "playerPrivateBody": "Ce profil est privé. Seuls son pseudo, son niveau et son XP apparaissent dans le classement.",
+  "playerSince": "Sur Detox depuis le {date}",
+  "@playerSince": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "playerRankLabel": "Rang",
+  "playerLevelLabel": "Niveau",
+  "playerNoBadges": "Aucun badge pour l’instant.",
+  "playerAddictionsTitle": "Ses défis",
+  "playerNoAddictions": "Aucune addiction publique.",
+  "profilePrivateToggle": "Profil privé",
+  "profilePrivateOn": "Tu restes dans le classement (pseudo, niveau, XP), mais personne ne peut ouvrir ton profil ni voir ton feed ou tes SOS.",
+  "profilePrivateOff": "Tout le monde peut voir ton niveau, tes badges et tes addictions non privées."
 }

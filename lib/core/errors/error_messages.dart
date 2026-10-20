@@ -19,7 +19,7 @@ bool isNetworkError(Object? error) => switch (error) {
 };
 
 /// Extracts a stable error code from Supabase errors. SQL functions raise
-/// snake_case codes (e.g. `squad_full`) as the exception message.
+/// snake_case codes (e.g. `too_many_quests`) as the exception message.
 String? errorCode(Object? error) {
   if (isNetworkError(error)) return 'network';
   return switch (error) {
@@ -57,14 +57,23 @@ String errorMessage(AppLocalizations l10n, Object? error) =>
       'otp_rate_limit' => l10n.errorOtpRateLimit,
       'unique_violation' => l10n.errorUsernameTaken,
       'check_violation' => l10n.errorUsernameInvalid,
-      'squad_full' => l10n.errorSquadFull,
-      'invalid_invite_code' => l10n.errorInvalidInviteCode,
-      'already_in_squad' => l10n.errorAlreadyInSquad,
+      'profile_private' => l10n.errorProfilePrivate,
+      'player_not_found' => l10n.errorPlayerNotFound,
       'relapse_in_future' => l10n.errorRelapseInFuture,
       'relapse_before_streak' => l10n.errorRelapseBeforeStreak,
       'quit_date_in_future' => l10n.errorQuitDateInFuture,
       'addiction_archived' => l10n.errorAddictionArchived,
       'too_many_addictions' => l10n.errorTooManyAddictions,
+      'too_many_quests' => l10n.errorTooManyQuests,
+      'quest_day_out_of_range' => l10n.errorQuestDayOutOfRange,
+      'quest_archived' => l10n.errorQuestArchived,
+      'craving_in_future' => l10n.errorCravingInFuture,
+      'craving_too_old' => l10n.errorCravingTooOld,
+      'sos_not_found' => l10n.errorSosNotFound,
+      'sos_own_alert' => l10n.errorSosOwnAlert,
+      'sos_expired' => l10n.errorSosExpired,
+      'sos_already_resolved' => l10n.errorSosAlreadyResolved,
+      'too_many_motivations' => l10n.errorTooManyMotivations,
       _ => _withDetail(l10n.errorGeneric, errorDetail(error)),
     };
 

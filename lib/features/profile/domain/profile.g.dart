@@ -10,6 +10,7 @@ _Profile _$ProfileFromJson(Map<String, dynamic> json) => _Profile(
   id: json['id'] as String,
   username: json['username'] as String,
   avatarEmoji: json['avatar_emoji'] as String,
+  isPrivate: json['is_private'] as bool? ?? false,
   createdAt: DateTime.parse(json['created_at'] as String),
 );
 
@@ -17,5 +18,6 @@ Map<String, dynamic> _$ProfileToJson(_Profile instance) => <String, dynamic>{
   'id': instance.id,
   'username': instance.username,
   'avatar_emoji': instance.avatarEmoji,
+  'is_private': instance.isPrivate,
   'created_at': instance.createdAt.toIso8601String(),
 };

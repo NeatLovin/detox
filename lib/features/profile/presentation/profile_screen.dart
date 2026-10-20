@@ -13,6 +13,8 @@ import '../../addictions/domain/addiction_catalog.dart';
 import '../../addictions/domain/addiction_limits.dart';
 import '../../addictions/presentation/addiction_providers.dart';
 import '../../auth/data/auth_repository.dart';
+import '../../gamification/presentation/badges_grid.dart';
+import 'motivations_section.dart';
 
 class ProfileScreen extends ConsumerWidget {
   const ProfileScreen({super.key});
@@ -88,6 +90,19 @@ class ProfileScreen extends ConsumerWidget {
                 icon: const Icon(Icons.edit_outlined),
                 onPressed: () => context.push(Routes.editProfile),
               ),
+            ),
+          ),
+          const SizedBox(height: 12),
+          const BadgesGrid(),
+          const SizedBox(height: 12),
+          const MotivationsSection(),
+          const SizedBox(height: 12),
+          Card(
+            child: ListTile(
+              leading: const Icon(Icons.edit_note),
+              title: Text(l10n.cravingJournalTitle),
+              trailing: const Icon(Icons.chevron_right),
+              onTap: () => context.push(Routes.cravings),
             ),
           ),
           const SizedBox(height: 24),

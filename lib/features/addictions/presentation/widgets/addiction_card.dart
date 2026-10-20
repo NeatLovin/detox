@@ -16,11 +16,12 @@ class AddictionCard extends ConsumerWidget {
   const AddictionCard({
     super.key,
     required this.addiction,
-    required this.onRelapse,
+    this.onRelapse,
   });
 
   final Addiction addiction;
-  final VoidCallback onRelapse;
+  /// Null on someone else's profile: no relapse button.
+  final VoidCallback? onRelapse;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -38,12 +39,13 @@ class AddictionCardView extends StatelessWidget {
     super.key,
     required this.addiction,
     required this.now,
-    required this.onRelapse,
+    this.onRelapse,
   });
 
   final Addiction addiction;
   final DateTime now;
-  final VoidCallback onRelapse;
+  /// Null on someone else's profile: no relapse button.
+  final VoidCallback? onRelapse;
 
   @override
   Widget build(BuildContext context) {
@@ -184,15 +186,17 @@ class AddictionCardView extends StatelessWidget {
                 textAlign: TextAlign.center,
                 style: theme.textTheme.labelLarge,
               ),
-            const SizedBox(height: 12),
-            Align(
-              alignment: Alignment.centerRight,
-              child: TextButton.icon(
-                onPressed: onRelapse,
-                icon: const Icon(Icons.replay),
-                label: Text(l10n.relapseButton),
+            if (onRelapse != null) ...[
+              const SizedBox(height: 12),
+              Align(
+                alignment: Alignment.centerRight,
+                child: TextButton.icon(
+                  onPressed: onRelapse,
+                  icon: const Icon(Icons.replay),
+                  label: Text(l10n.relapseButton),
+                ),
               ),
-            ),
+            ],
           ],
         ),
       ),

@@ -24,6 +24,8 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
   late String _avatar =
       ref.read(currentProfileProvider).value?.avatarEmoji ??
       ProfileRules.avatarEmojis.first;
+  late bool _isPrivate =
+      ref.read(currentProfileProvider).value?.isPrivate ?? false;
   bool _busy = false;
   String? _error;
 
@@ -58,6 +60,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
         userId: profile.id,
         username: username,
         avatarEmoji: _avatar,
+        isPrivate: _isPrivate,
       );
       ref.invalidate(currentProfileProvider);
       if (!mounted) return;
@@ -108,6 +111,20 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
             EmojiGrid(
               selected: _avatar,
               onSelected: (emoji) => setState(() => _avatar = emoji),
+            ),
+            const SizedBox(height: 16),
+            Card(
+              child: SwitchListTile(
+                value: _isPrivate,
+                secondary: Icon(_isPrivate ? Icons.lock : Icons.public),
+                title: Text(l10n.profilePrivateToggle),
+                subtitle: Text(
+                  _isPrivate ? l10n.profilePrivateOn : l10n.profilePrivateOff,
+                ),
+                onChanged: _busy
+                    ? null
+                    : (value) => setState(() => _isPrivate = value),
+              ),
             ),
             if (_error != null) ...[
               const SizedBox(height: 16),

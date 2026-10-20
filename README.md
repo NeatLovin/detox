@@ -1,27 +1,29 @@
 # detox
-Gamified Flutter app to quit addictions and build healthy habits with your squad.
+Gamified Flutter app to quit addictions and build healthy habits — with a public leaderboard.
 
-> **Detox** — arrête avec ton escouade. Level up chaque jour.
+> **Detox** — arrête avec tes potes. Level up chaque jour.
 
-Une app mobile entre potes (2 à 10) pour décrocher du porno, du snus, de la clope, de la beuh, du sucre, de l'alcool… Chaque jour clean rapporte de l'XP, les paliers donnent des bonus, l'escouade se tire vers le haut avec un classement hebdo et un feed en temps réel. Une rechute coûte des HP, **jamais** d'XP ni de niveau : on repart.
+Une app mobile pour décrocher du porno, du snus, de la clope, de la beuh, du sucre, de l'alcool… et tenir un bon rythme de vie. Chaque jour clean, chaque envie résistée, chaque quête bouclée rapporte de l'XP. Tout le monde voit le classement général et les profils publics des autres. Une rechute coûte des HP, **jamais** d'XP ni de niveau : on repart.
 
 ## Captures
 
-| Accueil | Escouade | Rechute |
+| Accueil | Classement | SOS |
 |---|---|---|
 | _(capture à venir)_ | _(capture à venir)_ | _(capture à venir)_ |
 
-## Fonctionnalités V0
+## Fonctionnalités
 
 - Connexion par email + code OTP à 6 chiffres
 - Onboarding : pseudo, avatar emoji, addictions suivies (catalogue + custom, option « privée »)
-- Escouade privée : créer, rejoindre par code, partager le code
-- Accueil : carte joueur (niveau, XP animée, HP, état KO), timer live par addiction, CHF économisés, unités évitées, record, prochain palier
-- Rechute en 2 taps, note optionnelle, partage optionnel (le nom d'une addiction privée ne sort jamais)
-- Escouade : podium et classement XP de la semaine, feed temps réel, réglages
-- Profil : pseudo/emoji, ajouter / modifier / archiver ses addictions, déconnexion
+- Accueil : carte joueur (niveau, XP, HP), engagement du matin, timer live par addiction, CHF économisés, record, prochain palier, bouton **SOS**, « Noter une envie »
+- **SOS** : compte à rebours de 5 min, respiration guidée, raisons perso, ancrage 5-4-3-2-1, soutiens reçus en direct
+- **Journal des envies** : intensité, déclencheur, part des envies résistées, déclencheur n°1
+- **Quêtes du jour** : eau, sport, sommeil, pas, méditation, lecture, sans écran, perso ; séries 🔥 et bonus « journée bouclée »
+- **Classement général** (XP total) et **feed global** temps réel ; profils publics : niveau, XP, HP, badges, addictions non privées
+- **Profil privé** : reste dans le classement (pseudo, niveau, XP), mais profil, feed et SOS invisibles pour les autres
+- **13 badges**, rechute en 2 taps (le nom d'une addiction privée ne sort jamais)
 
-Toute la gamification (XP, HP, niveaux, paliers, feed) est calculée **côté serveur** par des fonctions et triggers Postgres.
+Toute la gamification (XP, HP, niveaux, paliers, badges, feed) est calculée **côté serveur** par des fonctions et triggers Postgres, avec des plafonds journaliers anti-farming.
 
 ## Stack
 
@@ -36,7 +38,10 @@ lib/
 ├── features/
 │   ├── auth/         domain · data · presentation
 │   ├── onboarding/
-│   ├── squad/
+│   ├── community/    classement, feed, profils joueurs
+│   ├── cravings/
+│   ├── quests/
+│   ├── sos/
 │   ├── addictions/
 │   ├── gamification/
 │   └── profile/
@@ -65,6 +70,6 @@ tool/sql_tests/run.sh                   # tests SQL anti-triche (Postgres local,
 
 ## Roadmap
 
-- **V1 — Tenir le coup** : bouton SOS (respiration, message à l'escouade), journal de cravings, notifications push.
-- **V2 — Hygiène de vie** : quêtes quotidiennes (eau, sport, sommeil), Health Connect / HealthKit, badges.
-- **V3 — Mode coop et garde-fous** : boss raid d'escouade, challenges entre potes, blocage d'apps, avatar animé, offline-first.
+- **V1 — Tenir le coup** ✅ : SOS, journal des envies, quêtes du jour, engagement du matin, badges, classement général.
+- **V2 — Hygiène de vie** : notifications push (SOS, rappels), Health Connect / HealthKit pour remplir les quêtes automatiquement, heatmap des envies.
+- **V3 — Défis et garde-fous** : challenges entre joueurs, blocage d'apps, avatar animé, offline-first.

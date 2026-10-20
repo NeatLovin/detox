@@ -24,19 +24,12 @@ class SplashScreen extends ConsumerWidget {
                     const Text('📡', style: TextStyle(fontSize: 48)),
                     const SizedBox(height: 16),
                     Text(
-                      errorMessage(
-                        l10n,
-                        ref.read(currentProfileProvider).error ??
-                            ref.read(currentSquadProvider).error,
-                      ),
+                      errorMessage(l10n, ref.read(currentProfileProvider).error),
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: 24),
                     FilledButton(
-                      onPressed: () {
-                        ref.invalidate(currentProfileProvider);
-                        ref.invalidate(currentSquadProvider);
-                      },
+                      onPressed: () => ref.invalidate(currentProfileProvider),
                       child: Text(l10n.commonRetry),
                     ),
                   ],
