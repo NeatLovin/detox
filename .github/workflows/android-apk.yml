@@ -89,7 +89,13 @@ jobs:
             echo "keyPassword=$KEY_PASSWORD"
           } > android/key.properties
 
-      - run: flutter pub get
+      - name: flutter pub get
+        run: |
+          set -o pipefail
+          if ! flutter pub get 2>&1 | tee pub.log; then
+            grep -v '^\s*$' pub.log | tail -12 | while IFS= read -r l; do echo "::error::${l:0:300}"; done
+            exit 1
+          fi
 
       - name: Analyze
         run: |
