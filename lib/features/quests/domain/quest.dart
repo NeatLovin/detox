@@ -105,6 +105,7 @@ class QuestProgress {
     required this.quest,
     required this.value,
     required this.streak,
+    this.xpAwarded = false,
   });
 
   /// Builds the view of [quest] for [today] from its logs.
@@ -119,6 +120,7 @@ class QuestProgress {
     return QuestProgress(
       quest: quest,
       value: todayLog?.value ?? 0,
+      xpAwarded: todayLog?.xpAwarded ?? false,
       streak: consecutiveDays(
         mine.where((l) => l.done).map((l) => l.day),
         today,
@@ -129,6 +131,9 @@ class QuestProgress {
   final DailyQuest quest;
   final double value;
   final int streak;
+
+  /// Today's XP already paid (a quest-day pays once, even after undo/redo).
+  final bool xpAwarded;
 
   bool get done => value >= quest.target;
 

@@ -42,7 +42,7 @@ class QuestRepository {
   Future<List<QuestLog>> fetchLogsSince(DateTime since) async {
     final rows = await _client
         .from('quest_logs')
-        .select('quest_id, day, value, done')
+        .select('quest_id, day, value, done, xp_awarded')
         .gte('day', dayKey(since));
     return [for (final row in rows) QuestLog.fromJson(row)];
   }

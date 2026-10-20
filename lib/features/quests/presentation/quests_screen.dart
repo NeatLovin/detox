@@ -149,7 +149,7 @@ class _QuestCardState extends ConsumerState<QuestCard> {
   Future<void> _set(double value) async {
     final l10n = context.l10n;
     final messenger = ScaffoldMessenger.of(context);
-    final wasDone = widget.progress.done;
+    final alreadyPaid = widget.progress.xpAwarded;
     setState(() => _busy = true);
     try {
       final log = await ref
@@ -157,7 +157,7 @@ class _QuestCardState extends ConsumerState<QuestCard> {
           .log(_quest.id, value < 0 ? 0 : value);
       ref.invalidate(questLogsProvider);
       ref.invalidate(playerStatsProvider);
-      if (!wasDone && log.done && log.xpAwarded) {
+      if (!alreadyPaid && log.xpAwarded) {
         messenger.showSnackBar(
           SnackBar(content: Text(l10n.xpGain(Rewards.quest.xp))),
         );

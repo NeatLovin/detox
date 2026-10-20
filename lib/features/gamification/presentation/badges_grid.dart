@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/l10n/l10n.dart';
+import '../../../core/session/session_providers.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../core/utils/formatters.dart';
 import '../domain/badges.dart';
@@ -13,6 +14,12 @@ class BadgesGrid extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // Most badges come with XP or a level change (written server side).
+    ref.listen(playerStatsProvider, (previous, next) {
+      if (previous?.value != null && previous!.value != next.value) {
+        ref.invalidate(myBadgesProvider);
+      }
+    });
     final l10n = context.l10n;
     final theme = Theme.of(context);
     final unlocked = {
