@@ -683,5 +683,75 @@
       }
     }
   },
-  "levelUpContinue": "Let’s go"
+  "levelUpContinue": "Let’s go",
+  "statsTitle": "Mes stats",
+  "statsCleanDays": "Jours clean",
+  "statsBestStreak": "Meilleure série",
+  "statsXpTitle": "XP des {days} derniers jours",
+  "@statsXpTitle": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "statsXpTotal": "{xp} XP gagnés",
+  "@statsXpTotal": {
+    "placeholders": {
+      "xp": {
+        "type": "int"
+      }
+    }
+  },
+  "statsQuestsTitle": "Quêtes bouclées · {days} jours",
+  "@statsQuestsTitle": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "statsCravingsTitle": "Tes moments à risque",
+  "statsRiskiest": "Pic d’envies : {day}, {slot}",
+  "@statsRiskiest": {
+    "placeholders": {
+      "day": {
+        "type": "String"
+      },
+      "slot": {
+        "type": "String"
+      }
+    }
+  },
+  "statsWeekday": "{day, select, 0{lundi} 1{mardi} 2{mercredi} 3{jeudi} 4{vendredi} 5{samedi} other{dimanche}}",
+  "@statsWeekday": {
+    "placeholders": {
+      "day": {
+        "type": "int"
+      }
+    }
+  },
+  "statsWeekdayShort": "{day, select, 0{Lun} 1{Mar} 2{Mer} 3{Jeu} 4{Ven} 5{Sam} other{Dim}}",
+  "@statsWeekdayShort": {
+    "placeholders": {
+      "day": {
+        "type": "int"
+      }
+    }
+  },
+  "statsFootnote": "Jours clean et argent : séries en cours de tes addictions actives. Envies : tes 50 dernières.",
+  "healthTitle": "Health Connect",
+  "healthBody": "Remplis automatiquement tes quêtes pas, sommeil et sport depuis ton téléphone ou ta montre.",
+  "healthConnect": "Connecter",
+  "healthInstall": "Installer Health Connect",
+  "healthDenied": "Accès refusé : tu peux toujours remplir tes quêtes à la main.",
+  "healthSynced": "{count, plural, =0{Health Connect connecté ✅} =1{1 quête mise à jour depuis Health Connect} other{{count} quêtes mises à jour depuis Health Connect}}",
+  "@healthSynced": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "healthConnected": "Pas, sommeil et sport synchronisés avec Health Connect"
 }

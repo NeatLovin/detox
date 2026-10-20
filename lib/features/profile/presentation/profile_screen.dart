@@ -98,11 +98,22 @@ class ProfileScreen extends ConsumerWidget {
           const MotivationsSection(),
           const SizedBox(height: 12),
           Card(
-            child: ListTile(
-              leading: const Icon(Icons.edit_note),
-              title: Text(l10n.cravingJournalTitle),
-              trailing: const Icon(Icons.chevron_right),
-              onTap: () => context.push(Routes.cravings),
+            child: Column(
+              children: [
+                ListTile(
+                  leading: const Icon(Icons.insights),
+                  title: Text(l10n.statsTitle),
+                  trailing: const Icon(Icons.chevron_right),
+                  onTap: () => context.push(Routes.stats),
+                ),
+                const Divider(height: 1),
+                ListTile(
+                  leading: const Icon(Icons.edit_note),
+                  title: Text(l10n.cravingJournalTitle),
+                  trailing: const Icon(Icons.chevron_right),
+                  onTap: () => context.push(Routes.cravings),
+                ),
+              ],
             ),
           ),
           const SizedBox(height: 24),

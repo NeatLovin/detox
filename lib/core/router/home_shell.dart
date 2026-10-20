@@ -4,10 +4,11 @@ import 'package:go_router/go_router.dart';
 
 import '../../features/gamification/presentation/engagement_providers.dart';
 import '../../features/gamification/presentation/level_up_dialog.dart';
-import '../session/session_providers.dart';
+import '../../features/health/presentation/health_providers.dart';
 import '../../features/quests/presentation/quest_providers.dart';
 import '../../features/updates/presentation/update_banner.dart';
 import '../l10n/l10n.dart';
+import '../session/session_providers.dart';
 import '../utils/day.dart';
 
 class HomeShell extends ConsumerStatefulWidget {
@@ -33,6 +34,7 @@ class _HomeShellState extends ConsumerState<HomeShell> {
 
   void _onResume() {
     ref.invalidate(latestReleaseProvider);
+    ref.invalidate(healthSyncProvider);
     final today = dayKey(DateTime.now());
     if (today == _day) return;
     _day = today;
