@@ -886,4 +886,32 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get profilePrivateOff =>
       'Tout le monde peut voir ton niveau, tes badges et tes addictions non privées.';
+
+  @override
+  String get onboardingQuestsTitle => 'Tes défis du jour';
+
+  @override
+  String get onboardingQuestsSubtitle =>
+      'Les habitudes que tu veux tenir chaque jour. Chaque défi bouclé rapporte de l’XP, et tous les boucler donne un bonus.';
+
+  @override
+  String get onboardingQuestsNone =>
+      'Aucun défi choisi : tu pourras en ajouter plus tard dans l’onglet Quêtes.';
+
+  @override
+  String get onboardingCustomQuestHint => 'Ex : prendre l’air 15 min';
+
+  @override
+  String get onboardingQuestToggleHint => 'À cocher une fois par jour.';
+
+  @override
+  String get onboardingPrefsTitle => 'Tes préférences';
+
+  @override
+  String get onboardingPrefsSubtitle =>
+      'Tout reste modifiable plus tard dans ton profil.';
+
+  @override
+  String get onboardingMotivationsSubtitle =>
+      'Pourquoi tu arrêtes ? Elles s’afficheront quand tu appuieras sur SOS. Optionnel.';
 }
