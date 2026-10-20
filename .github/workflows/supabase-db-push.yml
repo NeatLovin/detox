@@ -13,7 +13,7 @@ on:
       mode:
         description: "dry-run = show pending migrations only, apply = push them"
         type: choice
-        options: [dry-run, apply]
+        options: [dry-run, apply, verify]
         default: dry-run
 
 concurrency:
@@ -68,6 +68,23 @@ jobs:
           grep -v '^\s*$' dry-run.log | tail -8 | while IFS= read -r line; do
             echo "::notice::cli: $line"
           done || true
+
+      - name: Verify remote state (read-only)
+        if: inputs.mode == 'verify'
+        run: |
+          supabase migration list --linked 2>&1 | tee list.log || true
+          grep -E '^\s*[0-9]{14}' list.log | while IFS= read -r line; do
+            echo "::notice::migration: $(echo "$line" | tr -s ' ')"
+          done || true
+          q() {
+            out=$(supabase db query --linked --output csv "$1" 2>&1) || true
+            echo "$out"
+            echo "::notice::$2: $(echo "$out" | tail -n +2 | tr '\n' ' ' | cut -c1-300)"
+          }
+          q "select count(*) from information_schema.tables where table_schema='public'" "public tables"
+          q "select jobname || ' ' || schedule from cron.job" "cron jobs"
+          q "select tablename from pg_publication_tables where pubname='supabase_realtime'" "realtime tables"
+          q "select count(*) from public.profiles" "profiles"
 
       - name: Push migrations
         if: inputs.mode == 'apply'
