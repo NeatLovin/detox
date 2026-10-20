@@ -132,6 +132,8 @@ jobs:
           q "select string_agg(proname, ' ' order by proname) from pg_proc p join pg_namespace n on n.oid=p.pronamespace where n.nspname='public' and proname in ('leaderboard','player_profile','start_sos','log_quest','make_pledge','create_squad')" "rpcs"
           q "select string_agg(tablename, ' ' order by tablename) from pg_publication_tables where pubname='supabase_realtime'" "realtime"
           q "select count(*) || ' rules' from private.reward_rules" "reward rules"
+          q "select count(*) || ' releases' from public.app_releases" "app releases"
+          q "select coalesce(string_agg(id || ':' || public::text, ' '), 'none') from storage.buckets" "buckets"
 
       - name: Push migrations
         if: inputs.mode == 'apply'
