@@ -6,6 +6,37 @@ Tout le reste (code, migrations, tests) est déjà dans le repo. Ces étapes dem
 
 ---
 
+## 0. Parcours sans PC (tout depuis le navigateur)
+
+Deux workflows GitHub Actions remplacent les étapes 4 à 6 :
+
+| Workflow | Déclenchement | Ce qu'il fait |
+|---|---|---|
+| `Android APK` | chaque push sur `main`, ou à la main | lance les tests, build un APK release signé, le publie dans **Releases** |
+| `Supabase db push` | à la main uniquement | `dry-run` liste les migrations en attente, `apply` les pousse |
+
+**Secrets à créer** dans GitHub → *Settings → Secrets and variables → Actions → New repository secret* :
+
+| Secret | Où le trouver |
+|---|---|
+| `SUPABASE_URL` | étape 1.3 |
+| `SUPABASE_ANON_KEY` | étape 1.3 (clé publishable ou anon) |
+| `SUPABASE_PROJECT_REF` | étape 1.4 |
+| `SUPABASE_DB_PASSWORD` | mot de passe DB choisi à l'étape 1.2 |
+| `SUPABASE_ACCESS_TOKEN` | supabase.com → avatar → **Account → Access Tokens** → *Generate new token* |
+| `ANDROID_KEYSTORE_BASE64`, `ANDROID_KEYSTORE_PASSWORD`, `ANDROID_KEY_ALIAS`, `ANDROID_KEY_PASSWORD` | fichier de signature fourni à part (jamais dans le repo) |
+
+**Ordre :**
+1. Étapes 1, 2 et 3 ci-dessous dans le dashboard Supabase.
+2. Crée les 9 secrets.
+3. *Actions → Supabase db push → Run workflow* avec `dry-run`, vérifie la liste, puis relance avec `apply`.
+4. *Actions → Android APK → Run workflow* (ou push sur `main`).
+5. Sur le téléphone, connecté à GitHub : **github.com/NeatLovin/detox/releases** → dernière release → télécharge `detox-build-N.apk` → ouvre-le → autorise « Installer des applis inconnues » pour le navigateur.
+
+> Le repo étant privé, chaque pote doit soit avoir accès au repo, soit recevoir l'APK de ta part (WhatsApp, Drive…). Toutes les versions sont signées avec la même clé : une mise à jour s'installe par-dessus l'ancienne.
+
+---
+
 ## 1. Créer le projet Supabase
 
 1. Va sur <https://supabase.com/dashboard> → **New project**.
