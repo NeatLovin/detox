@@ -73,6 +73,7 @@ jobs:
           echo "::notice::smtp host=$(jq -r '.smtp_host // "-"' auth.json) port=$(jq -r '.smtp_port // "-"' auth.json)"
           echo "::notice::smtp user=$(jq -r '.smtp_user // "-"' auth.json | mask) sender=$(jq -r '.smtp_admin_email // "-"' auth.json | mask) name=$(jq -r '.smtp_sender_name // "-"' auth.json)"
           echo "::notice::smtp password set=$(jq -r 'if (.smtp_pass // "") == "" then "no" else "yes" end' auth.json) | user==sender: $(jq -r 'if .smtp_user == .smtp_admin_email then "yes" else "no" end' auth.json)"
+          echo "::notice::smtp password shape: $(jq -r '(.smtp_pass // "") as $p | if ($p | test("^[*•]+$")) then "masked by API" else "len=\($p | length) spaces=\($p | test(" ")) lowercase-only=\($p | test("^[a-z ]+$"))" end' auth.json)"
           echo "::notice::otp length=$(jq -r '.mailer_otp_length // "-"' auth.json) | email rate/h=$(jq -r '.rate_limit_email_sent // "-"' auth.json)"
           for t in confirmation magic_link; do
             has=$(jq -r --arg k "mailer_templates_${t}_content" 'if ((.[$k] // "") | test("\\.Token\\b")) then "yes" else "no" end' auth.json)
