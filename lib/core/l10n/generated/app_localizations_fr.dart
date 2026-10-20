@@ -943,4 +943,101 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get levelUpContinue => 'Let’s go';
+
+  @override
+  String get statsTitle => 'Mes stats';
+
+  @override
+  String get statsCleanDays => 'Jours clean';
+
+  @override
+  String get statsBestStreak => 'Meilleure série';
+
+  @override
+  String statsXpTitle(int days) {
+    return 'XP des $days derniers jours';
+  }
+
+  @override
+  String statsXpTotal(int xp) {
+    return '$xp XP gagnés';
+  }
+
+  @override
+  String statsQuestsTitle(int days) {
+    return 'Quêtes bouclées · $days jours';
+  }
+
+  @override
+  String get statsCravingsTitle => 'Tes moments à risque';
+
+  @override
+  String statsRiskiest(String day, String slot) {
+    return 'Pic d’envies : $day, $slot';
+  }
+
+  @override
+  String statsWeekday(String day) {
+    String _temp0 = intl.Intl.selectLogic(day, {
+      '0': 'lundi',
+      '1': 'mardi',
+      '2': 'mercredi',
+      '3': 'jeudi',
+      '4': 'vendredi',
+      '5': 'samedi',
+      'other': 'dimanche',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String statsWeekdayShort(String day) {
+    String _temp0 = intl.Intl.selectLogic(day, {
+      '0': 'Lun',
+      '1': 'Mar',
+      '2': 'Mer',
+      '3': 'Jeu',
+      '4': 'Ven',
+      '5': 'Sam',
+      'other': 'Dim',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get statsFootnote =>
+      'Jours clean et argent : séries en cours de tes addictions actives. Envies : tes 50 dernières.';
+
+  @override
+  String get healthTitle => 'Health Connect';
+
+  @override
+  String get healthBody =>
+      'Remplis automatiquement tes quêtes pas, sommeil et sport depuis ton téléphone ou ta montre.';
+
+  @override
+  String get healthConnect => 'Connecter';
+
+  @override
+  String get healthInstall => 'Installer Health Connect';
+
+  @override
+  String get healthDenied =>
+      'Accès refusé : tu peux toujours remplir tes quêtes à la main.';
+
+  @override
+  String healthSynced(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count quêtes mises à jour depuis Health Connect',
+      one: '1 quête mise à jour depuis Health Connect',
+      zero: 'Health Connect connecté ✅',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get healthConnected =>
+      'Pas, sommeil et sport synchronisés avec Health Connect';
 }
