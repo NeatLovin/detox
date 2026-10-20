@@ -1,0 +1,108 @@
+import 'package:flutter/foundation.dart';
+import 'package:go_router/go_router.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+import '../../features/addictions/presentation/home_screen.dart';
+import '../../features/auth/presentation/auth_screen.dart';
+import '../../features/onboarding/presentation/onboarding_screen.dart';
+import '../../features/profile/presentation/addiction_form_screen.dart';
+import '../../features/profile/presentation/edit_profile_screen.dart';
+import '../../features/profile/presentation/profile_screen.dart';
+import '../../features/squad/presentation/squad_screen.dart';
+import '../../features/squad/presentation/squad_settings_screen.dart';
+import '../../features/squad/presentation/squad_setup_screen.dart';
+import '../session/session_gate.dart';
+import '../session/session_providers.dart';
+import 'home_shell.dart';
+import 'routes.dart';
+import 'splash_screen.dart';
+
+part 'app_router.g.dart';
+
+@Riverpod(keepAlive: true)
+GoRouter appRouter(Ref ref) {
+  final gate = ValueNotifier<SessionGate>(ref.read(sessionGateProvider));
+  ref.listen(sessionGateProvider, (_, next) => gate.value = next);
+
+  final router = GoRouter(
+    initialLocation: Routes.splash,
+    refreshListenable: gate,
+    redirect: (context, state) =>
+        Routes.redirect(gate.value, state.matchedLocation),
+    routes: [
+      GoRoute(
+        path: Routes.splash,
+        builder: (context, state) => const SplashScreen(),
+      ),
+      GoRoute(
+        path: Routes.auth,
+        builder: (context, state) => const AuthScreen(),
+      ),
+      GoRoute(
+        path: Routes.onboarding,
+        builder: (context, state) => const OnboardingScreen(),
+      ),
+      GoRoute(
+        path: Routes.squadSetup,
+        builder: (context, state) => const SquadSetupScreen(),
+      ),
+      StatefulShellRoute.indexedStack(
+        builder: (context, state, shell) => HomeShell(shell: shell),
+        branches: [
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: Routes.home,
+                builder: (context, state) => const HomeScreen(),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: Routes.squad,
+                builder: (context, state) => const SquadScreen(),
+                routes: [
+                  GoRoute(
+                    path: 'settings',
+                    builder: (context, state) => const SquadSettingsScreen(),
+                  ),
+                ],
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: Routes.profile,
+                builder: (context, state) => const ProfileScreen(),
+                routes: [
+                  GoRoute(
+                    path: 'edit',
+                    builder: (context, state) => const EditProfileScreen(),
+                  ),
+                  GoRoute(
+                    path: 'addictions/new',
+                    builder: (context, state) => const AddictionFormScreen(),
+                  ),
+                  GoRoute(
+                    path: 'addictions/:id',
+                    builder: (context, state) => AddictionFormScreen(
+                      addictionId: state.pathParameters['id'],
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ],
+      ),
+    ],
+  );
+
+  ref.onDispose(() {
+    gate.dispose();
+    router.dispose();
+  });
+  return router;
+}
