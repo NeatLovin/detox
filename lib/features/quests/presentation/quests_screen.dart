@@ -8,6 +8,8 @@ import '../../../core/session/session_providers.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../shared/widgets/empty_state.dart';
 import '../../gamification/domain/rewards.dart';
+import '../../health/presentation/health_card.dart';
+import '../../health/presentation/health_providers.dart';
 import '../data/quest_repository.dart';
 import '../domain/quest.dart';
 import '../domain/quest_catalog.dart';
@@ -20,6 +22,8 @@ class QuestsScreen extends ConsumerWidget {
   Future<void> _refresh(WidgetRef ref) async {
     ref.invalidate(activeQuestsProvider);
     ref.invalidate(questLogsProvider);
+    ref.invalidate(healthStateProvider);
+    ref.invalidate(healthSyncProvider);
     await ref.read(questDayProvider.future);
   }
 
@@ -104,6 +108,7 @@ class QuestsScreen extends ConsumerWidget {
                         ),
                       ),
                       const SizedBox(height: 12),
+                      const HealthCard(),
                       for (final (index, progress) in summary.items.indexed) ...[
                         QuestCard(
                           key: ValueKey(progress.quest.id),

@@ -27,7 +27,13 @@ jobs:
           channel: stable
           cache: true
 
-      - run: flutter pub get
+      - name: flutter pub get
+        run: |
+          set -o pipefail
+          if ! flutter pub get 2>&1 | tee pub.log; then
+            grep -iE 'error|because|incompatible|requires|version solving|depends on|sdk' pub.log | head -15 | while IFS= read -r l; do echo "::error::${l:0:300}"; done
+            exit 1
+          fi
 
       # Generated files (riverpod, freezed, json, l10n) are produced here and
       # committed back to the branch, so authoring without a local SDK works.
@@ -39,10 +45,10 @@ jobs:
             exit 1
           fi
           flutter gen-l10n
-          if [ -n "$(git status --porcelain -- lib test)" ] && [ "${{ github.event_name }}" = "push" ]; then
+          if [ -n "$(git status --porcelain -- lib test pubspec.lock)" ] && [ "${{ github.event_name }}" = "push" ]; then
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add lib test
+            git add lib test pubspec.lock
             git commit -m "chore: regenerate code"
             git push origin "HEAD:${GITHUB_REF_NAME}"
             echo "::notice::Generated files committed back to ${GITHUB_REF_NAME}"

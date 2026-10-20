@@ -12,6 +12,7 @@ import '../../features/profile/presentation/addiction_form_screen.dart';
 import '../../features/profile/presentation/edit_profile_screen.dart';
 import '../../features/profile/presentation/profile_screen.dart';
 import '../../features/quests/presentation/quests_screen.dart';
+import '../../features/stats/presentation/stats_screen.dart';
 import '../../features/sos/presentation/sos_screen.dart';
 import '../session/session_gate.dart';
 import '../session/session_providers.dart';
@@ -99,6 +100,10 @@ GoRouter appRouter(Ref ref) {
                   GoRoute(
                     path: 'cravings',
                     builder: (context, state) => const CravingsJournalScreen(),
+                  ),
+                  GoRoute(
+                    path: 'stats',
+                    builder: (context, state) => const StatsScreen(),
                   ),
                   GoRoute(
                     path: 'addictions/new',

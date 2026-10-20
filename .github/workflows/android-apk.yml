@@ -15,6 +15,11 @@ on:
       - 'tool/**'
       - '.github/workflows/supabase-db-push.yml'
   workflow_dispatch:
+    inputs:
+      publish:
+        description: "Publish the release and the in-app update (off = build check only)"
+        type: boolean
+        default: true
 
 permissions:
   contents: write
@@ -89,7 +94,13 @@ jobs:
             echo "keyPassword=$KEY_PASSWORD"
           } > android/key.properties
 
-      - run: flutter pub get
+      - name: flutter pub get
+        run: |
+          set -o pipefail
+          if ! flutter pub get 2>&1 | tee pub.log; then
+            grep -v '^\s*$' pub.log | tail -12 | while IFS= read -r l; do echo "::error::${l:0:300}"; done
+            exit 1
+          fi
 
       - name: Analyze
         run: |
@@ -116,6 +127,7 @@ jobs:
         run: |
           flutter build apk --release \
             --dart-define-from-file=env.json \
+            --dart-define=BUILD_NUMBER=${{ github.run_number }} \
             --build-number=${{ github.run_number }}
           cp build/app/outputs/flutter-apk/app-release.apk detox-build-${{ github.run_number }}.apk
 
@@ -126,6 +138,7 @@ jobs:
           retention-days: 14
 
       - name: Publish release
+        if: github.event_name == 'push' || inputs.publish
         env:
           GH_TOKEN: ${{ github.token }}
           TAG: build-${{ github.run_number }}
@@ -144,6 +157,53 @@ jobs:
             exit 1
           fi
           echo "::notice::Release published: $(tail -1 release.log)"
+
+      # In-app updates: an arm64-only APK (≈25 MB, under the 50 MB storage limit
+      # of the free plan) with the SAME version code as the full APK, so either
+      # one installs over the other.
+      - name: Build arm64 APK (in-app update)
+        run: |
+          flutter build apk --release --target-platform android-arm64 \
+            --dart-define-from-file=env.json \
+            --dart-define=BUILD_NUMBER=${{ github.run_number }} \
+            --build-number=${{ github.run_number }}
+          cp build/app/outputs/flutter-apk/app-release.apk detox-arm64-${{ github.run_number }}.apk
+          echo "::notice::arm64 APK: $(du -h detox-arm64-${{ github.run_number }}.apk | cut -f1)"
+
+      - name: Publish in-app update (Supabase)
+        if: github.event_name == 'push' || inputs.publish
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+          SUPABASE_PROJECT_REF: ${{ secrets.SUPABASE_PROJECT_REF }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          BUILD: ${{ github.run_number }}
+        run: |
+          set -euo pipefail
+          url="$(printf '%s' "$SUPABASE_URL" | tr -d '[:space:]' | sed 's:/*$::')"
+          # The service key is fetched at run time with the management token and
+          # never stored: it only lives in this step.
+          key=$(curl -sS "https://api.supabase.com/v1/projects/$SUPABASE_PROJECT_REF/api-keys?reveal=true" \
+            -H "Authorization: Bearer $SUPABASE_ACCESS_TOKEN" \
+            | jq -r '[.[] | select(.name == "service_role" or .type == "secret") | .api_key | select(. != null and . != "")][0] // empty')
+          if [ -z "$key" ]; then echo "::error::Could not fetch the service key"; exit 1; fi
+          echo "::add-mask::$key"
+
+          file="detox-arm64-$BUILD.apk"
+          code=$(curl -sS -o upload.json -w '%{http_code}' -X POST "$url/storage/v1/object/releases/$file" \
+            -H "Authorization: Bearer $key" -H "apikey: $key" \
+            -H "Content-Type: application/vnd.android.package-archive" -H "x-upsert: true" \
+            --data-binary "@$file")
+          if [ "$code" -ge 300 ]; then echo "::error::Upload failed ($code): $(head -c 300 upload.json)"; exit 1; fi
+
+          notes=$(git log -1 --format=%s | head -c 200)
+          jq -n --argjson v "$BUILD" --arg name "build $BUILD" \
+            --arg apk "$url/storage/v1/object/public/releases/$file" --arg notes "$notes" \
+            '{version_code: $v, version_name: $name, apk_url: $apk, notes: $notes}' > release.json
+          code=$(curl -sS -o insert.json -w '%{http_code}' -X POST "$url/rest/v1/app_releases" \
+            -H "Authorization: Bearer $key" -H "apikey: $key" -H "Content-Type: application/json" \
+            -H "Prefer: resolution=merge-duplicates" --data-binary @release.json)
+          if [ "$code" -ge 300 ]; then echo "::error::Release row failed ($code): $(head -c 300 insert.json)"; exit 1; fi
+          echo "::notice::In-app update published: build $BUILD"
 
       - name: Clean up signing files
         if: always()

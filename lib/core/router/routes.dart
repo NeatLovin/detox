@@ -13,6 +13,7 @@ abstract final class Routes {
   static const newAddiction = '/profile/addictions/new';
   static String editAddiction(String id) => '/profile/addictions/$id';
   static const cravings = '/profile/cravings';
+  static const stats = '/profile/stats';
   static String sos(String alertId, String addictionId) =>
       '/sos/$alertId?addiction=$addictionId';
 

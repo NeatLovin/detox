@@ -1479,6 +1479,162 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Pourquoi tu arrêtes ? Elles s’afficheront quand tu appuieras sur SOS. Optionnel.'**
   String get onboardingMotivationsSubtitle;
+
+  /// No description provided for @updateTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nouvelle version dispo (build {build})'**
+  String updateTitle(int build);
+
+  /// No description provided for @updateInstall.
+  ///
+  /// In fr, this message translates to:
+  /// **'Installer'**
+  String get updateInstall;
+
+  /// No description provided for @updateLater.
+  ///
+  /// In fr, this message translates to:
+  /// **'Plus tard'**
+  String get updateLater;
+
+  /// No description provided for @updateDownloadHint.
+  ///
+  /// In fr, this message translates to:
+  /// **'Téléchargement lancé : ouvre le fichier .apk depuis la notification pour installer. Tes données sont conservées.'**
+  String get updateDownloadHint;
+
+  /// No description provided for @updateOpenFailed.
+  ///
+  /// In fr, this message translates to:
+  /// **'Impossible d’ouvrir le lien de mise à jour.'**
+  String get updateOpenFailed;
+
+  /// No description provided for @levelUpTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'LEVEL UP !'**
+  String get levelUpTitle;
+
+  /// No description provided for @levelUpBody.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tu passes niveau {level}. Continue comme ça 💪'**
+  String levelUpBody(int level);
+
+  /// No description provided for @levelUpContinue.
+  ///
+  /// In fr, this message translates to:
+  /// **'Let’s go'**
+  String get levelUpContinue;
+
+  /// No description provided for @statsTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mes stats'**
+  String get statsTitle;
+
+  /// No description provided for @statsCleanDays.
+  ///
+  /// In fr, this message translates to:
+  /// **'Jours clean'**
+  String get statsCleanDays;
+
+  /// No description provided for @statsBestStreak.
+  ///
+  /// In fr, this message translates to:
+  /// **'Meilleure série'**
+  String get statsBestStreak;
+
+  /// No description provided for @statsXpTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'XP des {days} derniers jours'**
+  String statsXpTitle(int days);
+
+  /// No description provided for @statsXpTotal.
+  ///
+  /// In fr, this message translates to:
+  /// **'{xp} XP gagnés'**
+  String statsXpTotal(int xp);
+
+  /// No description provided for @statsQuestsTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Quêtes bouclées · {days} jours'**
+  String statsQuestsTitle(int days);
+
+  /// No description provided for @statsCravingsTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tes moments à risque'**
+  String get statsCravingsTitle;
+
+  /// No description provided for @statsRiskiest.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pic d’envies : {day}, {slot}'**
+  String statsRiskiest(String day, String slot);
+
+  /// No description provided for @statsWeekday.
+  ///
+  /// In fr, this message translates to:
+  /// **'{day, select, 0{lundi} 1{mardi} 2{mercredi} 3{jeudi} 4{vendredi} 5{samedi} other{dimanche}}'**
+  String statsWeekday(String day);
+
+  /// No description provided for @statsWeekdayShort.
+  ///
+  /// In fr, this message translates to:
+  /// **'{day, select, 0{Lun} 1{Mar} 2{Mer} 3{Jeu} 4{Ven} 5{Sam} other{Dim}}'**
+  String statsWeekdayShort(String day);
+
+  /// No description provided for @statsFootnote.
+  ///
+  /// In fr, this message translates to:
+  /// **'Jours clean et argent : séries en cours de tes addictions actives. Envies : tes 50 dernières.'**
+  String get statsFootnote;
+
+  /// No description provided for @healthTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Health Connect'**
+  String get healthTitle;
+
+  /// No description provided for @healthBody.
+  ///
+  /// In fr, this message translates to:
+  /// **'Remplis automatiquement tes quêtes pas, sommeil et sport depuis ton téléphone ou ta montre.'**
+  String get healthBody;
+
+  /// No description provided for @healthConnect.
+  ///
+  /// In fr, this message translates to:
+  /// **'Connecter'**
+  String get healthConnect;
+
+  /// No description provided for @healthInstall.
+  ///
+  /// In fr, this message translates to:
+  /// **'Installer Health Connect'**
+  String get healthInstall;
+
+  /// No description provided for @healthDenied.
+  ///
+  /// In fr, this message translates to:
+  /// **'Accès refusé : tu peux toujours remplir tes quêtes à la main.'**
+  String get healthDenied;
+
+  /// No description provided for @healthSynced.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count, plural, =0{Health Connect connecté ✅} =1{1 quête mise à jour depuis Health Connect} other{{count} quêtes mises à jour depuis Health Connect}}'**
+  String healthSynced(int count);
+
+  /// No description provided for @healthConnected.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pas, sommeil et sport synchronisés avec Health Connect'**
+  String get healthConnected;
 }
 
 class _AppLocalizationsDelegate

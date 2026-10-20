@@ -3,6 +3,10 @@ abstract final class Env {
   static const _rawSupabaseUrl = String.fromEnvironment('SUPABASE_URL');
   static const _rawSupabaseAnonKey = String.fromEnvironment('SUPABASE_ANON_KEY');
 
+  /// Android versionCode of this build (the CI run number). 0 for local builds,
+  /// which never offer an update.
+  static const buildNumber = int.fromEnvironment('BUILD_NUMBER');
+
   /// Trimmed: a secret pasted with a trailing newline or space must not break startup.
   static String get supabaseUrl => normalizeUrl(_rawSupabaseUrl);
   static String get supabaseAnonKey => _rawSupabaseAnonKey.trim();
