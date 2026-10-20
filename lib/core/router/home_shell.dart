@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../features/gamification/presentation/engagement_providers.dart';
+import '../../features/gamification/presentation/level_up_dialog.dart';
+import '../session/session_providers.dart';
 import '../../features/quests/presentation/quest_providers.dart';
 import '../../features/updates/presentation/update_banner.dart';
 import '../l10n/l10n.dart';
@@ -48,6 +50,14 @@ class _HomeShellState extends ConsumerState<HomeShell> {
 
   @override
   Widget build(BuildContext context) {
+    // Level-up celebration, wherever the XP came from (written server side).
+    ref.listen(playerStatsProvider, (previous, next) {
+      final level = next.value?.level;
+      if (level != null &&
+          isLevelUp(previousLevel: previous?.value?.level, nextLevel: level)) {
+        showLevelUpDialog(context, level);
+      }
+    });
     final l10n = context.l10n;
     return Scaffold(
       body: shell,

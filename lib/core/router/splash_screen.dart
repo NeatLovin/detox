@@ -37,6 +37,8 @@ class SplashScreen extends ConsumerWidget {
               : Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
+                    Image.asset('assets/brand/logo.png', width: 120, height: 120),
+                    const SizedBox(height: 12),
                     Text(
                       l10n.appTitle,
                       style: Theme.of(context).textTheme.displaySmall?.copyWith(

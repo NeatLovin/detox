@@ -673,5 +673,15 @@
   "updateInstall": "Installer",
   "updateLater": "Plus tard",
   "updateDownloadHint": "Téléchargement lancé : ouvre le fichier .apk depuis la notification pour installer. Tes données sont conservées.",
-  "updateOpenFailed": "Impossible d’ouvrir le lien de mise à jour."
+  "updateOpenFailed": "Impossible d’ouvrir le lien de mise à jour.",
+  "levelUpTitle": "LEVEL UP !",
+  "levelUpBody": "Tu passes niveau {level}. Continue comme ça 💪",
+  "@levelUpBody": {
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
+  },
+  "levelUpContinue": "Let’s go"
 }

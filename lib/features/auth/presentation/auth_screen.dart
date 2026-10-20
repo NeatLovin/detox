@@ -103,10 +103,12 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  const Text(
-                    '🛡️',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 64),
+                  Center(
+                    child: Image.asset(
+                      'assets/brand/logo.png',
+                      width: 112,
+                      height: 112,
+                    ),
                   ),
                   const SizedBox(height: 8),
                   Text(
