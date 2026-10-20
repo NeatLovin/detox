@@ -885,6 +885,600 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Niv. {level} · {xp} XP'**
   String profileStats(int level, int xp);
+
+  /// No description provided for @navQuests.
+  ///
+  /// In fr, this message translates to:
+  /// **'Quêtes'**
+  String get navQuests;
+
+  /// No description provided for @errorTooManyQuests.
+  ///
+  /// In fr, this message translates to:
+  /// **'Maximum 8 quêtes actives. Archive-en une pour en ajouter une autre.'**
+  String get errorTooManyQuests;
+
+  /// No description provided for @errorQuestDayOutOfRange.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tu peux seulement noter aujourd’hui ou hier.'**
+  String get errorQuestDayOutOfRange;
+
+  /// No description provided for @errorQuestArchived.
+  ///
+  /// In fr, this message translates to:
+  /// **'Cette quête est archivée.'**
+  String get errorQuestArchived;
+
+  /// No description provided for @errorCravingInFuture.
+  ///
+  /// In fr, this message translates to:
+  /// **'L’envie ne peut pas être dans le futur.'**
+  String get errorCravingInFuture;
+
+  /// No description provided for @errorCravingTooOld.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tu peux noter les envies des 7 derniers jours seulement.'**
+  String get errorCravingTooOld;
+
+  /// No description provided for @errorSosNotFound.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ce SOS n’existe plus.'**
+  String get errorSosNotFound;
+
+  /// No description provided for @errorSosOwnAlert.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tu ne peux pas soutenir ton propre SOS.'**
+  String get errorSosOwnAlert;
+
+  /// No description provided for @errorSosExpired.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ce SOS est trop ancien.'**
+  String get errorSosExpired;
+
+  /// No description provided for @errorSosAlreadyResolved.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ce SOS est déjà terminé.'**
+  String get errorSosAlreadyResolved;
+
+  /// No description provided for @errorTooManyMotivations.
+  ///
+  /// In fr, this message translates to:
+  /// **'5 raisons maximum.'**
+  String get errorTooManyMotivations;
+
+  /// No description provided for @homeSosButton.
+  ///
+  /// In fr, this message translates to:
+  /// **'SOS'**
+  String get homeSosButton;
+
+  /// No description provided for @homeLogCraving.
+  ///
+  /// In fr, this message translates to:
+  /// **'Noter une envie'**
+  String get homeLogCraving;
+
+  /// No description provided for @pledgeTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Engagement du jour'**
+  String get pledgeTitle;
+
+  /// No description provided for @pledgeBody.
+  ///
+  /// In fr, this message translates to:
+  /// **'Engage-toi devant ton escouade à tenir aujourd’hui.'**
+  String get pledgeBody;
+
+  /// No description provided for @pledgeButton.
+  ///
+  /// In fr, this message translates to:
+  /// **'Je m’engage 🤝'**
+  String get pledgeButton;
+
+  /// No description provided for @pledgeDone.
+  ///
+  /// In fr, this message translates to:
+  /// **'Engagé pour aujourd’hui ✅'**
+  String get pledgeDone;
+
+  /// No description provided for @xpGain.
+  ///
+  /// In fr, this message translates to:
+  /// **'+{xp} XP'**
+  String xpGain(int xp);
+
+  /// No description provided for @cravingSheetTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Une envie ?'**
+  String get cravingSheetTitle;
+
+  /// No description provided for @cravingSheetSubtitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'La noter aide à repérer tes moments à risque.'**
+  String get cravingSheetSubtitle;
+
+  /// No description provided for @cravingAddictionLabel.
+  ///
+  /// In fr, this message translates to:
+  /// **'Envie de quoi ?'**
+  String get cravingAddictionLabel;
+
+  /// No description provided for @cravingIntensity.
+  ///
+  /// In fr, this message translates to:
+  /// **'Intensité : {value}/5'**
+  String cravingIntensity(int value);
+
+  /// No description provided for @cravingTriggerTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Déclencheur'**
+  String get cravingTriggerTitle;
+
+  /// No description provided for @cravingTriggerLabel.
+  ///
+  /// In fr, this message translates to:
+  /// **'{trigger, select, stress{Stress} boredom{Ennui} party{Soirée} after_meal{Après le repas} morning{Réveil} screen{Écran} social{Avec des potes} tired{Fatigue} other{Autre}}'**
+  String cravingTriggerLabel(String trigger);
+
+  /// No description provided for @cravingNoteLabel.
+  ///
+  /// In fr, this message translates to:
+  /// **'Note (optionnel)'**
+  String get cravingNoteLabel;
+
+  /// No description provided for @cravingResisted.
+  ///
+  /// In fr, this message translates to:
+  /// **'J’ai résisté 💪'**
+  String get cravingResisted;
+
+  /// No description provided for @cravingGaveIn.
+  ///
+  /// In fr, this message translates to:
+  /// **'J’ai craqué'**
+  String get cravingGaveIn;
+
+  /// No description provided for @cravingSavedXp.
+  ///
+  /// In fr, this message translates to:
+  /// **'Bien joué ! +{xp} XP'**
+  String cravingSavedXp(int xp);
+
+  /// No description provided for @cravingSaved.
+  ///
+  /// In fr, this message translates to:
+  /// **'Envie notée 📝'**
+  String get cravingSaved;
+
+  /// No description provided for @cravingJournalTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Journal des envies'**
+  String get cravingJournalTitle;
+
+  /// No description provided for @cravingJournalEmpty.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune envie notée pour l’instant. Note la prochaine : c’est comme ça qu’on repère ses pièges.'**
+  String get cravingJournalEmpty;
+
+  /// No description provided for @cravingStats.
+  ///
+  /// In fr, this message translates to:
+  /// **'{resisted}/{total} envies résistées ({percent} %)'**
+  String cravingStats(int resisted, int total, int percent);
+
+  /// No description provided for @cravingTopTrigger.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ton déclencheur n°1 : {trigger}'**
+  String cravingTopTrigger(String trigger);
+
+  /// No description provided for @cravingResistedTag.
+  ///
+  /// In fr, this message translates to:
+  /// **'Résistée'**
+  String get cravingResistedTag;
+
+  /// No description provided for @cravingGaveInTag.
+  ///
+  /// In fr, this message translates to:
+  /// **'Craquée'**
+  String get cravingGaveInTag;
+
+  /// No description provided for @cravingDelete.
+  ///
+  /// In fr, this message translates to:
+  /// **'Supprimer'**
+  String get cravingDelete;
+
+  /// No description provided for @sosPickAddiction.
+  ///
+  /// In fr, this message translates to:
+  /// **'SOS : envie de quoi ?'**
+  String get sosPickAddiction;
+
+  /// No description provided for @sosTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tiens bon'**
+  String get sosTitle;
+
+  /// No description provided for @sosSubtitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Une envie dure rarement plus de quelques minutes. Respire avec le cercle.'**
+  String get sosSubtitle;
+
+  /// No description provided for @sosBreathIn.
+  ///
+  /// In fr, this message translates to:
+  /// **'Inspire'**
+  String get sosBreathIn;
+
+  /// No description provided for @sosBreathHold.
+  ///
+  /// In fr, this message translates to:
+  /// **'Bloque'**
+  String get sosBreathHold;
+
+  /// No description provided for @sosBreathOut.
+  ///
+  /// In fr, this message translates to:
+  /// **'Expire'**
+  String get sosBreathOut;
+
+  /// No description provided for @sosTimeLeft.
+  ///
+  /// In fr, this message translates to:
+  /// **'Encore {time}'**
+  String sosTimeLeft(String time);
+
+  /// No description provided for @sosTimeUp.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le plus dur est passé 💪'**
+  String get sosTimeUp;
+
+  /// No description provided for @sosReasonsTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tes raisons'**
+  String get sosReasonsTitle;
+
+  /// No description provided for @sosNoReasons.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ajoute tes raisons d’arrêter dans ton profil : elles s’afficheront ici.'**
+  String get sosNoReasons;
+
+  /// No description provided for @sosGroundingTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ancrage 5-4-3-2-1'**
+  String get sosGroundingTitle;
+
+  /// No description provided for @sosGrounding5.
+  ///
+  /// In fr, this message translates to:
+  /// **'5 choses que tu vois'**
+  String get sosGrounding5;
+
+  /// No description provided for @sosGrounding4.
+  ///
+  /// In fr, this message translates to:
+  /// **'4 choses que tu peux toucher'**
+  String get sosGrounding4;
+
+  /// No description provided for @sosGrounding3.
+  ///
+  /// In fr, this message translates to:
+  /// **'3 sons que tu entends'**
+  String get sosGrounding3;
+
+  /// No description provided for @sosGrounding2.
+  ///
+  /// In fr, this message translates to:
+  /// **'2 odeurs que tu sens'**
+  String get sosGrounding2;
+
+  /// No description provided for @sosGrounding1.
+  ///
+  /// In fr, this message translates to:
+  /// **'1 goût dans ta bouche'**
+  String get sosGrounding1;
+
+  /// No description provided for @sosSquadNotified.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ton escouade est prévenue'**
+  String get sosSquadNotified;
+
+  /// No description provided for @sosNoSquad.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pas d’escouade : personne n’est prévenu.'**
+  String get sosNoSquad;
+
+  /// No description provided for @sosSupportsReceived.
+  ///
+  /// In fr, this message translates to:
+  /// **'Soutien reçu'**
+  String get sosSupportsReceived;
+
+  /// No description provided for @sosResisted.
+  ///
+  /// In fr, this message translates to:
+  /// **'J’ai tenu 💪'**
+  String get sosResisted;
+
+  /// No description provided for @sosGaveIn.
+  ///
+  /// In fr, this message translates to:
+  /// **'J’ai craqué'**
+  String get sosGaveIn;
+
+  /// No description provided for @sosVictory.
+  ///
+  /// In fr, this message translates to:
+  /// **'Victoire ! Envie résistée 🏆'**
+  String get sosVictory;
+
+  /// No description provided for @sosLeaveConfirmTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Quitter le SOS ?'**
+  String get sosLeaveConfirmTitle;
+
+  /// No description provided for @sosLeaveConfirmBody.
+  ///
+  /// In fr, this message translates to:
+  /// **'Dis-nous comment ça s’est fini : ça compte pour ton journal.'**
+  String get sosLeaveConfirmBody;
+
+  /// No description provided for @squadSosTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'{username} traverse une envie ({label})'**
+  String squadSosTitle(String username, String label);
+
+  /// No description provided for @squadSosSupport.
+  ///
+  /// In fr, this message translates to:
+  /// **'Envoie-lui de la force'**
+  String get squadSosSupport;
+
+  /// No description provided for @squadSosSent.
+  ///
+  /// In fr, this message translates to:
+  /// **'Soutien envoyé {emoji}'**
+  String squadSosSent(String emoji);
+
+  /// No description provided for @feedPledge.
+  ///
+  /// In fr, this message translates to:
+  /// **'{username} s’engage pour aujourd’hui 🤝'**
+  String feedPledge(String username);
+
+  /// No description provided for @feedBadge.
+  ///
+  /// In fr, this message translates to:
+  /// **'{username} débloque le badge « {badge} »'**
+  String feedBadge(String username, String badge);
+
+  /// No description provided for @feedSos.
+  ///
+  /// In fr, this message translates to:
+  /// **'{username} lance un SOS ({label}). Envoie-lui de la force !'**
+  String feedSos(String username, String label);
+
+  /// No description provided for @feedSosSupport.
+  ///
+  /// In fr, this message translates to:
+  /// **'{username} envoie {emoji} à {to}'**
+  String feedSosSupport(String username, String emoji, String to);
+
+  /// No description provided for @feedSosResolved.
+  ///
+  /// In fr, this message translates to:
+  /// **'{username} a résisté à son envie ({label}) 🏆'**
+  String feedSosResolved(String username, String label);
+
+  /// No description provided for @feedQuestsAllDone.
+  ///
+  /// In fr, this message translates to:
+  /// **'{username} a bouclé toutes ses quêtes du jour ✅'**
+  String feedQuestsAllDone(String username);
+
+  /// No description provided for @badgesTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Badges'**
+  String get badgesTitle;
+
+  /// No description provided for @badgesProgress.
+  ///
+  /// In fr, this message translates to:
+  /// **'{unlocked}/{total} débloqués'**
+  String badgesProgress(int unlocked, int total);
+
+  /// No description provided for @badgeName.
+  ///
+  /// In fr, this message translates to:
+  /// **'{badge, select, first_pledge{Premier engagement} pledge_streak_7{Parole tenue} first_resist{Première victoire} resist_10{Mur de briques} sos_first{Appel à l\'aide} helper{Pote en or} streak_7{Une semaine} streak_30{Un mois} streak_90{Trois mois} comeback{Comeback} quest_streak_7{Régulier} level_5{Niveau 5} level_10{Niveau 10} other{Badge}}'**
+  String badgeName(String badge);
+
+  /// No description provided for @badgeDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'{badge, select, first_pledge{Faire ton premier engagement du matin.} pledge_streak_7{T\'engager 7 jours d\'affilée.} first_resist{Résister à ta première envie.} resist_10{Résister à 10 envies.} sos_first{Tenir bon grâce au SOS.} helper{Soutenir 5 fois un pote en SOS.} streak_7{7 jours clean sur une addiction.} streak_30{30 jours clean sur une addiction.} streak_90{90 jours clean sur une addiction.} comeback{30 jours clean après une rechute.} quest_streak_7{Boucler une quête 7 jours d\'affilée.} level_5{Atteindre le niveau 5.} level_10{Atteindre le niveau 10.} other{}}'**
+  String badgeDescription(String badge);
+
+  /// No description provided for @badgeLocked.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pas encore débloqué'**
+  String get badgeLocked;
+
+  /// No description provided for @badgeUnlockedOn.
+  ///
+  /// In fr, this message translates to:
+  /// **'Débloqué le {date}'**
+  String badgeUnlockedOn(String date);
+
+  /// No description provided for @questsTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Quêtes du jour'**
+  String get questsTitle;
+
+  /// No description provided for @questsSummary.
+  ///
+  /// In fr, this message translates to:
+  /// **'{done}/{total} quêtes'**
+  String questsSummary(int done, int total);
+
+  /// No description provided for @questsAllDoneHint.
+  ///
+  /// In fr, this message translates to:
+  /// **'Boucle toutes tes quêtes (3 min.) : +{xp} XP bonus'**
+  String questsAllDoneHint(int xp);
+
+  /// No description provided for @questsAllDone.
+  ///
+  /// In fr, this message translates to:
+  /// **'Journée bouclée ✅'**
+  String get questsAllDone;
+
+  /// No description provided for @questsEmpty.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ajoute tes premières quêtes : eau, sport, sommeil…'**
+  String get questsEmpty;
+
+  /// No description provided for @questsAdd.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ajouter une quête'**
+  String get questsAdd;
+
+  /// No description provided for @questStreak.
+  ///
+  /// In fr, this message translates to:
+  /// **'🔥 {days} j'**
+  String questStreak(int days);
+
+  /// No description provided for @questTypeLabel.
+  ///
+  /// In fr, this message translates to:
+  /// **'{type, select, water{Eau} sport{Sport} sleep{Sommeil} steps{Pas} meditation{Méditation} reading{Lecture} no_screen{Sans écran} other{Perso}}'**
+  String questTypeLabel(String type);
+
+  /// No description provided for @questFormNewTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nouvelle quête'**
+  String get questFormNewTitle;
+
+  /// No description provided for @questFormEditTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Modifier la quête'**
+  String get questFormEditTitle;
+
+  /// No description provided for @questLabelField.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nom'**
+  String get questLabelField;
+
+  /// No description provided for @questUnitField.
+  ///
+  /// In fr, this message translates to:
+  /// **'Unité'**
+  String get questUnitField;
+
+  /// No description provided for @questTargetField.
+  ///
+  /// In fr, this message translates to:
+  /// **'Objectif par jour'**
+  String get questTargetField;
+
+  /// No description provided for @questArchive.
+  ///
+  /// In fr, this message translates to:
+  /// **'Archiver la quête'**
+  String get questArchive;
+
+  /// No description provided for @questSetValueTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'{label} aujourd’hui'**
+  String questSetValueTitle(String label);
+
+  /// No description provided for @questDone.
+  ///
+  /// In fr, this message translates to:
+  /// **'Fait'**
+  String get questDone;
+
+  /// No description provided for @questsLimit.
+  ///
+  /// In fr, this message translates to:
+  /// **'Maximum {max} quêtes actives.'**
+  String questsLimit(int max);
+
+  /// No description provided for @motivationsTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mes raisons d’arrêter'**
+  String get motivationsTitle;
+
+  /// No description provided for @motivationsSubtitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Elles s’affichent pendant un SOS.'**
+  String get motivationsSubtitle;
+
+  /// No description provided for @motivationsAdd.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ajouter une raison'**
+  String get motivationsAdd;
+
+  /// No description provided for @motivationsHint.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ex : avoir du souffle au foot'**
+  String get motivationsHint;
+
+  /// No description provided for @motivationsEmpty.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune raison pour l’instant.'**
+  String get motivationsEmpty;
+
+  /// No description provided for @commonDelete.
+  ///
+  /// In fr, this message translates to:
+  /// **'Supprimer'**
+  String get commonDelete;
+
+  /// No description provided for @commonEdit.
+  ///
+  /// In fr, this message translates to:
+  /// **'Modifier'**
+  String get commonEdit;
 }
 
 class _AppLocalizationsDelegate

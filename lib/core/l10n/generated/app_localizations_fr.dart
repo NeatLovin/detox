@@ -500,4 +500,414 @@ class AppLocalizationsFr extends AppLocalizations {
   String profileStats(int level, int xp) {
     return 'Niv. $level · $xp XP';
   }
+
+  @override
+  String get navQuests => 'Quêtes';
+
+  @override
+  String get errorTooManyQuests =>
+      'Maximum 8 quêtes actives. Archive-en une pour en ajouter une autre.';
+
+  @override
+  String get errorQuestDayOutOfRange =>
+      'Tu peux seulement noter aujourd’hui ou hier.';
+
+  @override
+  String get errorQuestArchived => 'Cette quête est archivée.';
+
+  @override
+  String get errorCravingInFuture => 'L’envie ne peut pas être dans le futur.';
+
+  @override
+  String get errorCravingTooOld =>
+      'Tu peux noter les envies des 7 derniers jours seulement.';
+
+  @override
+  String get errorSosNotFound => 'Ce SOS n’existe plus.';
+
+  @override
+  String get errorSosOwnAlert => 'Tu ne peux pas soutenir ton propre SOS.';
+
+  @override
+  String get errorSosExpired => 'Ce SOS est trop ancien.';
+
+  @override
+  String get errorSosAlreadyResolved => 'Ce SOS est déjà terminé.';
+
+  @override
+  String get errorTooManyMotivations => '5 raisons maximum.';
+
+  @override
+  String get homeSosButton => 'SOS';
+
+  @override
+  String get homeLogCraving => 'Noter une envie';
+
+  @override
+  String get pledgeTitle => 'Engagement du jour';
+
+  @override
+  String get pledgeBody =>
+      'Engage-toi devant ton escouade à tenir aujourd’hui.';
+
+  @override
+  String get pledgeButton => 'Je m’engage 🤝';
+
+  @override
+  String get pledgeDone => 'Engagé pour aujourd’hui ✅';
+
+  @override
+  String xpGain(int xp) {
+    return '+$xp XP';
+  }
+
+  @override
+  String get cravingSheetTitle => 'Une envie ?';
+
+  @override
+  String get cravingSheetSubtitle =>
+      'La noter aide à repérer tes moments à risque.';
+
+  @override
+  String get cravingAddictionLabel => 'Envie de quoi ?';
+
+  @override
+  String cravingIntensity(int value) {
+    return 'Intensité : $value/5';
+  }
+
+  @override
+  String get cravingTriggerTitle => 'Déclencheur';
+
+  @override
+  String cravingTriggerLabel(String trigger) {
+    String _temp0 = intl.Intl.selectLogic(trigger, {
+      'stress': 'Stress',
+      'boredom': 'Ennui',
+      'party': 'Soirée',
+      'after_meal': 'Après le repas',
+      'morning': 'Réveil',
+      'screen': 'Écran',
+      'social': 'Avec des potes',
+      'tired': 'Fatigue',
+      'other': 'Autre',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get cravingNoteLabel => 'Note (optionnel)';
+
+  @override
+  String get cravingResisted => 'J’ai résisté 💪';
+
+  @override
+  String get cravingGaveIn => 'J’ai craqué';
+
+  @override
+  String cravingSavedXp(int xp) {
+    return 'Bien joué ! +$xp XP';
+  }
+
+  @override
+  String get cravingSaved => 'Envie notée 📝';
+
+  @override
+  String get cravingJournalTitle => 'Journal des envies';
+
+  @override
+  String get cravingJournalEmpty =>
+      'Aucune envie notée pour l’instant. Note la prochaine : c’est comme ça qu’on repère ses pièges.';
+
+  @override
+  String cravingStats(int resisted, int total, int percent) {
+    return '$resisted/$total envies résistées ($percent %)';
+  }
+
+  @override
+  String cravingTopTrigger(String trigger) {
+    return 'Ton déclencheur n°1 : $trigger';
+  }
+
+  @override
+  String get cravingResistedTag => 'Résistée';
+
+  @override
+  String get cravingGaveInTag => 'Craquée';
+
+  @override
+  String get cravingDelete => 'Supprimer';
+
+  @override
+  String get sosPickAddiction => 'SOS : envie de quoi ?';
+
+  @override
+  String get sosTitle => 'Tiens bon';
+
+  @override
+  String get sosSubtitle =>
+      'Une envie dure rarement plus de quelques minutes. Respire avec le cercle.';
+
+  @override
+  String get sosBreathIn => 'Inspire';
+
+  @override
+  String get sosBreathHold => 'Bloque';
+
+  @override
+  String get sosBreathOut => 'Expire';
+
+  @override
+  String sosTimeLeft(String time) {
+    return 'Encore $time';
+  }
+
+  @override
+  String get sosTimeUp => 'Le plus dur est passé 💪';
+
+  @override
+  String get sosReasonsTitle => 'Tes raisons';
+
+  @override
+  String get sosNoReasons =>
+      'Ajoute tes raisons d’arrêter dans ton profil : elles s’afficheront ici.';
+
+  @override
+  String get sosGroundingTitle => 'Ancrage 5-4-3-2-1';
+
+  @override
+  String get sosGrounding5 => '5 choses que tu vois';
+
+  @override
+  String get sosGrounding4 => '4 choses que tu peux toucher';
+
+  @override
+  String get sosGrounding3 => '3 sons que tu entends';
+
+  @override
+  String get sosGrounding2 => '2 odeurs que tu sens';
+
+  @override
+  String get sosGrounding1 => '1 goût dans ta bouche';
+
+  @override
+  String get sosSquadNotified => 'Ton escouade est prévenue';
+
+  @override
+  String get sosNoSquad => 'Pas d’escouade : personne n’est prévenu.';
+
+  @override
+  String get sosSupportsReceived => 'Soutien reçu';
+
+  @override
+  String get sosResisted => 'J’ai tenu 💪';
+
+  @override
+  String get sosGaveIn => 'J’ai craqué';
+
+  @override
+  String get sosVictory => 'Victoire ! Envie résistée 🏆';
+
+  @override
+  String get sosLeaveConfirmTitle => 'Quitter le SOS ?';
+
+  @override
+  String get sosLeaveConfirmBody =>
+      'Dis-nous comment ça s’est fini : ça compte pour ton journal.';
+
+  @override
+  String squadSosTitle(String username, String label) {
+    return '$username traverse une envie ($label)';
+  }
+
+  @override
+  String get squadSosSupport => 'Envoie-lui de la force';
+
+  @override
+  String squadSosSent(String emoji) {
+    return 'Soutien envoyé $emoji';
+  }
+
+  @override
+  String feedPledge(String username) {
+    return '$username s’engage pour aujourd’hui 🤝';
+  }
+
+  @override
+  String feedBadge(String username, String badge) {
+    return '$username débloque le badge « $badge »';
+  }
+
+  @override
+  String feedSos(String username, String label) {
+    return '$username lance un SOS ($label). Envoie-lui de la force !';
+  }
+
+  @override
+  String feedSosSupport(String username, String emoji, String to) {
+    return '$username envoie $emoji à $to';
+  }
+
+  @override
+  String feedSosResolved(String username, String label) {
+    return '$username a résisté à son envie ($label) 🏆';
+  }
+
+  @override
+  String feedQuestsAllDone(String username) {
+    return '$username a bouclé toutes ses quêtes du jour ✅';
+  }
+
+  @override
+  String get badgesTitle => 'Badges';
+
+  @override
+  String badgesProgress(int unlocked, int total) {
+    return '$unlocked/$total débloqués';
+  }
+
+  @override
+  String badgeName(String badge) {
+    String _temp0 = intl.Intl.selectLogic(badge, {
+      'first_pledge': 'Premier engagement',
+      'pledge_streak_7': 'Parole tenue',
+      'first_resist': 'Première victoire',
+      'resist_10': 'Mur de briques',
+      'sos_first': 'Appel à l\'aide',
+      'helper': 'Pote en or',
+      'streak_7': 'Une semaine',
+      'streak_30': 'Un mois',
+      'streak_90': 'Trois mois',
+      'comeback': 'Comeback',
+      'quest_streak_7': 'Régulier',
+      'level_5': 'Niveau 5',
+      'level_10': 'Niveau 10',
+      'other': 'Badge',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String badgeDescription(String badge) {
+    String _temp0 = intl.Intl.selectLogic(badge, {
+      'first_pledge': 'Faire ton premier engagement du matin.',
+      'pledge_streak_7': 'T\'engager 7 jours d\'affilée.',
+      'first_resist': 'Résister à ta première envie.',
+      'resist_10': 'Résister à 10 envies.',
+      'sos_first': 'Tenir bon grâce au SOS.',
+      'helper': 'Soutenir 5 fois un pote en SOS.',
+      'streak_7': '7 jours clean sur une addiction.',
+      'streak_30': '30 jours clean sur une addiction.',
+      'streak_90': '90 jours clean sur une addiction.',
+      'comeback': '30 jours clean après une rechute.',
+      'quest_streak_7': 'Boucler une quête 7 jours d\'affilée.',
+      'level_5': 'Atteindre le niveau 5.',
+      'level_10': 'Atteindre le niveau 10.',
+      'other': '',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get badgeLocked => 'Pas encore débloqué';
+
+  @override
+  String badgeUnlockedOn(String date) {
+    return 'Débloqué le $date';
+  }
+
+  @override
+  String get questsTitle => 'Quêtes du jour';
+
+  @override
+  String questsSummary(int done, int total) {
+    return '$done/$total quêtes';
+  }
+
+  @override
+  String questsAllDoneHint(int xp) {
+    return 'Boucle toutes tes quêtes (3 min.) : +$xp XP bonus';
+  }
+
+  @override
+  String get questsAllDone => 'Journée bouclée ✅';
+
+  @override
+  String get questsEmpty =>
+      'Ajoute tes premières quêtes : eau, sport, sommeil…';
+
+  @override
+  String get questsAdd => 'Ajouter une quête';
+
+  @override
+  String questStreak(int days) {
+    return '🔥 $days j';
+  }
+
+  @override
+  String questTypeLabel(String type) {
+    String _temp0 = intl.Intl.selectLogic(type, {
+      'water': 'Eau',
+      'sport': 'Sport',
+      'sleep': 'Sommeil',
+      'steps': 'Pas',
+      'meditation': 'Méditation',
+      'reading': 'Lecture',
+      'no_screen': 'Sans écran',
+      'other': 'Perso',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get questFormNewTitle => 'Nouvelle quête';
+
+  @override
+  String get questFormEditTitle => 'Modifier la quête';
+
+  @override
+  String get questLabelField => 'Nom';
+
+  @override
+  String get questUnitField => 'Unité';
+
+  @override
+  String get questTargetField => 'Objectif par jour';
+
+  @override
+  String get questArchive => 'Archiver la quête';
+
+  @override
+  String questSetValueTitle(String label) {
+    return '$label aujourd’hui';
+  }
+
+  @override
+  String get questDone => 'Fait';
+
+  @override
+  String questsLimit(int max) {
+    return 'Maximum $max quêtes actives.';
+  }
+
+  @override
+  String get motivationsTitle => 'Mes raisons d’arrêter';
+
+  @override
+  String get motivationsSubtitle => 'Elles s’affichent pendant un SOS.';
+
+  @override
+  String get motivationsAdd => 'Ajouter une raison';
+
+  @override
+  String get motivationsHint => 'Ex : avoir du souffle au foot';
+
+  @override
+  String get motivationsEmpty => 'Aucune raison pour l’instant.';
+
+  @override
+  String get commonDelete => 'Supprimer';
+
+  @override
+  String get commonEdit => 'Modifier';
 }
