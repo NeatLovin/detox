@@ -9,6 +9,11 @@ name: Android APK
 on:
   push:
     branches: [main]
+    paths-ignore:
+      - '**.md'
+      - 'supabase/**'
+      - 'tool/**'
+      - '.github/workflows/supabase-db-push.yml'
   workflow_dispatch:
 
 permissions:

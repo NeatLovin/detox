@@ -31,12 +31,29 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Check secrets
+        run: |
+          missing=0
+          for name in SUPABASE_ACCESS_TOKEN SUPABASE_DB_PASSWORD SUPABASE_PROJECT_REF; do
+            if [ -z "${!name}" ]; then echo "::error::Missing secret $name"; missing=1; fi
+          done
+          if [ "$missing" = 0 ] && ! [[ "$SUPABASE_PROJECT_REF" =~ ^[a-z]{20}$ ]]; then
+            echo "::error::SUPABASE_PROJECT_REF must be the 20-letter ref only (not the full URL)"; missing=1
+          fi
+          exit $missing
+
       - uses: supabase/setup-cli@v1
         with:
           version: latest
 
       - name: Link project
-        run: supabase link --project-ref "$SUPABASE_PROJECT_REF"
+        run: |
+          if ! supabase link --project-ref "$SUPABASE_PROJECT_REF" > link.log 2>&1; then
+            cat link.log
+            echo "::error::supabase link failed: $(grep -v '^\s*$' link.log | tail -1)"
+            exit 1
+          fi
+          cat link.log
 
       - name: Dry run
         if: inputs.mode == 'dry-run'
