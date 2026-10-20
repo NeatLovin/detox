@@ -4,6 +4,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../../core/supabase/supabase_providers.dart';
 import '../domain/feed_event.dart';
 import '../domain/squad.dart';
+import '../domain/squad_rules.dart';
 
 part 'squad_repository.g.dart';
 
@@ -33,7 +34,7 @@ class SquadRepository {
   Future<Squad> joinSquad(String code) async {
     final row = await _client.rpc<Map<String, dynamic>>(
       'join_squad',
-      params: {'code': code.trim().toUpperCase()},
+      params: {'code': SquadRules.normalizeInviteCode(code)},
     );
     return Squad.fromJson(row);
   }
