@@ -57,8 +57,22 @@ jobs:
 
       - name: Dry run
         if: inputs.mode == 'dry-run'
-        run: supabase db push --dry-run
+        run: |
+          set -o pipefail
+          supabase db push --dry-run 2>&1 | tee dry-run.log
+          # Surface the pending migrations as annotations (readable without the raw log).
+          grep -oE '[0-9]{14}_[A-Za-z0-9_]+\.sql' dry-run.log | sort -u | while read -r f; do
+            echo "::notice::Pending migration: $f"
+          done || true
+          if grep -qiE 'up to date|no changes|nothing to push' dry-run.log; then
+            echo "::notice::Remote database is up to date"
+          fi
 
       - name: Push migrations
         if: inputs.mode == 'apply'
-        run: supabase db push
+        run: |
+          set -o pipefail
+          supabase db push 2>&1 | tee push.log
+          grep -oE '[0-9]{14}_[A-Za-z0-9_]+\.sql' push.log | sort -u | while read -r f; do
+            echo "::notice::Applied migration: $f"
+          done
