@@ -661,5 +661,17 @@
   "onboardingQuestToggleHint": "À cocher une fois par jour.",
   "onboardingPrefsTitle": "Tes préférences",
   "onboardingPrefsSubtitle": "Tout reste modifiable plus tard dans ton profil.",
-  "onboardingMotivationsSubtitle": "Pourquoi tu arrêtes ? Elles s’afficheront quand tu appuieras sur SOS. Optionnel."
+  "onboardingMotivationsSubtitle": "Pourquoi tu arrêtes ? Elles s’afficheront quand tu appuieras sur SOS. Optionnel.",
+  "updateTitle": "Nouvelle version dispo (build {build})",
+  "@updateTitle": {
+    "placeholders": {
+      "build": {
+        "type": "int"
+      }
+    }
+  },
+  "updateInstall": "Installer",
+  "updateLater": "Plus tard",
+  "updateDownloadHint": "Téléchargement lancé : ouvre le fichier .apk depuis la notification pour installer. Tes données sont conservées.",
+  "updateOpenFailed": "Impossible d’ouvrir le lien de mise à jour."
 }

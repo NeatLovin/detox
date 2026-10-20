@@ -13,6 +13,7 @@ import '../../gamification/presentation/engagement_providers.dart';
 import '../../gamification/presentation/pledge_card.dart';
 import '../../gamification/presentation/player_card.dart';
 import '../../sos/presentation/sos_launcher.dart';
+import '../../updates/presentation/update_banner.dart';
 import '../domain/addiction.dart';
 import 'addiction_providers.dart';
 import 'widgets/addiction_card.dart';
@@ -25,6 +26,7 @@ class HomeScreen extends ConsumerWidget {
     ref.invalidate(myAddictionsProvider);
     ref.invalidate(playerStatsProvider);
     ref.invalidate(pledgedTodayProvider);
+    ref.invalidate(latestReleaseProvider);
     await ref.read(activeAddictionsProvider.future);
   }
 
@@ -84,6 +86,7 @@ class HomeScreen extends ConsumerWidget {
           physics: const AlwaysScrollableScrollPhysics(),
           padding: const EdgeInsets.fromLTRB(16, 8, 16, 96),
           children: [
+            const UpdateBanner(),
             const PlayerCard(),
             const SizedBox(height: 12),
             const PledgeCard(),

@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../features/gamification/presentation/engagement_providers.dart';
 import '../../features/quests/presentation/quest_providers.dart';
+import '../../features/updates/presentation/update_banner.dart';
 import '../l10n/l10n.dart';
 import '../utils/day.dart';
 
@@ -29,6 +30,7 @@ class _HomeShellState extends ConsumerState<HomeShell> {
   }
 
   void _onResume() {
+    ref.invalidate(latestReleaseProvider);
     final today = dayKey(DateTime.now());
     if (today == _day) return;
     _day = today;
