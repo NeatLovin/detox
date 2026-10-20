@@ -1635,6 +1635,30 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Pas, sommeil et sport synchronisés avec Health Connect'**
   String get healthConnected;
+
+  /// No description provided for @notifySosToggle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Alertes SOS'**
+  String get notifySosToggle;
+
+  /// No description provided for @notifySosHint.
+  ///
+  /// In fr, this message translates to:
+  /// **'Être prévenu quand quelqu’un lance un SOS, et quand on te soutient.'**
+  String get notifySosHint;
+
+  /// No description provided for @notifyRemindersToggle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rappels du jour'**
+  String get notifyRemindersToggle;
+
+  /// No description provided for @notifyRemindersHint.
+  ///
+  /// In fr, this message translates to:
+  /// **'Engagement à {pledge} h, quêtes restantes à {quests} h.'**
+  String notifyRemindersHint(int pledge, int quests);
 }
 
 class _AppLocalizationsDelegate

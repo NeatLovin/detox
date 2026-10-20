@@ -1040,4 +1040,19 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get healthConnected =>
       'Pas, sommeil et sport synchronisés avec Health Connect';
+
+  @override
+  String get notifySosToggle => 'Alertes SOS';
+
+  @override
+  String get notifySosHint =>
+      'Être prévenu quand quelqu’un lance un SOS, et quand on te soutient.';
+
+  @override
+  String get notifyRemindersToggle => 'Rappels du jour';
+
+  @override
+  String notifyRemindersHint(int pledge, int quests) {
+    return 'Engagement à $pledge h, quêtes restantes à $quests h.';
+  }
 }
