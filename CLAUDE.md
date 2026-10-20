@@ -16,7 +16,8 @@ Flutter / Dart 3 · Riverpod (codegen) · go_router · freezed · Supabase (Auth
 - Addiction privée : son label ne sort jamais vers l'escouade.
 - Aucune clé service_role / secret dans l'app ou le repo. env.json est gitignoré.
 - Schéma modifié uniquement via une nouvelle migration dans supabase/migrations/. Jamais d'édition d'une migration déjà poussée.
-- Pas de `supabase db push` distant sans accord explicite.
+- Pas de `supabase db push` distant sans accord explicite. Le push distant passe par le workflow manuel `Supabase db push` (mode `apply`), lancé par le propriétaire.
+- Signature Android : keystore et key.properties fournis par les secrets GitHub en CI, jamais commités.
 
 ## Conventions
 - UI en français (ARB app_fr.arb), code et commentaires en anglais.
@@ -29,3 +30,5 @@ Flutter / Dart 3 · Riverpod (codegen) · go_router · freezed · Supabase (Auth
 - Run : flutter run --dart-define-from-file=env.json
 - DB locale : supabase start / supabase db reset
 - Tests SQL (Postgres local, sans Docker) : PGHOST=/tmp PGUSER=postgres tool/sql_tests/run.sh
+- CI : .github/workflows/android-apk.yml (APK publié en GitHub Release à chaque push sur main), .github/workflows/supabase-db-push.yml (manuel)
+- Le propriétaire n'a pas d'environnement Flutter local : tout changement doit passer `flutter test` et builder en CI.
