@@ -1431,6 +1431,54 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Tout le monde peut voir ton niveau, tes badges et tes addictions non privées.'**
   String get profilePrivateOff;
+
+  /// No description provided for @onboardingQuestsTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tes défis du jour'**
+  String get onboardingQuestsTitle;
+
+  /// No description provided for @onboardingQuestsSubtitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Les habitudes que tu veux tenir chaque jour. Chaque défi bouclé rapporte de l’XP, et tous les boucler donne un bonus.'**
+  String get onboardingQuestsSubtitle;
+
+  /// No description provided for @onboardingQuestsNone.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun défi choisi : tu pourras en ajouter plus tard dans l’onglet Quêtes.'**
+  String get onboardingQuestsNone;
+
+  /// No description provided for @onboardingCustomQuestHint.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ex : prendre l’air 15 min'**
+  String get onboardingCustomQuestHint;
+
+  /// No description provided for @onboardingQuestToggleHint.
+  ///
+  /// In fr, this message translates to:
+  /// **'À cocher une fois par jour.'**
+  String get onboardingQuestToggleHint;
+
+  /// No description provided for @onboardingPrefsTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tes préférences'**
+  String get onboardingPrefsTitle;
+
+  /// No description provided for @onboardingPrefsSubtitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tout reste modifiable plus tard dans ton profil.'**
+  String get onboardingPrefsSubtitle;
+
+  /// No description provided for @onboardingMotivationsSubtitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pourquoi tu arrêtes ? Elles s’afficheront quand tu appuieras sur SOS. Optionnel.'**
+  String get onboardingMotivationsSubtitle;
 }
 
 class _AppLocalizationsDelegate

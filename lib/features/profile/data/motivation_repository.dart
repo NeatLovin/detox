@@ -32,8 +32,17 @@ class MotivationRepository {
     return [for (final row in rows) Motivation.fromJson(row)];
   }
 
-  Future<void> add(String text) =>
-      _client.from('motivations').insert({'text': text.trim()});
+  Future<void> add(String text) => addAll([text]);
+
+  /// Blank entries are skipped.
+  Future<void> addAll(List<String> texts) async {
+    final rows = [
+      for (final t in texts)
+        if (t.trim().isNotEmpty) {'text': t.trim()},
+    ];
+    if (rows.isEmpty) return;
+    await _client.from('motivations').insert(rows);
+  }
 
   Future<void> update(String id, String text) => _client
       .from('motivations')

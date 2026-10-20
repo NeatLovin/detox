@@ -97,6 +97,22 @@ class QuestDraft {
   final String label;
   final String unitLabel;
   final double target;
+
+  QuestDraft copyWith({String? label, String? unitLabel, double? target}) =>
+      QuestDraft(
+        type: type,
+        label: label ?? this.label,
+        unitLabel: unitLabel ?? this.unitLabel,
+        target: target ?? this.target,
+      );
+
+  /// Same rules as the SQL CHECK constraints.
+  bool get isValid =>
+      label.trim().isNotEmpty &&
+      label.trim().length <= 40 &&
+      unitLabel.trim().isNotEmpty &&
+      target > 0 &&
+      target <= 100000;
 }
 
 /// Today's view of one quest: progress, completion and streak.
