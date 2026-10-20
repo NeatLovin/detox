@@ -13,7 +13,7 @@ on:
       mode:
         description: "dry-run = show pending migrations only, apply = push them"
         type: choice
-        options: [dry-run, apply, verify, auth-logs]
+        options: [dry-run, apply, verify, auth-logs, auth-config]
         default: dry-run
 
 concurrency:
@@ -63,13 +63,30 @@ jobs:
           echo "::notice::entries fetched: $(jq '.result | length' logs.json 2>/dev/null)"
           exit 0
 
+      - name: Auth email config (read-only, password never shown)
+        if: inputs.mode == 'auth-config'
+        run: |
+          curl -sS "https://api.supabase.com/v1/projects/$SUPABASE_PROJECT_REF/config/auth" \
+            -H "Authorization: Bearer $SUPABASE_ACCESS_TOKEN" > auth.json
+          jq -r '.message // empty' auth.json | while IFS= read -r e; do echo "::error::config api: $e"; done
+          mask() { sed -E 's/^(.{3})[^@]*@/\1***@/'; }
+          echo "::notice::smtp host=$(jq -r '.smtp_host // "-"' auth.json) port=$(jq -r '.smtp_port // "-"' auth.json)"
+          echo "::notice::smtp user=$(jq -r '.smtp_user // "-"' auth.json | mask) sender=$(jq -r '.smtp_admin_email // "-"' auth.json | mask) name=$(jq -r '.smtp_sender_name // "-"' auth.json)"
+          echo "::notice::smtp password set=$(jq -r 'if (.smtp_pass // "") == "" then "no" else "yes" end' auth.json) | user==sender: $(jq -r 'if .smtp_user == .smtp_admin_email then "yes" else "no" end' auth.json)"
+          echo "::notice::otp length=$(jq -r '.mailer_otp_length // "-"' auth.json) | email rate/h=$(jq -r '.rate_limit_email_sent // "-"' auth.json)"
+          for t in confirmation magic_link; do
+            has=$(jq -r --arg k "mailer_templates_${t}_content" 'if ((.[$k] // "") | test("\\.Token\\b")) then "yes" else "no" end' auth.json)
+            echo "::notice::template $t contains {{ .Token }}: $has"
+          done
+          exit 0
+
       - uses: supabase/setup-cli@v1
-        if: inputs.mode != 'auth-logs'
+        if: inputs.mode != 'auth-logs' && inputs.mode != 'auth-config'
         with:
           version: latest
 
       - name: Link project
-        if: inputs.mode != 'auth-logs'
+        if: inputs.mode != 'auth-logs' && inputs.mode != 'auth-config'
         run: |
           if ! supabase link --project-ref "$SUPABASE_PROJECT_REF" > link.log 2>&1; then
             cat link.log
