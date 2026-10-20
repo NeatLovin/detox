@@ -43,6 +43,20 @@ jobs:
           for name in SUPABASE_URL SUPABASE_ANON_KEY KEYSTORE STORE_PASSWORD KEY_ALIAS KEY_PASSWORD; do
             if [ -z "${!name}" ]; then echo "::error::Missing secret for $name"; missing=1; fi
           done
+          [ "$missing" = 0 ] || exit 1
+          # Format checks (the values themselves are never printed).
+          url="$(printf '%s' "$SUPABASE_URL" | tr -d '[:space:]')"
+          key="$(printf '%s' "$SUPABASE_ANON_KEY" | tr -d '[:space:]')"
+          [ "$url" != "$SUPABASE_URL" ] && echo "::warning::SUPABASE_URL contains whitespace (trimmed by the app)"
+          [ "$key" != "$SUPABASE_ANON_KEY" ] && echo "::warning::SUPABASE_ANON_KEY contains whitespace (trimmed by the app)"
+          if ! [[ "$url" =~ ^https://[a-z0-9]{20}\.supabase\.co/?$ ]]; then
+            echo "::error::SUPABASE_URL must look like https://<20-char-ref>.supabase.co (got ${#url} chars, starts with '${url:0:12}')"; missing=1
+          fi
+          case "$key" in
+            sb_secret_*) echo "::error::SUPABASE_ANON_KEY is a SECRET key: use the publishable key"; missing=1 ;;
+            sb_publishable_*|eyJ*) echo "::notice::SUPABASE_ANON_KEY format OK (${key:0:15}…, ${#key} chars)" ;;
+            *) echo "::error::SUPABASE_ANON_KEY must start with sb_publishable_ or eyJ (got ${#key} chars, starts with '${key:0:4}')"; missing=1 ;;
+          esac
           exit $missing
 
       - uses: actions/setup-java@v5
@@ -76,6 +90,9 @@ jobs:
           } > android/key.properties
 
       - run: flutter pub get
+
+      - name: Analyze
+        run: flutter analyze --no-fatal-infos
 
       - name: Tests
         run: flutter test
