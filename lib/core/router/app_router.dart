@@ -7,6 +7,7 @@ import '../../features/auth/presentation/auth_screen.dart';
 import '../../features/onboarding/presentation/onboarding_screen.dart';
 import '../../features/profile/presentation/profile_screen.dart';
 import '../../features/squad/presentation/squad_screen.dart';
+import '../../features/squad/presentation/squad_settings_screen.dart';
 import '../../features/squad/presentation/squad_setup_screen.dart';
 import '../session/session_gate.dart';
 import '../session/session_providers.dart';
@@ -59,6 +60,12 @@ GoRouter appRouter(Ref ref) {
               GoRoute(
                 path: Routes.squad,
                 builder: (context, state) => const SquadScreen(),
+                routes: [
+                  GoRoute(
+                    path: 'settings',
+                    builder: (context, state) => const SquadSettingsScreen(),
+                  ),
+                ],
               ),
             ],
           ),
