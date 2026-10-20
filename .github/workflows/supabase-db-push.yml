@@ -64,9 +64,10 @@ jobs:
           grep -oE '[0-9]{14}_[A-Za-z0-9_]+\.sql' dry-run.log | sort -u | while read -r f; do
             echo "::notice::Pending migration: $f"
           done || true
-          if grep -qiE 'up to date|no changes|nothing to push' dry-run.log; then
-            echo "::notice::Remote database is up to date"
-          fi
+          # Raw CLI output as annotations (last 8 non-empty lines).
+          grep -v '^\s*$' dry-run.log | tail -8 | while IFS= read -r line; do
+            echo "::notice::cli: $line"
+          done || true
 
       - name: Push migrations
         if: inputs.mode == 'apply'
