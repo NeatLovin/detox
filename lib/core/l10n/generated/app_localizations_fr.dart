@@ -914,4 +914,33 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get onboardingMotivationsSubtitle =>
       'Pourquoi tu arrêtes ? Elles s’afficheront quand tu appuieras sur SOS. Optionnel.';
+
+  @override
+  String updateTitle(int build) {
+    return 'Nouvelle version dispo (build $build)';
+  }
+
+  @override
+  String get updateInstall => 'Installer';
+
+  @override
+  String get updateLater => 'Plus tard';
+
+  @override
+  String get updateDownloadHint =>
+      'Téléchargement lancé : ouvre le fichier .apk depuis la notification pour installer. Tes données sont conservées.';
+
+  @override
+  String get updateOpenFailed => 'Impossible d’ouvrir le lien de mise à jour.';
+
+  @override
+  String get levelUpTitle => 'LEVEL UP !';
+
+  @override
+  String levelUpBody(int level) {
+    return 'Tu passes niveau $level. Continue comme ça 💪';
+  }
+
+  @override
+  String get levelUpContinue => 'Let’s go';
 }

@@ -1479,6 +1479,54 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Pourquoi tu arrêtes ? Elles s’afficheront quand tu appuieras sur SOS. Optionnel.'**
   String get onboardingMotivationsSubtitle;
+
+  /// No description provided for @updateTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nouvelle version dispo (build {build})'**
+  String updateTitle(int build);
+
+  /// No description provided for @updateInstall.
+  ///
+  /// In fr, this message translates to:
+  /// **'Installer'**
+  String get updateInstall;
+
+  /// No description provided for @updateLater.
+  ///
+  /// In fr, this message translates to:
+  /// **'Plus tard'**
+  String get updateLater;
+
+  /// No description provided for @updateDownloadHint.
+  ///
+  /// In fr, this message translates to:
+  /// **'Téléchargement lancé : ouvre le fichier .apk depuis la notification pour installer. Tes données sont conservées.'**
+  String get updateDownloadHint;
+
+  /// No description provided for @updateOpenFailed.
+  ///
+  /// In fr, this message translates to:
+  /// **'Impossible d’ouvrir le lien de mise à jour.'**
+  String get updateOpenFailed;
+
+  /// No description provided for @levelUpTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'LEVEL UP !'**
+  String get levelUpTitle;
+
+  /// No description provided for @levelUpBody.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tu passes niveau {level}. Continue comme ça 💪'**
+  String levelUpBody(int level);
+
+  /// No description provided for @levelUpContinue.
+  ///
+  /// In fr, this message translates to:
+  /// **'Let’s go'**
+  String get levelUpContinue;
 }
 
 class _AppLocalizationsDelegate
