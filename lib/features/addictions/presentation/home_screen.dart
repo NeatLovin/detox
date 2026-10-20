@@ -6,8 +6,13 @@ import 'package:go_router/go_router.dart';
 import '../../../core/l10n/l10n.dart';
 import '../../../core/router/routes.dart';
 import '../../../core/session/session_providers.dart';
+import '../../../core/theme/app_theme.dart';
 import '../../../shared/widgets/empty_state.dart';
+import '../../cravings/presentation/craving_sheet.dart';
+import '../../gamification/presentation/engagement_providers.dart';
+import '../../gamification/presentation/pledge_card.dart';
 import '../../gamification/presentation/player_card.dart';
+import '../../sos/presentation/sos_launcher.dart';
 import '../domain/addiction.dart';
 import 'addiction_providers.dart';
 import 'widgets/addiction_card.dart';
@@ -19,7 +24,22 @@ class HomeScreen extends ConsumerWidget {
   Future<void> _refresh(WidgetRef ref) async {
     ref.invalidate(myAddictionsProvider);
     ref.invalidate(playerStatsProvider);
+    ref.invalidate(pledgedTodayProvider);
     await ref.read(activeAddictionsProvider.future);
+  }
+
+  Future<void> _logCraving(
+    BuildContext context,
+    WidgetRef ref,
+    List<Addiction> addictions,
+  ) async {
+    final result = await showCravingSheet(context, addictions);
+    if (result == null || !context.mounted) return;
+    final (outcome, addiction) = result;
+    // Gave in: offer the relapse flow right away (the user decides to share).
+    if (outcome == CravingSheetResult.gaveIn) {
+      await _relapse(context, ref, addiction);
+    }
   }
 
   Future<void> _relapse(
@@ -44,15 +64,37 @@ class HomeScreen extends ConsumerWidget {
     final profile = ref.watch(currentProfileProvider).value;
     final addictions = ref.watch(activeAddictionsProvider);
 
+    final active = addictions.value ?? const <Addiction>[];
+
     return Scaffold(
       appBar: AppBar(title: Text(l10n.homeGreeting(profile?.username ?? ''))),
+      floatingActionButton: active.isEmpty
+          ? null
+          : FloatingActionButton.extended(
+              heroTag: 'sos',
+              backgroundColor: AppColors.hp,
+              foregroundColor: Colors.white,
+              onPressed: () => launchSos(context, ref),
+              icon: const Icon(Icons.sos),
+              label: Text(l10n.homeSosButton),
+            ),
       body: RefreshIndicator(
         onRefresh: () => _refresh(ref),
         child: ListView(
           physics: const AlwaysScrollableScrollPhysics(),
-          padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
+          padding: const EdgeInsets.fromLTRB(16, 8, 16, 96),
           children: [
             const PlayerCard(),
+            const SizedBox(height: 12),
+            const PledgeCard(),
+            if (active.isNotEmpty) ...[
+              const SizedBox(height: 12),
+              OutlinedButton.icon(
+                onPressed: () => _logCraving(context, ref, active),
+                icon: const Icon(Icons.edit_note),
+                label: Text(l10n.homeLogCraving),
+              ),
+            ],
             const SizedBox(height: 16),
             ...addictions.when(
               data: (items) => items.isEmpty

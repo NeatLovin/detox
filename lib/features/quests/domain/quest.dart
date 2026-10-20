@@ -61,6 +61,7 @@ class QuestLog {
     required this.day,
     required this.value,
     required this.done,
+    this.xpAwarded = false,
   });
 
   factory QuestLog.fromJson(Map<String, dynamic> json) => QuestLog(
@@ -68,13 +69,21 @@ class QuestLog {
     day: parseDay(json['day'] as String),
     value: (json['value'] as num).toDouble(),
     done: json['done'] as bool? ?? false,
+    xpAwarded: json['xp_awarded'] as bool? ?? false,
   );
 
   final String questId;
   final DateTime day;
   final double value;
   final bool done;
+
+  /// True once this quest-day has paid its XP (never twice).
+  final bool xpAwarded;
 }
+
+/// Formats a quest value without a useless ".0" (7.5 h, 8 verres).
+String formatQuestValue(double value) =>
+    value == value.roundToDouble() ? value.toInt().toString() : value.toString();
 
 class QuestDraft {
   const QuestDraft({

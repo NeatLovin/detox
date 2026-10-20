@@ -24,6 +24,11 @@ class HomeShell extends StatelessWidget {
             label: l10n.navHome,
           ),
           NavigationDestination(
+            icon: const Icon(Icons.task_alt_outlined),
+            selectedIcon: const Icon(Icons.task_alt),
+            label: l10n.navQuests,
+          ),
+          NavigationDestination(
             icon: const Icon(Icons.groups_outlined),
             selectedIcon: const Icon(Icons.groups),
             label: l10n.navSquad,

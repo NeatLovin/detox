@@ -17,6 +17,12 @@ class FeedTile extends StatelessWidget {
     FeedEventType.milestone => (Icons.emoji_events, AppColors.gold),
     FeedEventType.levelUp => (Icons.keyboard_double_arrow_up, AppColors.xp),
     FeedEventType.relapse => (Icons.favorite, AppColors.hp),
+    FeedEventType.pledge => (Icons.handshake, AppColors.gold),
+    FeedEventType.badge => (Icons.military_tech, AppColors.gold),
+    FeedEventType.sos => (Icons.sos, AppColors.hp),
+    FeedEventType.sosSupport => (Icons.volunteer_activism, AppColors.xp),
+    FeedEventType.sosResolved => (Icons.shield, AppColors.money),
+    FeedEventType.questsAllDone => (Icons.task_alt, AppColors.money),
     FeedEventType.unknown => (Icons.bolt, AppColors.silver),
   };
 
@@ -35,6 +41,19 @@ class FeedTile extends StatelessWidget {
         event.level ?? 1,
       ),
       FeedEventType.relapse => l10n.feedRelapse(event.username, label),
+      FeedEventType.pledge => l10n.feedPledge(event.username),
+      FeedEventType.badge => l10n.feedBadge(
+        event.username,
+        l10n.badgeName(event.badge ?? ''),
+      ),
+      FeedEventType.sos => l10n.feedSos(event.username, label),
+      FeedEventType.sosSupport => l10n.feedSosSupport(
+        event.username,
+        event.emoji ?? '💪',
+        event.toUsername ?? '?',
+      ),
+      FeedEventType.sosResolved => l10n.feedSosResolved(event.username, label),
+      FeedEventType.questsAllDone => l10n.feedQuestsAllDone(event.username),
       FeedEventType.unknown => l10n.feedUnknown(event.username),
     };
   }

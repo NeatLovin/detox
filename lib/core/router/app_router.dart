@@ -5,9 +5,12 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../../features/addictions/presentation/home_screen.dart';
 import '../../features/auth/presentation/auth_screen.dart';
 import '../../features/onboarding/presentation/onboarding_screen.dart';
+import '../../features/cravings/presentation/cravings_journal_screen.dart';
 import '../../features/profile/presentation/addiction_form_screen.dart';
 import '../../features/profile/presentation/edit_profile_screen.dart';
 import '../../features/profile/presentation/profile_screen.dart';
+import '../../features/quests/presentation/quests_screen.dart';
+import '../../features/sos/presentation/sos_screen.dart';
 import '../../features/squad/presentation/squad_screen.dart';
 import '../../features/squad/presentation/squad_settings_screen.dart';
 import '../../features/squad/presentation/squad_setup_screen.dart';
@@ -46,6 +49,14 @@ GoRouter appRouter(Ref ref) {
         path: Routes.squadSetup,
         builder: (context, state) => const SquadSetupScreen(),
       ),
+      // Full screen, above the bottom navigation.
+      GoRoute(
+        path: '/sos/:alertId',
+        builder: (context, state) => SosScreen(
+          alertId: state.pathParameters['alertId']!,
+          addictionId: state.uri.queryParameters['addiction'],
+        ),
+      ),
       StatefulShellRoute.indexedStack(
         builder: (context, state, shell) => HomeShell(shell: shell),
         branches: [
@@ -54,6 +65,14 @@ GoRouter appRouter(Ref ref) {
               GoRoute(
                 path: Routes.home,
                 builder: (context, state) => const HomeScreen(),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: Routes.quests,
+                builder: (context, state) => const QuestsScreen(),
               ),
             ],
           ),
@@ -80,6 +99,10 @@ GoRouter appRouter(Ref ref) {
                   GoRoute(
                     path: 'edit',
                     builder: (context, state) => const EditProfileScreen(),
+                  ),
+                  GoRoute(
+                    path: 'cravings',
+                    builder: (context, state) => const CravingsJournalScreen(),
                   ),
                   GoRoute(
                     path: 'addictions/new',

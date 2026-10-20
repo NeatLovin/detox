@@ -14,6 +14,18 @@ enum FeedEventType {
   levelUp,
   @JsonValue('relapse')
   relapse,
+  @JsonValue('pledge')
+  pledge,
+  @JsonValue('badge')
+  badge,
+  @JsonValue('sos')
+  sos,
+  @JsonValue('sos_support')
+  sosSupport,
+  @JsonValue('sos_resolved')
+  sosResolved,
+  @JsonValue('quests_all_done')
+  questsAllDone,
   unknown,
 }
 
@@ -42,4 +54,7 @@ abstract class FeedEvent with _$FeedEvent {
   int? get days => (payload['days'] as num?)?.toInt();
   int? get bonusXp => (payload['bonus_xp'] as num?)?.toInt();
   int? get level => (payload['level'] as num?)?.toInt();
+  String? get badge => payload['badge'] as String?;
+  String? get emoji => payload['emoji'] as String?;
+  String? get toUsername => payload['to_username'] as String?;
 }

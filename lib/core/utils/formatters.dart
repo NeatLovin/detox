@@ -5,6 +5,9 @@ const _locale = 'fr_CH';
 String formatDateTime(DateTime value) =>
     DateFormat('d MMM yyyy · HH:mm', _locale).format(value.toLocal());
 
+String formatDate(DateTime value) =>
+    DateFormat('d MMM yyyy', _locale).format(value.toLocal());
+
 String formatChf(double amount) =>
     '${NumberFormat('#,##0.00', _locale).format(amount)} CHF';
 

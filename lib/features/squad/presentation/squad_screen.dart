@@ -7,6 +7,7 @@ import '../../../core/router/routes.dart';
 import '../../../core/session/session_providers.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../shared/widgets/empty_state.dart';
+import '../../sos/presentation/squad_sos_banner.dart';
 import '../domain/leaderboard.dart';
 import '../domain/squad.dart';
 import 'squad_providers.dart';
@@ -41,6 +42,10 @@ class SquadScreen extends ConsumerWidget {
     final leaderboard = ref.watch(leaderboardProvider);
     final feed = ref.watch(squadFeedProvider);
     final now = DateTime.now();
+    final usernames = {
+      for (final m in ref.watch(squadMembersProvider).value ?? const <SquadMember>[])
+        m.userId: m.username,
+    };
 
     return Scaffold(
       appBar: AppBar(
@@ -59,6 +64,7 @@ class SquadScreen extends ConsumerWidget {
           physics: const AlwaysScrollableScrollPhysics(),
           padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
           children: [
+            SquadSosBanner(usernames: usernames),
             Text(l10n.leaderboardTitle, style: theme.textTheme.titleLarge),
             const SizedBox(height: 12),
             leaderboard.when(
