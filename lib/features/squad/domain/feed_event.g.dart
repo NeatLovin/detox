@@ -36,5 +36,11 @@ const _$FeedEventTypeEnumMap = {
   FeedEventType.milestone: 'milestone',
   FeedEventType.levelUp: 'level_up',
   FeedEventType.relapse: 'relapse',
+  FeedEventType.pledge: 'pledge',
+  FeedEventType.badge: 'badge',
+  FeedEventType.sos: 'sos',
+  FeedEventType.sosSupport: 'sos_support',
+  FeedEventType.sosResolved: 'sos_resolved',
+  FeedEventType.questsAllDone: 'quests_all_done',
   FeedEventType.unknown: 'unknown',
 };
