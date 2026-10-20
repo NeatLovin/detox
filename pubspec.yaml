@@ -44,6 +44,8 @@ dependencies:
   share_plus: ^13.3.1
   url_launcher: ^6.3.3
   health: ^13.2.1
+  firebase_core: any
+  firebase_messaging: any
   intl: ^0.20.3
   flutter_localizations:
     sdk: flutter

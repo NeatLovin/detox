@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "318222053672",
+    "project_id": "detox-46",
+    "storage_bucket": "detox-46.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:318222053672:android:466fe2452ab513e96aa01d",
+        "android_client_info": {
+          "package_name": "ch.neatlovin.detox"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC_q3VkrQIIby6jrxE3xeSIjYD6krgFhaU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

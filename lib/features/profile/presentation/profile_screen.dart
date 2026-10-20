@@ -13,6 +13,8 @@ import '../../addictions/domain/addiction_catalog.dart';
 import '../../addictions/domain/addiction_limits.dart';
 import '../../addictions/presentation/addiction_providers.dart';
 import '../../auth/data/auth_repository.dart';
+import '../../notifications/data/push_repository.dart';
+import '../../notifications/presentation/push_service.dart';
 import '../../gamification/presentation/badges_grid.dart';
 import 'motivations_section.dart';
 
@@ -183,7 +185,10 @@ class ProfileScreen extends ConsumerWidget {
           ),
           const SizedBox(height: 32),
           OutlinedButton.icon(
-            onPressed: () => ref.read(authRepositoryProvider).signOut(),
+            onPressed: () async {
+              await unregisterThisDevice(ref.read(pushRepositoryProvider));
+              await ref.read(authRepositoryProvider).signOut();
+            },
             icon: const Icon(Icons.logout),
             label: Text(l10n.profileSignOut),
           ),
