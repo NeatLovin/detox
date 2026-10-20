@@ -137,12 +137,12 @@ set role authenticated;
 select t2.login('cccccccc-0000-0000-0000-00000000000b');
 select public.make_pledge();
 reset role;
-select private.send_reminders((current_date + time '09:30') at time zone 'Europe/Zurich');
+select private.send_reminders((private.zurich_today() + time '09:30') at time zone 'Europe/Zurich');
 select t2.eq(t2.pushed('reminder_pledge', 'cccccccc-0000-0000-0000-00000000000a'), 1::bigint, 'pledge reminder at 9 h');
 select t2.eq(t2.pushed('reminder_pledge', 'cccccccc-0000-0000-0000-00000000000b'), 0::bigint, 'not when already pledged');
-select private.send_reminders((current_date + time '09:45') at time zone 'Europe/Zurich');
+select private.send_reminders((private.zurich_today() + time '09:45') at time zone 'Europe/Zurich');
 select t2.eq((select count(*) from private.push_log where kind = 'reminder_pledge'), 1::bigint, 'pledge reminder once a day');
-select private.send_reminders((current_date + time '14:00') at time zone 'Europe/Zurich');
+select private.send_reminders((private.zurich_today() + time '14:00') at time zone 'Europe/Zurich');
 select t2.eq((select count(*) from private.push_log where kind like 'reminder%'), 1::bigint, 'nothing outside reminder hours');
 
 -- 20:00 Zurich: players with unfinished quests, with the count.
@@ -152,14 +152,14 @@ insert into public.daily_quests (type, label, unit_label, target) values
   ('water', 'Eau', 'verres', 8), ('sport', 'Sport', 'min', 30);
 select public.log_quest((select id from public.daily_quests where type = 'water'), 8);
 reset role;
-select private.send_reminders((current_date + time '20:10') at time zone 'Europe/Zurich');
+select private.send_reminders((private.zurich_today() + time '20:10') at time zone 'Europe/Zurich');
 select t2.eq(t2.pushed('reminder_quests', 'cccccccc-0000-0000-0000-00000000000b'), 1::bigint, 'quests reminder at 20 h');
 select t2.eq((select body from private.push_log where kind = 'reminder_quests'),
   'Plus qu''une quête à boucler avant minuit. Tu gères !', 'quests reminder counts what is left');
 select t2.eq(t2.pushed('reminder_quests', 'cccccccc-0000-0000-0000-00000000000a'), 0::bigint, 'no quests, no reminder');
 
 update public.profiles set notify_reminders = false where id = 'cccccccc-0000-0000-0000-00000000000a';
-select t2.eq('cccccccc-0000-0000-0000-00000000000a' = any (private.pledge_reminder_targets(current_date + 1)), false,
+select t2.eq('cccccccc-0000-0000-0000-00000000000a' = any (private.pledge_reminder_targets(private.zurich_today() + 1)), false,
   'reminders can be turned off');
 
 -- 4. Privacy of the delivery tables ----------------------------------------------
