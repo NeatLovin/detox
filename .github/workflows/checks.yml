@@ -61,7 +61,7 @@ jobs:
       - name: Riverpod lint
         run: |
           set -o pipefail
-          if ! dart analyze --no-fatal-infos 2>&1 | tee dart-analyze.log; then
+          if ! dart analyze 2>&1 | tee dart-analyze.log; then
             grep -v '^\s*$' dart-analyze.log | grep -v '^\s*info' | tail -15 | while IFS= read -r l; do
               echo "::error::$(echo "$l" | tr -s ' ' | cut -c1-300)"
             done
