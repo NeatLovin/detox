@@ -52,6 +52,11 @@ android {
 
     buildTypes {
         release {
+            // R8 stripped a Pigeon method of shared_preferences_android
+            // (NoSuchMethodError on SharedPreferencesApiRegistrar.getAll at startup).
+            // Code shrinking saves only a few MB on a sideloaded app, so it stays off.
+            isMinifyEnabled = false
+            isShrinkResources = false
             // Stable release key when available, so updates install over the
             // previous APK. Falls back to the debug key for local release runs.
             signingConfig = if (hasReleaseKey) {
