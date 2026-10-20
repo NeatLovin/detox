@@ -65,6 +65,16 @@ String errorMessage(AppLocalizations l10n, Object? error) =>
       'quit_date_in_future' => l10n.errorQuitDateInFuture,
       'addiction_archived' => l10n.errorAddictionArchived,
       'too_many_addictions' => l10n.errorTooManyAddictions,
+      'too_many_quests' => l10n.errorTooManyQuests,
+      'quest_day_out_of_range' => l10n.errorQuestDayOutOfRange,
+      'quest_archived' => l10n.errorQuestArchived,
+      'craving_in_future' => l10n.errorCravingInFuture,
+      'craving_too_old' => l10n.errorCravingTooOld,
+      'sos_not_found' => l10n.errorSosNotFound,
+      'sos_own_alert' => l10n.errorSosOwnAlert,
+      'sos_expired' => l10n.errorSosExpired,
+      'sos_already_resolved' => l10n.errorSosAlreadyResolved,
+      'too_many_motivations' => l10n.errorTooManyMotivations,
       _ => _withDetail(l10n.errorGeneric, errorDetail(error)),
     };
 

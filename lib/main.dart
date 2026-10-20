@@ -23,7 +23,11 @@ Future<void> main() async {
 
     final envError = Env.validationError;
     if (envError != null) {
-      runApp(StartupErrorApp(title: 'Configuration invalide', details: envError));
+      runApp(
+        ProviderScope(
+          child: StartupErrorApp(title: 'Configuration invalide', details: envError),
+        ),
+      );
       return;
     }
 
@@ -32,15 +36,23 @@ Future<void> main() async {
       publishableKey: Env.supabaseAnonKey,
     ).timeout(const Duration(seconds: 15));
   } on TimeoutException {
-    runApp(const StartupErrorApp(
-      title: 'Démarrage trop long',
-      details: 'La connexion à Supabase n’a pas abouti en 15 secondes. '
-          'Vérifie ta connexion internet puis relance l’app.',
-    ));
+    runApp(
+      const ProviderScope(
+        child: StartupErrorApp(
+          title: 'Démarrage trop long',
+          details: 'La connexion à Supabase n’a pas abouti en 15 secondes. '
+              'Vérifie ta connexion internet puis relance l’app.',
+        ),
+      ),
+    );
     return;
   } catch (error, stack) {
     debugPrint('Startup failed: $error\n$stack');
-    runApp(StartupErrorApp(title: 'Erreur au démarrage', details: '$error'));
+    runApp(
+      ProviderScope(
+        child: StartupErrorApp(title: 'Erreur au démarrage', details: '$error'),
+      ),
+    );
     return;
   }
 
