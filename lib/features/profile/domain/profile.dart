@@ -10,6 +10,8 @@ abstract class Profile with _$Profile {
     required String username,
     required String avatarEmoji,
     @Default(false) bool isPrivate,
+    @Default(true) bool notifySos,
+    @Default(true) bool notifyReminders,
     required DateTime createdAt,
   }) = _Profile;
 

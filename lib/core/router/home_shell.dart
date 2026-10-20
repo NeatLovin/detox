@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../../features/gamification/presentation/engagement_providers.dart';
 import '../../features/gamification/presentation/level_up_dialog.dart';
 import '../../features/health/presentation/health_providers.dart';
+import '../../features/notifications/presentation/push_service.dart';
 import '../../features/quests/presentation/quest_providers.dart';
 import '../../features/updates/presentation/update_banner.dart';
 import '../l10n/l10n.dart';
@@ -52,6 +53,14 @@ class _HomeShellState extends ConsumerState<HomeShell> {
 
   @override
   Widget build(BuildContext context) {
+    // Register this device for push notifications (once per session).
+    ref.watch(pushSetupProvider);
+    // A tapped notification opens its screen.
+    ref.listen(pendingNotificationRouteProvider, (_, route) {
+      if (route == null) return;
+      ref.read(pendingNotificationRouteProvider.notifier).set(null);
+      if (context.mounted) GoRouter.of(context).go(route);
+    });
     // Level-up celebration, wherever the XP came from (written server side).
     ref.listen(playerStatsProvider, (previous, next) {
       final level = next.value?.level;

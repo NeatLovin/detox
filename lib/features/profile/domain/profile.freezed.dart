@@ -16,7 +16,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$Profile {
 
- String get id; String get username; String get avatarEmoji; bool get isPrivate; DateTime get createdAt;
+ String get id; String get username; String get avatarEmoji; bool get isPrivate; bool get notifySos; bool get notifyReminders; DateTime get createdAt;
 /// Create a copy of Profile
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -30,20 +30,20 @@ $ProfileCopyWith<Profile> get copyWith => _$ProfileCopyWithImpl<Profile>(this as
 @override
 bool operator ==(Object other) {
   final _this = this as Profile;
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Profile&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.username, _this.username) || other.username == _this.username)&&(identical(other.avatarEmoji, _this.avatarEmoji) || other.avatarEmoji == _this.avatarEmoji)&&(identical(other.isPrivate, _this.isPrivate) || other.isPrivate == _this.isPrivate)&&(identical(other.createdAt, _this.createdAt) || other.createdAt == _this.createdAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Profile&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.username, _this.username) || other.username == _this.username)&&(identical(other.avatarEmoji, _this.avatarEmoji) || other.avatarEmoji == _this.avatarEmoji)&&(identical(other.isPrivate, _this.isPrivate) || other.isPrivate == _this.isPrivate)&&(identical(other.notifySos, _this.notifySos) || other.notifySos == _this.notifySos)&&(identical(other.notifyReminders, _this.notifyReminders) || other.notifyReminders == _this.notifyReminders)&&(identical(other.createdAt, _this.createdAt) || other.createdAt == _this.createdAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
   final _this = this as Profile;
-  return Object.hash(runtimeType,_this.id,_this.username,_this.avatarEmoji,_this.isPrivate,_this.createdAt);
+  return Object.hash(runtimeType,_this.id,_this.username,_this.avatarEmoji,_this.isPrivate,_this.notifySos,_this.notifyReminders,_this.createdAt);
 }
 
 @override
 String toString() {
   final _this = this as Profile;
-  return 'Profile(id: ${_this.id}, username: ${_this.username}, avatarEmoji: ${_this.avatarEmoji}, isPrivate: ${_this.isPrivate}, createdAt: ${_this.createdAt})';
+  return 'Profile(id: ${_this.id}, username: ${_this.username}, avatarEmoji: ${_this.avatarEmoji}, isPrivate: ${_this.isPrivate}, notifySos: ${_this.notifySos}, notifyReminders: ${_this.notifyReminders}, createdAt: ${_this.createdAt})';
 }
 
 
@@ -54,7 +54,7 @@ abstract mixin class $ProfileCopyWith<$Res>  {
   factory $ProfileCopyWith(Profile value, $Res Function(Profile) _then) = _$ProfileCopyWithImpl;
 @useResult
 $Res call({
- String id, String username, String avatarEmoji, bool isPrivate, DateTime createdAt
+ String id, String username, String avatarEmoji, bool isPrivate, bool notifySos, bool notifyReminders, DateTime createdAt
 });
 
 
@@ -71,12 +71,14 @@ class _$ProfileCopyWithImpl<$Res>
 
 /// Create a copy of Profile
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? username = null,Object? avatarEmoji = null,Object? isPrivate = null,Object? createdAt = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? username = null,Object? avatarEmoji = null,Object? isPrivate = null,Object? notifySos = null,Object? notifyReminders = null,Object? createdAt = null,}) {
   return _then(Profile(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,username: null == username ? _self.username : username // ignore: cast_nullable_to_non_nullable
 as String,avatarEmoji: null == avatarEmoji ? _self.avatarEmoji : avatarEmoji // ignore: cast_nullable_to_non_nullable
 as String,isPrivate: null == isPrivate ? _self.isPrivate : isPrivate // ignore: cast_nullable_to_non_nullable
+as bool,notifySos: null == notifySos ? _self.notifySos : notifySos // ignore: cast_nullable_to_non_nullable
+as bool,notifyReminders: null == notifyReminders ? _self.notifyReminders : notifyReminders // ignore: cast_nullable_to_non_nullable
 as bool,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime,
   ));
@@ -163,10 +165,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String username,  String avatarEmoji,  bool isPrivate,  DateTime createdAt)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String username,  String avatarEmoji,  bool isPrivate,  bool notifySos,  bool notifyReminders,  DateTime createdAt)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Profile() when $default != null:
-return $default(_that.id,_that.username,_that.avatarEmoji,_that.isPrivate,_that.createdAt);case _:
+return $default(_that.id,_that.username,_that.avatarEmoji,_that.isPrivate,_that.notifySos,_that.notifyReminders,_that.createdAt);case _:
   return orElse();
 
 }
@@ -184,10 +186,10 @@ return $default(_that.id,_that.username,_that.avatarEmoji,_that.isPrivate,_that.
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String username,  String avatarEmoji,  bool isPrivate,  DateTime createdAt)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String username,  String avatarEmoji,  bool isPrivate,  bool notifySos,  bool notifyReminders,  DateTime createdAt)  $default,) {final _that = this;
 switch (_that) {
 case _Profile():
-return $default(_that.id,_that.username,_that.avatarEmoji,_that.isPrivate,_that.createdAt);case _:
+return $default(_that.id,_that.username,_that.avatarEmoji,_that.isPrivate,_that.notifySos,_that.notifyReminders,_that.createdAt);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -204,10 +206,10 @@ return $default(_that.id,_that.username,_that.avatarEmoji,_that.isPrivate,_that.
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String username,  String avatarEmoji,  bool isPrivate,  DateTime createdAt)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String username,  String avatarEmoji,  bool isPrivate,  bool notifySos,  bool notifyReminders,  DateTime createdAt)?  $default,) {final _that = this;
 switch (_that) {
 case _Profile() when $default != null:
-return $default(_that.id,_that.username,_that.avatarEmoji,_that.isPrivate,_that.createdAt);case _:
+return $default(_that.id,_that.username,_that.avatarEmoji,_that.isPrivate,_that.notifySos,_that.notifyReminders,_that.createdAt);case _:
   return null;
 
 }
@@ -219,13 +221,15 @@ return $default(_that.id,_that.username,_that.avatarEmoji,_that.isPrivate,_that.
 @JsonSerializable()
 
 class _Profile implements Profile {
-  const _Profile({required this.id, required this.username, required this.avatarEmoji, this.isPrivate = false, required this.createdAt});
+  const _Profile({required this.id, required this.username, required this.avatarEmoji, this.isPrivate = false, this.notifySos = true, this.notifyReminders = true, required this.createdAt});
   factory _Profile.fromJson(Map<String, dynamic> json) => _$ProfileFromJson(json);
 
 @override final  String id;
 @override final  String username;
 @override final  String avatarEmoji;
 @override@JsonKey() final  bool isPrivate;
+@override@JsonKey() final  bool notifySos;
+@override@JsonKey() final  bool notifyReminders;
 @override final  DateTime createdAt;
 
 /// Create a copy of Profile
@@ -241,18 +245,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is _Profile&&(identical(other.id, id) || other.id == id)&&(identical(other.username, username) || other.username == username)&&(identical(other.avatarEmoji, avatarEmoji) || other.avatarEmoji == avatarEmoji)&&(identical(other.isPrivate, isPrivate) || other.isPrivate == isPrivate)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _Profile&&(identical(other.id, id) || other.id == id)&&(identical(other.username, username) || other.username == username)&&(identical(other.avatarEmoji, avatarEmoji) || other.avatarEmoji == avatarEmoji)&&(identical(other.isPrivate, isPrivate) || other.isPrivate == isPrivate)&&(identical(other.notifySos, notifySos) || other.notifySos == notifySos)&&(identical(other.notifyReminders, notifyReminders) || other.notifyReminders == notifyReminders)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
-    return Object.hash(runtimeType,id,username,avatarEmoji,isPrivate,createdAt);
+    return Object.hash(runtimeType,id,username,avatarEmoji,isPrivate,notifySos,notifyReminders,createdAt);
 }
 
 @override
 String toString() {
-    return 'Profile(id: $id, username: $username, avatarEmoji: $avatarEmoji, isPrivate: $isPrivate, createdAt: $createdAt)';
+    return 'Profile(id: $id, username: $username, avatarEmoji: $avatarEmoji, isPrivate: $isPrivate, notifySos: $notifySos, notifyReminders: $notifyReminders, createdAt: $createdAt)';
 }
 
 
@@ -263,7 +267,7 @@ abstract mixin class _$ProfileCopyWith<$Res> implements $ProfileCopyWith<$Res> {
   factory _$ProfileCopyWith(_Profile value, $Res Function(_Profile) _then) = __$ProfileCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String username, String avatarEmoji, bool isPrivate, DateTime createdAt
+ String id, String username, String avatarEmoji, bool isPrivate, bool notifySos, bool notifyReminders, DateTime createdAt
 });
 
 
@@ -280,12 +284,14 @@ class __$ProfileCopyWithImpl<$Res>
 
 /// Create a copy of Profile
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? username = null,Object? avatarEmoji = null,Object? isPrivate = null,Object? createdAt = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? username = null,Object? avatarEmoji = null,Object? isPrivate = null,Object? notifySos = null,Object? notifyReminders = null,Object? createdAt = null,}) {
   return _then(_Profile(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,username: null == username ? _self.username : username // ignore: cast_nullable_to_non_nullable
 as String,avatarEmoji: null == avatarEmoji ? _self.avatarEmoji : avatarEmoji // ignore: cast_nullable_to_non_nullable
 as String,isPrivate: null == isPrivate ? _self.isPrivate : isPrivate // ignore: cast_nullable_to_non_nullable
+as bool,notifySos: null == notifySos ? _self.notifySos : notifySos // ignore: cast_nullable_to_non_nullable
+as bool,notifyReminders: null == notifyReminders ? _self.notifyReminders : notifyReminders // ignore: cast_nullable_to_non_nullable
 as bool,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime,
   ));

@@ -753,5 +753,19 @@
       }
     }
   },
-  "healthConnected": "Pas, sommeil et sport synchronisés avec Health Connect"
+  "healthConnected": "Pas, sommeil et sport synchronisés avec Health Connect",
+  "notifySosToggle": "Alertes SOS",
+  "notifySosHint": "Être prévenu quand quelqu’un lance un SOS, et quand on te soutient.",
+  "notifyRemindersToggle": "Rappels du jour",
+  "notifyRemindersHint": "Engagement à {pledge} h, quêtes restantes à {quests} h.",
+  "@notifyRemindersHint": {
+    "placeholders": {
+      "pledge": {
+        "type": "int"
+      },
+      "quests": {
+        "type": "int"
+      }
+    }
+  }
 }

@@ -13,7 +13,7 @@ on:
       mode:
         description: "dry-run = show pending migrations only, apply = push them"
         type: choice
-        options: [dry-run, apply, verify, auth-logs, auth-config]
+        options: [dry-run, apply, verify, auth-logs, auth-config, deploy-push]
         default: dry-run
 
 concurrency:
@@ -133,7 +133,36 @@ jobs:
           q "select string_agg(tablename, ' ' order by tablename) from pg_publication_tables where pubname='supabase_realtime'" "realtime"
           q "select count(*) || ' rules' from private.reward_rules" "reward rules"
           q "select count(*) || ' releases' from public.app_releases" "app releases"
+          q "select (select count(*) from private.push_config) || ' config, pg_net=' || exists(select 1 from pg_extension where extname='pg_net')::text" "push"
+          q "select string_agg(jobname, ' ') from cron.job" "cron"
           q "select coalesce(string_agg(id || ':' || public::text, ' '), 'none') from storage.buckets" "buckets"
+
+      # Deploys the push Edge Function and points the database at it. The
+      # shared secret is derived from the DB password (stable, never printed).
+      - name: Deploy push function
+        if: inputs.mode == 'deploy-push'
+        env:
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+        run: |
+          set -euo pipefail
+          if [ -z "$FIREBASE_SERVICE_ACCOUNT" ]; then echo "::error::Missing secret FIREBASE_SERVICE_ACCOUNT"; exit 1; fi
+          if ! printf '%s' "$FIREBASE_SERVICE_ACCOUNT" | jq -e '.project_id and .client_email and .private_key' > /dev/null; then
+            echo "::error::FIREBASE_SERVICE_ACCOUNT is not a service account JSON key"; exit 1
+          fi
+          echo "::notice::Firebase project: $(printf '%s' "$FIREBASE_SERVICE_ACCOUNT" | jq -r .project_id)"
+          secret=$(printf '%s' "detox-push:$SUPABASE_DB_PASSWORD" | sha256sum | cut -d' ' -f1)
+          echo "::add-mask::$secret"
+          printf '%s' "$FIREBASE_SERVICE_ACCOUNT" > sa.json
+          supabase secrets set --project-ref "$SUPABASE_PROJECT_REF" \
+            "FIREBASE_SERVICE_ACCOUNT=$(cat sa.json)" "PUSH_SECRET=$secret" > /dev/null
+          rm -f sa.json
+          supabase functions deploy push --project-ref "$SUPABASE_PROJECT_REF" --no-verify-jwt
+          url="https://$SUPABASE_PROJECT_REF.supabase.co/functions/v1/push"
+          supabase db query --linked "insert into private.push_config (id, function_url, secret) values (1, '$url', '$secret') on conflict (id) do update set function_url = excluded.function_url, secret = excluded.secret" > /dev/null
+          code=$(curl -sS -o resp.txt -w '%{http_code}' -X POST "$url" -H "x-push-secret: $secret" \
+            -H "Content-Type: application/json" -d '{"user_ids":[],"title":""}')
+          echo "::notice::push function answered $code: $(head -c 100 resp.txt)"
+          [ "$code" = 200 ] || exit 1
 
       - name: Push migrations
         if: inputs.mode == 'apply'
