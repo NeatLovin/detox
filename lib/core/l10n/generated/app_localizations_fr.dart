@@ -1220,4 +1220,54 @@ class AppLocalizationsFr extends AppLocalizations {
   String aboutVersion(String version) {
     return 'Version $version';
   }
+
+  @override
+  String get leaderboardWeekTab => 'Semaine';
+
+  @override
+  String get leaderboardAllTimeTab => 'Général';
+
+  @override
+  String get leaderboardWeekTitle => 'Classement de la semaine';
+
+  @override
+  String leaderboardWeekEndsDays(int days, int hours) {
+    return 'Nouvelle semaine dans $days j $hours h';
+  }
+
+  @override
+  String leaderboardWeekEndsHours(int hours) {
+    return 'Nouvelle semaine dans $hours h';
+  }
+
+  @override
+  String leaderboardWeekEndsMinutes(int minutes) {
+    return 'Nouvelle semaine dans $minutes min';
+  }
+
+  @override
+  String get leaderboardWeekEmpty =>
+      'Personne n’a encore gagné d’XP cette semaine. À toi d’ouvrir le score !';
+
+  @override
+  String feedWeekWinner(String username, int xp) {
+    return '$username remporte la semaine avec $xp XP 🏆';
+  }
+
+  @override
+  String feedWeekWinnerTie(String username, int xp) {
+    return '$username remporte la semaine ex æquo avec $xp XP 🏆';
+  }
+
+  @override
+  String get feedReact => 'Réagir';
+
+  @override
+  String get errorOwnEvent => 'Tu ne peux pas réagir à ton propre événement.';
+
+  @override
+  String get errorInvalidReaction => 'Cette réaction n’est pas disponible ici.';
+
+  @override
+  String get errorEventNotFound => 'Cet événement n’est plus visible.';
 }

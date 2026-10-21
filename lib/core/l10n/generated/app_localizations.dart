@@ -1875,6 +1875,84 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Version {version}'**
   String aboutVersion(String version);
+
+  /// No description provided for @leaderboardWeekTab.
+  ///
+  /// In fr, this message translates to:
+  /// **'Semaine'**
+  String get leaderboardWeekTab;
+
+  /// No description provided for @leaderboardAllTimeTab.
+  ///
+  /// In fr, this message translates to:
+  /// **'Général'**
+  String get leaderboardAllTimeTab;
+
+  /// No description provided for @leaderboardWeekTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Classement de la semaine'**
+  String get leaderboardWeekTitle;
+
+  /// No description provided for @leaderboardWeekEndsDays.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nouvelle semaine dans {days} j {hours} h'**
+  String leaderboardWeekEndsDays(int days, int hours);
+
+  /// No description provided for @leaderboardWeekEndsHours.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nouvelle semaine dans {hours} h'**
+  String leaderboardWeekEndsHours(int hours);
+
+  /// No description provided for @leaderboardWeekEndsMinutes.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nouvelle semaine dans {minutes} min'**
+  String leaderboardWeekEndsMinutes(int minutes);
+
+  /// No description provided for @leaderboardWeekEmpty.
+  ///
+  /// In fr, this message translates to:
+  /// **'Personne n’a encore gagné d’XP cette semaine. À toi d’ouvrir le score !'**
+  String get leaderboardWeekEmpty;
+
+  /// No description provided for @feedWeekWinner.
+  ///
+  /// In fr, this message translates to:
+  /// **'{username} remporte la semaine avec {xp} XP 🏆'**
+  String feedWeekWinner(String username, int xp);
+
+  /// No description provided for @feedWeekWinnerTie.
+  ///
+  /// In fr, this message translates to:
+  /// **'{username} remporte la semaine ex æquo avec {xp} XP 🏆'**
+  String feedWeekWinnerTie(String username, int xp);
+
+  /// No description provided for @feedReact.
+  ///
+  /// In fr, this message translates to:
+  /// **'Réagir'**
+  String get feedReact;
+
+  /// No description provided for @errorOwnEvent.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tu ne peux pas réagir à ton propre événement.'**
+  String get errorOwnEvent;
+
+  /// No description provided for @errorInvalidReaction.
+  ///
+  /// In fr, this message translates to:
+  /// **'Cette réaction n’est pas disponible ici.'**
+  String get errorInvalidReaction;
+
+  /// No description provided for @errorEventNotFound.
+  ///
+  /// In fr, this message translates to:
+  /// **'Cet événement n’est plus visible.'**
+  String get errorEventNotFound;
 }
 
 class _AppLocalizationsDelegate

@@ -39,5 +39,6 @@ const _$FeedEventTypeEnumMap = {
   FeedEventType.sosSupport: 'sos_support',
   FeedEventType.sosResolved: 'sos_resolved',
   FeedEventType.questsAllDone: 'quests_all_done',
+  FeedEventType.weekWinner: 'week_winner',
   FeedEventType.unknown: 'unknown',
 };

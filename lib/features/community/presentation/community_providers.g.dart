@@ -166,3 +166,147 @@ final class PlayerProfileFamily extends $Family
   @override
   String toString() => r'playerProfileProvider';
 }
+
+@ProviderFor(weekLeaderboard)
+final weekLeaderboardProvider = WeekLeaderboardProvider._();
+
+final class WeekLeaderboardProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<LeaderboardView>,
+          LeaderboardView,
+          FutureOr<LeaderboardView>
+        >
+    with $FutureModifier<LeaderboardView>, $FutureProvider<LeaderboardView> {
+  WeekLeaderboardProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'weekLeaderboardProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$weekLeaderboardHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<LeaderboardView> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<LeaderboardView> create(Ref ref) {
+    return weekLeaderboard(ref);
+  }
+}
+
+String _$weekLeaderboardHash() => r'e8e161337e471ece4e34aa66fd1509be8111af89';
+
+/// Leaderboard tab picked on the community screen (the week by default).
+
+@ProviderFor(SelectedLeaderboard)
+final selectedLeaderboardProvider = SelectedLeaderboardProvider._();
+
+/// Leaderboard tab picked on the community screen (the week by default).
+final class SelectedLeaderboardProvider
+    extends $NotifierProvider<SelectedLeaderboard, LeaderboardScope> {
+  /// Leaderboard tab picked on the community screen (the week by default).
+  SelectedLeaderboardProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'selectedLeaderboardProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$selectedLeaderboardHash();
+
+  @$internal
+  @override
+  SelectedLeaderboard create() => SelectedLeaderboard();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(LeaderboardScope value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<LeaderboardScope>(value),
+    );
+  }
+}
+
+String _$selectedLeaderboardHash() =>
+    r'17de43434b884199ba522089556873ea7443f20d';
+
+/// Leaderboard tab picked on the community screen (the week by default).
+
+abstract class _$SelectedLeaderboard extends $Notifier<LeaderboardScope> {
+  LeaderboardScope build();
+  @$mustCallSuper
+  @override
+  WhenComplete runBuild() {
+    final ref = this.ref as $Ref<LeaderboardScope, LeaderboardScope>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<LeaderboardScope, LeaderboardScope>,
+              LeaderboardScope,
+              Object?,
+              Object?
+            >;
+    return element.handleCreate(ref, build);
+  }
+}
+
+/// Realtime reactions, grouped by feed event.
+
+@ProviderFor(feedReactions)
+final feedReactionsProvider = FeedReactionsProvider._();
+
+/// Realtime reactions, grouped by feed event.
+
+final class FeedReactionsProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<Map<String, ReactionSummary>>,
+          Map<String, ReactionSummary>,
+          Stream<Map<String, ReactionSummary>>
+        >
+    with
+        $FutureModifier<Map<String, ReactionSummary>>,
+        $StreamProvider<Map<String, ReactionSummary>> {
+  /// Realtime reactions, grouped by feed event.
+  FeedReactionsProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'feedReactionsProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$feedReactionsHash();
+
+  @$internal
+  @override
+  $StreamProviderElement<Map<String, ReactionSummary>> $createElement(
+    $ProviderPointer pointer,
+  ) => $StreamProviderElement(pointer);
+
+  @override
+  Stream<Map<String, ReactionSummary>> create(Ref ref) {
+    return feedReactions(ref);
+  }
+}
+
+String _$feedReactionsHash() => r'd4893b43e1073855c609c1eb8108a81749374fe3';
