@@ -53,6 +53,9 @@ jobs:
             fi
           done
           test -s "$RUNNER_TEMP/fonts/NotoColorEmoji.ttf"
+          dejavu=$(fc-list : file | grep -m1 '/DejaVuSans.ttf' | cut -d: -f1 || true)
+          if [ -z "$dejavu" ]; then sudo apt-get install -y -qq fonts-dejavu-core > /dev/null; dejavu=/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf; fi
+          cp "$dejavu" "$RUNNER_TEMP/fonts/DejaVuSans.ttf"
           ls -la "$RUNNER_TEMP/fonts"
 
       - name: Render

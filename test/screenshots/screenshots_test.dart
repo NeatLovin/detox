@@ -2,8 +2,8 @@
 //
 // Skipped by a plain `flutter test`. The `Screenshots` workflow runs it with
 //   --dart-define=SCREENSHOTS_DIR=<out> --dart-define=FONTS_DIR=<fonts>
-// where FONTS_DIR holds Roboto-*.ttf, MaterialIcons-Regular.otf and
-// NotoColorEmoji.ttf (the test renderer has no system fonts).
+// where FONTS_DIR holds Roboto-*.ttf, MaterialIcons-Regular.otf,
+// NotoColorEmoji.ttf and DejaVuSans.ttf (the test renderer has no system fonts).
 import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
@@ -60,6 +60,11 @@ const _pixelRatio = 2.625;
 const _physicalSize = Size(1080, 2400);
 
 const _emojiFont = 'NotoColorEmoji';
+
+/// Symbols such as ✓ that neither Roboto nor the emoji font cover (a phone
+/// finds them in its system fonts).
+const _symbolFont = 'DejaVuSans';
+const _fallback = [_emojiFont, _symbolFont];
 final _shotKey = GlobalKey();
 
 // Demo world ---------------------------------------------------------------------
@@ -403,10 +408,19 @@ Future<void> _loadFont(String family, Iterable<File> files) async {
 
 ThemeData _themeWithEmoji() {
   final theme = AppTheme.dark();
+  // The app's button text style names no font family (the phone default);
+  // here the family must be explicit, or the test font is used.
+  final buttonText = theme.filledButtonTheme.style?.textStyle?.resolve({})?.copyWith(
+    fontFamily: 'Roboto',
+    fontFamilyFallback: _fallback,
+  );
   return theme.copyWith(
-    textTheme: theme.textTheme.apply(fontFamilyFallback: const [_emojiFont]),
-    primaryTextTheme: theme.primaryTextTheme.apply(
-      fontFamilyFallback: const [_emojiFont],
+    textTheme: theme.textTheme.apply(fontFamilyFallback: _fallback),
+    primaryTextTheme: theme.primaryTextTheme.apply(fontFamilyFallback: _fallback),
+    filledButtonTheme: FilledButtonThemeData(
+      style: theme.filledButtonTheme.style?.copyWith(
+        textStyle: WidgetStatePropertyAll(buttonText),
+      ),
     ),
   );
 }
@@ -419,6 +433,8 @@ Future<void> _shoot(
   required String route,
   bool communityAlert = false,
 }) async {
+  // flutter_test draws shadows as solid outlines unless told otherwise.
+  debugDisableShadows = false;
   tester.view.physicalSize = _physicalSize;
   tester.view.devicePixelRatio = _pixelRatio;
   addTearDown(tester.view.reset);
@@ -498,6 +514,7 @@ Future<void> _shoot(
   // Unmount so no screen timer outlives the test.
   await tester.pumpWidget(const SizedBox.shrink());
   await tester.pump(const Duration(seconds: 1));
+  debugDisableShadows = true;
 }
 
 void main() {
@@ -512,6 +529,7 @@ void main() {
     await _loadFont('Roboto', fonts.where((f) => f.path.contains('Roboto-')));
     await _loadFont('MaterialIcons', fonts.where((f) => f.path.contains('MaterialIcons')));
     await _loadFont(_emojiFont, fonts.where((f) => f.path.contains(_emojiFont)));
+    await _loadFont(_symbolFont, fonts.where((f) => f.path.contains(_symbolFont)));
     _timelines = HealthTimelines.fromJson(
       jsonDecode(File(healthTimelineAsset).readAsStringSync()) as Map<String, dynamic>,
     );
