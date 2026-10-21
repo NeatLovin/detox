@@ -101,8 +101,12 @@ class _ReactionBarState extends State<ReactionBar> {
         if (canReact)
           IconButton(
             tooltip: l10n.feedReact,
-            visualDensity: VisualDensity.compact,
             iconSize: 18,
+            style: IconButton.styleFrom(
+              minimumSize: const Size(36, 32),
+              padding: const EdgeInsets.symmetric(horizontal: 6),
+              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+            ),
             color: theme.colorScheme.onSurfaceVariant,
             onPressed: _busy ? null : _pick,
             icon: const Icon(Icons.add_reaction_outlined),
