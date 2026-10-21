@@ -103,6 +103,10 @@ tool/sql_tests/run.sh                   # tests SQL anti-triche (Postgres local,
 - **V2 — Hygiène de vie** ✅ : notifications push, Health Connect, stats, timeline santé, paramètres et suppression de compte.
 - **V3 — Défis et garde-fous** : défis entre joueurs, mode réduction progressive, version iPhone (HealthKit), offline-first.
 
+## Licence
+
+[MIT](LICENSE.md) © 2026 Valentino Di Donato (NeatLovin).
+
 ---
 
 <p align="center"><img src="assets/brand/logo.png" width="48" alt=""><br><sub>Développé par <a href="https://github.com/NeatLovin">NeatLovin</a></sub></p>
