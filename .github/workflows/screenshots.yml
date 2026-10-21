@@ -1,0 +1,87 @@
+# Renders the README screenshots (test/screenshots) with demo data and commits
+# them to docs/screenshots on the branch it runs on: manually, or when the
+# screenshot test itself changes.
+name: Screenshots
+
+on:
+  workflow_dispatch:
+  push:
+    branches-ignore: [main]
+    paths:
+      - test/screenshots/**
+      - .github/workflows/screenshots.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: screenshots-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - run: flutter pub get
+
+      # The test renderer has no system fonts: Roboto and Material Icons come
+      # from the Flutter SDK, color emoji from Google's Noto project.
+      - name: Fonts
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/fonts"
+          fonts="$FLUTTER_ROOT/bin/cache/artifacts/material_fonts"
+          [ -d "$fonts" ] || flutter precache --universal --no-android --no-ios
+          cp "$FLUTTER_ROOT"/bin/cache/artifacts/material_fonts/Roboto-*.ttf \
+             "$FLUTTER_ROOT"/bin/cache/artifacts/material_fonts/MaterialIcons-Regular.otf \
+             "$RUNNER_TEMP/fonts/"
+          # COLRv1 first (vector, drawn by Skia), the bitmap CBDT font as fallback.
+          for url in \
+            https://raw.githubusercontent.com/google/fonts/main/ofl/notocoloremoji/NotoColorEmoji-Regular.ttf \
+            https://raw.githubusercontent.com/googlefonts/noto-emoji/main/fonts/Noto-COLRv1.ttf \
+            https://raw.githubusercontent.com/googlefonts/noto-emoji/main/fonts/NotoColorEmoji.ttf; do
+            if curl -sSfL -o "$RUNNER_TEMP/fonts/NotoColorEmoji.ttf" "$url"; then
+              echo "::notice::emoji font: $url"; break
+            fi
+          done
+          test -s "$RUNNER_TEMP/fonts/NotoColorEmoji.ttf"
+          dejavu=$(fc-list : file | grep -m1 '/DejaVuSans.ttf' | cut -d: -f1 || true)
+          if [ -z "$dejavu" ]; then sudo apt-get install -y -qq fonts-dejavu-core > /dev/null; dejavu=/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf; fi
+          cp "$dejavu" "$RUNNER_TEMP/fonts/DejaVuSans.ttf"
+          ls -la "$RUNNER_TEMP/fonts"
+
+      - name: Render
+        run: |
+          set -o pipefail
+          rm -rf docs/screenshots
+          if ! flutter test test/screenshots \
+              --dart-define=SCREENSHOTS_DIR="$PWD/docs/screenshots" \
+              --dart-define=FONTS_DIR="$RUNNER_TEMP/fonts" 2>&1 | tee render.log; then
+            grep -E 'EXCEPTION|Error|Expected|failed' render.log | head -15 | while IFS= read -r l; do echo "::error::${l:0:300}"; done
+            exit 1
+          fi
+          ls -la docs/screenshots
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: screenshots
+          path: docs/screenshots
+
+      - name: Commit
+        run: |
+          if [ -n "$(git status --porcelain -- docs/screenshots)" ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add docs/screenshots
+            git commit -m "docs: refresh README screenshots"
+            git push origin "HEAD:${GITHUB_REF_NAME}"
+            echo "::notice::Screenshots committed to ${GITHUB_REF_NAME}"
+          fi

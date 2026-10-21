@@ -7,27 +7,49 @@ Une app mobile pour décrocher du porno, du snus, de la clope, de la beuh, du su
 
 ## Captures
 
-| Accueil | Classement | SOS |
-|---|---|---|
-| _(capture à venir)_ | _(capture à venir)_ | _(capture à venir)_ |
+<table>
+  <tr>
+    <th>Accueil</th><th>Quêtes du jour</th><th>Classement et feed</th>
+  </tr>
+  <tr>
+    <td><img src="docs/screenshots/home.png" width="260" alt="Accueil : carte joueur, engagement, timer par addiction"></td>
+    <td><img src="docs/screenshots/quests.png" width="260" alt="Quêtes du jour avec séries et Health Connect"></td>
+    <td><img src="docs/screenshots/community.png" width="260" alt="Podium, classement général et feed"></td>
+  </tr>
+  <tr>
+    <th>Profil d'un joueur</th><th>SOS</th><th>Ce qui change dans ton corps</th>
+  </tr>
+  <tr>
+    <td><img src="docs/screenshots/player.png" width="260" alt="Profil public : rang, niveau, badges, défis"></td>
+    <td><img src="docs/screenshots/sos.png" width="260" alt="SOS : respiration guidée, soutiens reçus, raisons"></td>
+    <td><img src="docs/screenshots/timeline.png" width="260" alt="Timeline santé du snus"></td>
+  </tr>
+</table>
+
+<sub>Rendus par la CI à partir des vrais écrans avec des joueurs fictifs (workflow <code>Screenshots</code>, test <code>test/screenshots</code>).</sub>
 
 ## Fonctionnalités
 
-- Connexion par email + code OTP à 6 chiffres
-- Onboarding : pseudo, avatar emoji, addictions suivies (catalogue + custom, option « privée »)
-- Accueil : carte joueur (niveau, XP, HP), engagement du matin, timer live par addiction, CHF économisés, record, prochain palier, bouton **SOS**, « Noter une envie »
-- **SOS** : compte à rebours de 5 min, respiration guidée, raisons perso, ancrage 5-4-3-2-1, soutiens reçus en direct
-- **Journal des envies** : intensité, déclencheur, part des envies résistées, déclencheur n°1
-- **Quêtes du jour** : eau, sport, sommeil, pas, méditation, lecture, sans écran, perso ; séries 🔥 et bonus « journée bouclée »
-- **Classement général** (XP total) et **feed global** temps réel ; profils publics : niveau, XP, HP, badges, addictions non privées
+- **Connexion** par email + code à 6 chiffres
+- **Onboarding** : pseudo, avatar, addictions suivies (catalogue + perso, option « privée »), quêtes du jour, préférences et motivations
+- **Accueil** : carte joueur (niveau, XP, HP), engagement du matin, timer live par addiction, CHF économisés, record, prochain palier, bouton **SOS**, « Noter une envie »
+- **SOS** : 5 min de respiration guidée, raisons perso, ancrage 5-4-3-2-1, soutiens des autres joueurs en direct
+- **Journal des envies** : intensité, déclencheur, part des envies résistées
+- **Quêtes du jour** : eau, sport, sommeil, pas, méditation, lecture, sans écran, perso ; séries et bonus « journée bouclée » ; pas, sommeil et sport remplis via **Health Connect**
+- **Ce qui change dans ton corps** : étapes santé par addiction (sources citées), avec compte à rebours vers la prochaine
+- **Classement général** (XP total) et **feed global** temps réel ; profils publics : rang, niveau, XP, HP, badges, addictions non privées
 - **Profil privé** : reste dans le classement (pseudo, niveau, XP), mais profil, feed et SOS invisibles pour les autres
-- **13 badges**, rechute en 2 taps (le nom d'une addiction privée ne sort jamais)
+- **Stats** : jours clean, meilleure série, XP et quêtes bouclées sur la période, moments à risque des envies
+- **Notifications push** : SOS des autres, soutiens reçus, rappels à 9 h (engagement) et 20 h (quêtes restantes)
+- **Paramètres** : confidentialité, notifications, suppression du compte (effacement complet côté serveur), don TWINT
+- **13 badges**, rechute en 2 taps : elle coûte des HP, jamais d'XP (le nom d'une addiction privée ne sort jamais)
+- **Mises à jour dans l'app** : chaque build de `main` est proposé directement aux joueurs
 
 Toute la gamification (XP, HP, niveaux, paliers, badges, feed) est calculée **côté serveur** par des fonctions et triggers Postgres, avec des plafonds journaliers anti-farming.
 
 ## Stack
 
-Flutter (Android + iOS) · Dart 3 · Riverpod (codegen) · go_router · freezed / json_serializable · Supabase (Auth OTP, Postgres + RLS, Realtime, pg_cron) · flutter_animate · Material 3 (thème sombre)
+Flutter (Android + iOS) · Dart 3 · Riverpod (codegen) · go_router · freezed / json_serializable · Supabase (Auth OTP, Postgres + RLS, Realtime, pg_cron, Edge Functions, Storage) · Firebase Cloud Messaging · Health Connect · flutter_animate · Material 3 (thème sombre)
 
 ## Structure
 
@@ -44,11 +66,18 @@ lib/
 │   ├── sos/
 │   ├── addictions/
 │   ├── gamification/
-│   └── profile/
+│   ├── health/       Health Connect
+│   ├── health_timeline/
+│   ├── notifications/
+│   ├── profile/
+│   ├── settings/
+│   ├── stats/
+│   └── updates/      mises à jour dans l'app
 └── shared/         widgets communs (XpBar, HpBar, StatTile, EmptyState…)
 
 supabase/
 ├── migrations/     schéma, fonctions de gamification, RLS / grants / realtime / cron
+├── functions/push/ envoi FCM (Edge Function)
 ├── seed.sql        3 users fictifs pour le dev local
 └── templates/      email OTP
 ```
@@ -71,5 +100,9 @@ tool/sql_tests/run.sh                   # tests SQL anti-triche (Postgres local,
 ## Roadmap
 
 - **V1 — Tenir le coup** ✅ : SOS, journal des envies, quêtes du jour, engagement du matin, badges, classement général.
-- **V2 — Hygiène de vie** : notifications push (SOS, rappels), Health Connect / HealthKit pour remplir les quêtes automatiquement, heatmap des envies.
-- **V3 — Défis et garde-fous** : challenges entre joueurs, blocage d'apps, avatar animé, offline-first.
+- **V2 — Hygiène de vie** ✅ : notifications push, Health Connect, stats, timeline santé, paramètres et suppression de compte.
+- **V3 — Défis et garde-fous** : défis entre joueurs, mode réduction progressive, version iPhone (HealthKit), offline-first.
+
+---
+
+<p align="center"><img src="assets/brand/logo.png" width="48" alt=""><br><sub>Développé par <a href="https://github.com/NeatLovin">NeatLovin</a></sub></p>
