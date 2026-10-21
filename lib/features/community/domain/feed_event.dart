@@ -24,6 +24,8 @@ enum FeedEventType {
   sosResolved,
   @JsonValue('quests_all_done')
   questsAllDone,
+  @JsonValue('week_winner')
+  weekWinner,
   unknown,
 }
 
@@ -55,4 +57,6 @@ abstract class FeedEvent with _$FeedEvent {
   String? get badge => payload['badge'] as String?;
   String? get emoji => payload['emoji'] as String?;
   String? get toUsername => payload['to_username'] as String?;
+  int? get xp => (payload['xp'] as num?)?.toInt();
+  bool get isTie => payload['tie'] as bool? ?? false;
 }

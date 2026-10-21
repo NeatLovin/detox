@@ -8,7 +8,10 @@ import '../../../core/session/session_providers.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../shared/widgets/empty_state.dart';
 import '../../sos/presentation/community_sos_banner.dart';
+import '../data/community_repository.dart';
+import '../domain/feed_reaction.dart';
 import '../domain/leaderboard.dart';
+import '../domain/leaderboard_week.dart';
 import 'community_providers.dart';
 import 'widgets/feed_tile.dart';
 import 'widgets/podium.dart';
@@ -29,8 +32,18 @@ class CommunityScreen extends ConsumerWidget {
 
   Future<void> _refresh(WidgetRef ref) async {
     ref.invalidate(leaderboardProvider);
+    ref.invalidate(weekLeaderboardProvider);
     ref.invalidate(communityFeedProvider);
     await ref.read(leaderboardProvider.future);
+  }
+
+  /// "Nouvelle semaine dans 4 j 11 h".
+  static String weekLeft(AppLocalizations l10n, Duration left) {
+    if (left.inDays >= 1) {
+      return l10n.leaderboardWeekEndsDays(left.inDays, left.inHours % 24);
+    }
+    if (left.inHours >= 1) return l10n.leaderboardWeekEndsHours(left.inHours);
+    return l10n.leaderboardWeekEndsMinutes(left.inMinutes < 1 ? 1 : left.inMinutes);
   }
 
   @override
@@ -42,14 +55,20 @@ class CommunityScreen extends ConsumerWidget {
           next.value != null &&
           next.value!.length != before) {
         ref.invalidate(leaderboardProvider);
+        ref.invalidate(weekLeaderboardProvider);
       }
     });
 
     final l10n = context.l10n;
     final theme = Theme.of(context);
     final me = ref.watch(authStateProvider).value;
-    final leaderboard = ref.watch(leaderboardProvider);
+    final scope = ref.watch(selectedLeaderboardProvider);
+    final isWeek = scope == LeaderboardScope.week;
+    final leaderboard = ref.watch(
+      isWeek ? weekLeaderboardProvider : leaderboardProvider,
+    );
     final feed = ref.watch(communityFeedProvider);
+    final reactions = ref.watch(feedReactionsProvider).value ?? const {};
     final view = leaderboard.value;
     final now = DateTime.now();
 
@@ -62,11 +81,41 @@ class CommunityScreen extends ConsumerWidget {
           padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
           children: [
             CommunitySosBanner(usernames: view?.usernames ?? const {}),
-            Text(l10n.leaderboardTitle, style: theme.textTheme.titleLarge),
+            SegmentedButton<LeaderboardScope>(
+              segments: [
+                ButtonSegment(
+                  value: LeaderboardScope.week,
+                  icon: const Icon(Icons.bolt),
+                  label: Text(l10n.leaderboardWeekTab),
+                ),
+                ButtonSegment(
+                  value: LeaderboardScope.allTime,
+                  icon: const Icon(Icons.emoji_events_outlined),
+                  label: Text(l10n.leaderboardAllTimeTab),
+                ),
+              ],
+              selected: {scope},
+              showSelectedIcon: false,
+              onSelectionChanged: (selection) => ref
+                  .read(selectedLeaderboardProvider.notifier)
+                  .select(selection.first),
+            ),
+            const SizedBox(height: 16),
+            Text(
+              isWeek ? l10n.leaderboardWeekTitle : l10n.leaderboardTitle,
+              style: theme.textTheme.titleLarge,
+            ),
+            if (isWeek)
+              Text(
+                weekLeft(l10n, LeaderboardWeek.remaining(now)),
+                style: theme.textTheme.bodySmall,
+              ),
             const SizedBox(height: 12),
             leaderboard.when(
               data: (view) => view.all.isEmpty
                   ? EmptyState(emoji: '🏁', message: l10n.leaderboardEmpty)
+                  : isWeek && view.podium.first.xp == 0
+                  ? EmptyState(emoji: '🏁', message: l10n.leaderboardWeekEmpty)
                   : Column(
                       children: [
                         Podium(
@@ -89,7 +138,9 @@ class CommunityScreen extends ConsumerWidget {
               ),
               error: (error, _) => ErrorState(
                 error: error,
-                onRetry: () => ref.invalidate(leaderboardProvider),
+                onRetry: () => ref.invalidate(
+                  isWeek ? weekLeaderboardProvider : leaderboardProvider,
+                ),
               ),
             ),
             const SizedBox(height: 24),
@@ -108,6 +159,12 @@ class CommunityScreen extends ConsumerWidget {
                             final entry? => () => openPlayer(context, entry, me),
                             null => null,
                           },
+                          reactions: reactions[event.id] ?? ReactionSummary.empty,
+                          onReact: event.userId == null || event.userId == me
+                              ? null
+                              : (emoji) => ref
+                                    .read(communityRepositoryProvider)
+                                    .react(eventId: event.id, emoji: emoji),
                         ),
                     ],
               loading: () => const [

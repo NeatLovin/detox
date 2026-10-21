@@ -13,7 +13,7 @@ on:
       mode:
         description: "dry-run = show pending migrations only, apply = push them"
         type: choice
-        options: [dry-run, apply, verify, auth-logs, auth-config, deploy-push, push-log, test-push, set-twint]
+        options: [dry-run, apply, verify, auth-logs, auth-config, deploy-push, push-log, test-push, set-twint, errors-log]
         default: dry-run
       twint_phone:
         description: "set-twint only: TWINT number shown in Paramètres (e.g. 079 123 45 67). Empty = hide the donation card."
@@ -140,6 +140,7 @@ jobs:
           q "select (select count(*) from private.push_config) || ' config, pg_net=' || exists(select 1 from pg_extension where extname='pg_net')::text" "push"
           q "select string_agg(jobname, ' ') from cron.job" "cron"
           q "select coalesce(string_agg(id || ':' || public::text, ' '), 'none') from storage.buckets" "buckets"
+          q "select 'leaderboard_week=' || exists(select 1 from pg_proc where proname = 'leaderboard_week')::text || ' react_feed=' || exists(select 1 from pg_proc where proname = 'react_feed')::text || ' report_error=' || exists(select 1 from pg_proc where proname = 'report_error')::text" "social"
           q "select 'delete_my_account=' || exists(select 1 from pg_proc where proname = 'delete_my_account')::text || ' twint set=' || coalesce((select (twint_phone is not null)::text from public.app_config), 'no table')" "settings"
 
       # Deploys the push Edge Function and points the database at it. The
@@ -213,6 +214,15 @@ jobs:
           supabase db query --linked "update public.app_config set twint_phone = $value, updated_at = now()" > /dev/null
           out=$(supabase db query --linked --output csv "select coalesce(twint_phone, '(hidden)') from public.app_config" 2>&1 || true)
           echo "::notice::TWINT number now: $(echo "$out" | tail -n +2 | tr '\n' ' ')"
+
+      # Crash reports sent by the app (last 7 days), most frequent first.
+      - name: Errors log (read-only)
+        if: inputs.mode == 'errors-log'
+        run: |
+          q() { supabase db query --linked --output csv "$1" 2>&1 | tail -n +2 || true; }
+          echo "::notice::$(q "select count(*) || ' kinds, ' || coalesce(sum(count), 0) || ' errors, ' || count(distinct user_id) || ' players (7 days)' from private.client_errors where last_seen > now() - interval '7 days'")"
+          q "select 'x' || sum(count) || ' · ' || count(distinct user_id) || 'p · build ' || max(build) || ' · ' || to_char(max(last_seen) at time zone 'Europe/Zurich', 'DD.MM HH24:MI') || ' · ' || coalesce(max(context), '-') || ' · ' || left(replace(message, chr(10), ' '), 160) || ' @ ' || coalesce((select string_agg(l, ' < ') from (select btrim(l) l from unnest(string_to_array(max(stack), chr(10))) l where l ~ 'package:detox' limit 3) f), '-') from private.client_errors where last_seen > now() - interval '7 days' group by fingerprint, message order by sum(count) desc limit 8" \
+            | while IFS= read -r line; do echo "::notice::${line:0:600}"; done
 
       - name: Push migrations
         if: inputs.mode == 'apply'

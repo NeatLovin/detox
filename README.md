@@ -37,13 +37,15 @@ Une app mobile pour décrocher du porno, du snus, de la clope, de la beuh, du su
 - **Journal des envies** : intensité, déclencheur, part des envies résistées
 - **Quêtes du jour** : eau, sport, sommeil, pas, méditation, lecture, sans écran, perso ; séries et bonus « journée bouclée » ; pas, sommeil et sport remplis via **Health Connect**
 - **Ce qui change dans ton corps** : étapes santé par addiction (sources citées), avec compte à rebours vers la prochaine
-- **Classement général** (XP total) et **feed global** temps réel ; profils publics : rang, niveau, XP, HP, badges, addictions non privées
+- **Classement de la semaine** (XP gagnée depuis lundi, le gagnant est annoncé chaque lundi) et **classement général** (XP total)
+- **Feed global** temps réel avec **réactions** (👏 🔥 💪 ❤️ 😂 ; seulement 💪 ❤️ sur une rechute ou un SOS) ; profils publics : rang, niveau, XP, HP, badges, addictions non privées
 - **Profil privé** : reste dans le classement (pseudo, niveau, XP), mais profil, feed et SOS invisibles pour les autres
 - **Stats** : jours clean, meilleure série, XP et quêtes bouclées sur la période, moments à risque des envies
 - **Notifications push** : SOS des autres, soutiens reçus, rappels à 9 h (engagement) et 20 h (quêtes restantes)
 - **Paramètres** : confidentialité, notifications, suppression du compte (effacement complet côté serveur), don TWINT
 - **13 badges**, rechute en 2 taps : elle coûte des HP, jamais d'XP (le nom d'une addiction privée ne sort jamais)
 - **Mises à jour dans l'app** : chaque build de `main` est proposé directement aux joueurs
+- **Remontée des plantages** : les erreurs inattendues de l'app sont regroupées dans Supabase (30 jours) et lisibles via le workflow `Supabase db push`, mode `errors-log`
 
 Toute la gamification (XP, HP, niveaux, paliers, badges, feed) est calculée **côté serveur** par des fonctions et triggers Postgres, avec des plafonds journaliers anti-farming.
 

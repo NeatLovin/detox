@@ -907,5 +907,62 @@
         "type": "String"
       }
     }
-  }
+  },
+  "leaderboardWeekTab": "Semaine",
+  "leaderboardAllTimeTab": "Général",
+  "leaderboardWeekTitle": "Classement de la semaine",
+  "leaderboardWeekEndsDays": "Nouvelle semaine dans {days} j {hours} h",
+  "@leaderboardWeekEndsDays": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      },
+      "hours": {
+        "type": "int"
+      }
+    }
+  },
+  "leaderboardWeekEndsHours": "Nouvelle semaine dans {hours} h",
+  "@leaderboardWeekEndsHours": {
+    "placeholders": {
+      "hours": {
+        "type": "int"
+      }
+    }
+  },
+  "leaderboardWeekEndsMinutes": "Nouvelle semaine dans {minutes} min",
+  "@leaderboardWeekEndsMinutes": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "leaderboardWeekEmpty": "Personne n’a encore gagné d’XP cette semaine. À toi d’ouvrir le score !",
+  "feedWeekWinner": "{username} remporte la semaine avec {xp} XP 🏆",
+  "@feedWeekWinner": {
+    "placeholders": {
+      "username": {
+        "type": "String"
+      },
+      "xp": {
+        "type": "int"
+      }
+    }
+  },
+  "feedWeekWinnerTie": "{username} remporte la semaine ex æquo avec {xp} XP 🏆",
+  "@feedWeekWinnerTie": {
+    "placeholders": {
+      "username": {
+        "type": "String"
+      },
+      "xp": {
+        "type": "int"
+      }
+    }
+  },
+  "feedReact": "Réagir",
+  "errorOwnEvent": "Tu ne peux pas réagir à ton propre événement.",
+  "errorInvalidReaction": "Cette réaction n’est pas disponible ici.",
+  "errorEventNotFound": "Cet événement n’est plus visible."
 }
