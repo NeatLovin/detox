@@ -11,6 +11,7 @@ abstract final class Routes {
   static String player(String userId) => '/community/players/$userId';
   static const profile = '/profile';
   static const editProfile = '/profile/edit';
+  static const settings = '/profile/settings';
   static const newAddiction = '/profile/addictions/new';
   static String editAddiction(String id) => '/profile/addictions/$id';
   static const cravings = '/profile/cravings';

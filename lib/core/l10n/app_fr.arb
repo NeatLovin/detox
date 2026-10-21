@@ -866,5 +866,46 @@
       }
     }
   },
-  "alcoholSafetyNote": "Si tu bois beaucoup tous les jours, ne t’arrête pas d’un coup sans en parler à un médecin : le sevrage d’alcool peut être dangereux."
+  "alcoholSafetyNote": "Si tu bois beaucoup tous les jours, ne t’arrête pas d’un coup sans en parler à un médecin : le sevrage d’alcool peut être dangereux.",
+  "brandDevelopedBy": "Développé par NeatLovin",
+  "settingsTitle": "Paramètres",
+  "settingsPrivacySection": "Confidentialité",
+  "settingsNotificationsSection": "Notifications",
+  "settingsAccountSection": "Compte",
+  "settingsSignedInAs": "Connecté avec {email}",
+  "@settingsSignedInAs": {
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "settingsDeleteAccount": "Supprimer mon compte",
+  "settingsDeleteAccountHint": "Efface définitivement ton profil et toutes tes données.",
+  "settingsDeleteTitle": "Supprimer ton compte ?",
+  "settingsDeleteBody": "Ton profil, ton XP, tes badges, tes addictions, ton journal d’envies et tes quêtes seront effacés pour de bon, et tu disparaîtras du classement. Impossible de revenir en arrière.",
+  "settingsDeleteConfirmLabel": "Tape {word} pour confirmer",
+  "@settingsDeleteConfirmLabel": {
+    "placeholders": {
+      "word": {
+        "type": "String"
+      }
+    }
+  },
+  "settingsDeleteConfirmButton": "Supprimer définitivement",
+  "settingsDeleted": "Ton compte a été supprimé. Prends soin de toi 💜",
+  "donateSection": "Soutenir Detox",
+  "donateBody": "Detox est gratuit et sans pub. Si l’app t’aide, tu peux soutenir son développement avec un don TWINT, du montant que tu veux.",
+  "donateSteps": "Ouvre TWINT → Envoyer → colle ce numéro. Merci 💜",
+  "donateCopy": "Copier le numéro",
+  "donateCopied": "Numéro copié, colle-le dans TWINT",
+  "aboutSection": "À propos",
+  "aboutVersion": "Version {version}",
+  "@aboutVersion": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  }
 }

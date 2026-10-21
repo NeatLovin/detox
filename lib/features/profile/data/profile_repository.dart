@@ -51,18 +51,29 @@ class ProfileRepository {
     required String userId,
     required String username,
     required String avatarEmoji,
-    required bool isPrivate,
-    required bool notifySos,
-    required bool notifyReminders,
+  }) async {
+    final row = await _client
+        .from('profiles')
+        .update({'username': username.trim(), 'avatar_emoji': avatarEmoji})
+        .eq('id', userId)
+        .select()
+        .single();
+    return Profile.fromJson(row);
+  }
+
+  /// Saves the settings toggles that changed (null = untouched).
+  Future<Profile> updateSettings({
+    required String userId,
+    bool? isPrivate,
+    bool? notifySos,
+    bool? notifyReminders,
   }) async {
     final row = await _client
         .from('profiles')
         .update({
-          'username': username.trim(),
-          'avatar_emoji': avatarEmoji,
-          'is_private': isPrivate,
-          'notify_sos': notifySos,
-          'notify_reminders': notifyReminders,
+          if (isPrivate != null) 'is_private': isPrivate,
+          if (notifySos != null) 'notify_sos': notifySos,
+          if (notifyReminders != null) 'notify_reminders': notifyReminders,
         })
         .eq('id', userId)
         .select()

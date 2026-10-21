@@ -14,6 +14,8 @@ class AuthRepository {
 
   String? get currentUserId => _auth.currentUser?.id;
 
+  String? get currentEmail => _auth.currentUser?.email;
+
   /// Emits the signed-in user id (or null) now and on every auth change.
   Stream<String?> watchUserId() async* {
     yield _auth.currentUser?.id;
@@ -32,6 +34,10 @@ class AuthRepository {
       );
 
   Future<void> signOut() => _auth.signOut();
+
+  /// Drops the local session only: used after the account was deleted, when
+  /// the server no longer knows the session.
+  Future<void> signOutLocally() => _auth.signOut(scope: SignOutScope.local);
 }
 
 @Riverpod(keepAlive: true)

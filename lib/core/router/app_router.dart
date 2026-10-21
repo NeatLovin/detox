@@ -13,6 +13,7 @@ import '../../features/profile/presentation/addiction_form_screen.dart';
 import '../../features/profile/presentation/edit_profile_screen.dart';
 import '../../features/profile/presentation/profile_screen.dart';
 import '../../features/quests/presentation/quests_screen.dart';
+import '../../features/settings/presentation/settings_screen.dart';
 import '../../features/stats/presentation/stats_screen.dart';
 import '../../features/sos/presentation/sos_screen.dart';
 import '../session/session_gate.dart';
@@ -104,6 +105,10 @@ GoRouter appRouter(Ref ref) {
                   GoRoute(
                     path: 'edit',
                     builder: (context, state) => const EditProfileScreen(),
+                  ),
+                  GoRoute(
+                    path: 'settings',
+                    builder: (context, state) => const SettingsScreen(),
                   ),
                   GoRoute(
                     path: 'cravings',

@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/errors/error_messages.dart';
 import '../../../core/l10n/l10n.dart';
+import '../../../shared/widgets/brand_subtitle.dart';
 import '../../../shared/widgets/button_spinner.dart';
 import '../data/auth_repository.dart';
 import '../domain/auth_rules.dart';
@@ -119,7 +120,8 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                       color: theme.colorScheme.primary,
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  const BrandSubtitle(),
+                  const SizedBox(height: 16),
                   Text(
                     l10n.authTagline,
                     textAlign: TextAlign.center,
