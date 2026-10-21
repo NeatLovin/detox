@@ -1755,6 +1755,126 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Si tu bois beaucoup tous les jours, ne t’arrête pas d’un coup sans en parler à un médecin : le sevrage d’alcool peut être dangereux.'**
   String get alcoholSafetyNote;
+
+  /// No description provided for @brandDevelopedBy.
+  ///
+  /// In fr, this message translates to:
+  /// **'Développé par NeatLovin'**
+  String get brandDevelopedBy;
+
+  /// No description provided for @settingsTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Paramètres'**
+  String get settingsTitle;
+
+  /// No description provided for @settingsPrivacySection.
+  ///
+  /// In fr, this message translates to:
+  /// **'Confidentialité'**
+  String get settingsPrivacySection;
+
+  /// No description provided for @settingsNotificationsSection.
+  ///
+  /// In fr, this message translates to:
+  /// **'Notifications'**
+  String get settingsNotificationsSection;
+
+  /// No description provided for @settingsAccountSection.
+  ///
+  /// In fr, this message translates to:
+  /// **'Compte'**
+  String get settingsAccountSection;
+
+  /// No description provided for @settingsSignedInAs.
+  ///
+  /// In fr, this message translates to:
+  /// **'Connecté avec {email}'**
+  String settingsSignedInAs(String email);
+
+  /// No description provided for @settingsDeleteAccount.
+  ///
+  /// In fr, this message translates to:
+  /// **'Supprimer mon compte'**
+  String get settingsDeleteAccount;
+
+  /// No description provided for @settingsDeleteAccountHint.
+  ///
+  /// In fr, this message translates to:
+  /// **'Efface définitivement ton profil et toutes tes données.'**
+  String get settingsDeleteAccountHint;
+
+  /// No description provided for @settingsDeleteTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Supprimer ton compte ?'**
+  String get settingsDeleteTitle;
+
+  /// No description provided for @settingsDeleteBody.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ton profil, ton XP, tes badges, tes addictions, ton journal d’envies et tes quêtes seront effacés pour de bon, et tu disparaîtras du classement. Impossible de revenir en arrière.'**
+  String get settingsDeleteBody;
+
+  /// No description provided for @settingsDeleteConfirmLabel.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tape {word} pour confirmer'**
+  String settingsDeleteConfirmLabel(String word);
+
+  /// No description provided for @settingsDeleteConfirmButton.
+  ///
+  /// In fr, this message translates to:
+  /// **'Supprimer définitivement'**
+  String get settingsDeleteConfirmButton;
+
+  /// No description provided for @settingsDeleted.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ton compte a été supprimé. Prends soin de toi 💜'**
+  String get settingsDeleted;
+
+  /// No description provided for @donateSection.
+  ///
+  /// In fr, this message translates to:
+  /// **'Soutenir Detox'**
+  String get donateSection;
+
+  /// No description provided for @donateBody.
+  ///
+  /// In fr, this message translates to:
+  /// **'Detox est gratuit et sans pub. Si l’app t’aide, tu peux soutenir son développement avec un don TWINT, du montant que tu veux.'**
+  String get donateBody;
+
+  /// No description provided for @donateSteps.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ouvre TWINT → Envoyer → colle ce numéro. Merci 💜'**
+  String get donateSteps;
+
+  /// No description provided for @donateCopy.
+  ///
+  /// In fr, this message translates to:
+  /// **'Copier le numéro'**
+  String get donateCopy;
+
+  /// No description provided for @donateCopied.
+  ///
+  /// In fr, this message translates to:
+  /// **'Numéro copié, colle-le dans TWINT'**
+  String get donateCopied;
+
+  /// No description provided for @aboutSection.
+  ///
+  /// In fr, this message translates to:
+  /// **'À propos'**
+  String get aboutSection;
+
+  /// No description provided for @aboutVersion.
+  ///
+  /// In fr, this message translates to:
+  /// **'Version {version}'**
+  String aboutVersion(String version);
 }
 
 class _AppLocalizationsDelegate

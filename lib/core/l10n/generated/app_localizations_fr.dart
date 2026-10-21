@@ -1150,4 +1150,74 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get alcoholSafetyNote =>
       'Si tu bois beaucoup tous les jours, ne t’arrête pas d’un coup sans en parler à un médecin : le sevrage d’alcool peut être dangereux.';
+
+  @override
+  String get brandDevelopedBy => 'Développé par NeatLovin';
+
+  @override
+  String get settingsTitle => 'Paramètres';
+
+  @override
+  String get settingsPrivacySection => 'Confidentialité';
+
+  @override
+  String get settingsNotificationsSection => 'Notifications';
+
+  @override
+  String get settingsAccountSection => 'Compte';
+
+  @override
+  String settingsSignedInAs(String email) {
+    return 'Connecté avec $email';
+  }
+
+  @override
+  String get settingsDeleteAccount => 'Supprimer mon compte';
+
+  @override
+  String get settingsDeleteAccountHint =>
+      'Efface définitivement ton profil et toutes tes données.';
+
+  @override
+  String get settingsDeleteTitle => 'Supprimer ton compte ?';
+
+  @override
+  String get settingsDeleteBody =>
+      'Ton profil, ton XP, tes badges, tes addictions, ton journal d’envies et tes quêtes seront effacés pour de bon, et tu disparaîtras du classement. Impossible de revenir en arrière.';
+
+  @override
+  String settingsDeleteConfirmLabel(String word) {
+    return 'Tape $word pour confirmer';
+  }
+
+  @override
+  String get settingsDeleteConfirmButton => 'Supprimer définitivement';
+
+  @override
+  String get settingsDeleted =>
+      'Ton compte a été supprimé. Prends soin de toi 💜';
+
+  @override
+  String get donateSection => 'Soutenir Detox';
+
+  @override
+  String get donateBody =>
+      'Detox est gratuit et sans pub. Si l’app t’aide, tu peux soutenir son développement avec un don TWINT, du montant que tu veux.';
+
+  @override
+  String get donateSteps => 'Ouvre TWINT → Envoyer → colle ce numéro. Merci 💜';
+
+  @override
+  String get donateCopy => 'Copier le numéro';
+
+  @override
+  String get donateCopied => 'Numéro copié, colle-le dans TWINT';
+
+  @override
+  String get aboutSection => 'À propos';
+
+  @override
+  String aboutVersion(String version) {
+    return 'Version $version';
+  }
 }
