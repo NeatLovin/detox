@@ -32,6 +32,10 @@ jobs:
 
       - run: flutter pub get
 
+      # Generated files may not be committed yet when this runs on a push.
+      - name: Codegen
+        run: dart run build_runner build -d && flutter gen-l10n
+
       # The test renderer has no system fonts: Roboto and Material Icons come
       # from the Flutter SDK, color emoji from Google's Noto project.
       - name: Fonts
