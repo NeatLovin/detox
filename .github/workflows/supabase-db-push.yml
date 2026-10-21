@@ -13,7 +13,7 @@ on:
       mode:
         description: "dry-run = show pending migrations only, apply = push them"
         type: choice
-        options: [dry-run, apply, verify, auth-logs, auth-config, deploy-push]
+        options: [dry-run, apply, verify, auth-logs, auth-config, deploy-push, push-log]
         default: dry-run
 
 concurrency:
@@ -163,6 +163,18 @@ jobs:
             -H "Content-Type: application/json" -d '{"user_ids":[],"title":""}')
           echo "::notice::push function answered $code: $(head -c 100 resp.txt)"
           [ "$code" = 200 ] || exit 1
+
+      - name: Push log (read-only)
+        if: inputs.mode == 'push-log'
+        run: |
+          q() {
+            out=$(supabase db query --linked --output csv "$1" 2>&1) || true
+            echo "::notice::$2: $(echo "$out" | tail -n +2 | tr '\n' ' ' | cut -c1-400)"
+          }
+          q "select count(*) || ' devices / ' || count(distinct user_id) || ' players' from public.push_tokens" "tokens"
+          q "select string_agg(kind || '@' || to_char(created_at at time zone 'Europe/Zurich', 'DD HH24:MI') || ' to=' || cardinality(user_ids) || ' sent=' || sent, ' | ' order by created_at desc) from (select * from private.push_log order by created_at desc limit 8) l" "last pushes"
+          q "select coalesce(string_agg(status_code::text, ' '), 'none') from (select status_code from net._http_response order by created desc limit 8) r" "pg_net responses"
+          q "select coalesce(string_agg(left(content, 80), ' | '), 'none') from (select content from net._http_response order by created desc limit 3) r" "function answers"
 
       - name: Push migrations
         if: inputs.mode == 'apply'
