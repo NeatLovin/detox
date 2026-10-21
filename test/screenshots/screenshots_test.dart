@@ -465,6 +465,7 @@ Future<void> _shoot(
   required String name,
   required String route,
   bool communityAlert = false,
+  double scroll = 0,
 }) async {
   // flutter_test draws shadows as solid outlines unless told otherwise.
   debugDisableShadows = false;
@@ -533,6 +534,12 @@ Future<void> _shoot(
   for (var i = 0; i < 30; i++) {
     await tester.pump(const Duration(milliseconds: 100));
   }
+  if (scroll > 0) {
+    await tester.drag(find.byType(Scrollable).first, Offset(0, -scroll));
+    for (var i = 0; i < 10; i++) {
+      await tester.pump(const Duration(milliseconds: 100));
+    }
+  }
 
   final boundary = tester.renderObject<RenderRepaintBoundary>(find.byKey(_shotKey));
   await tester.runAsync(() async {
@@ -578,6 +585,10 @@ void main() {
 
   testWidgets('community', skip: skip != null, (tester) async {
     await _shoot(tester, name: 'community', route: Routes.community);
+  });
+
+  testWidgets('feed', skip: skip != null, (tester) async {
+    await _shoot(tester, name: 'feed', route: Routes.community, scroll: 640);
   });
 
   testWidgets('player', skip: skip != null, (tester) async {

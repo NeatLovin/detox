@@ -9,20 +9,27 @@ Une app mobile pour décrocher du porno, du snus, de la clope, de la beuh, du su
 
 <table>
   <tr>
-    <th>Accueil</th><th>Quêtes du jour</th><th>Classement et feed</th>
+    <th>Accueil</th><th>Quêtes du jour</th><th>SOS</th>
   </tr>
   <tr>
     <td><img src="docs/screenshots/home.png" width="260" alt="Accueil : carte joueur, engagement, timer par addiction"></td>
     <td><img src="docs/screenshots/quests.png" width="260" alt="Quêtes du jour avec séries et Health Connect"></td>
-    <td><img src="docs/screenshots/community.png" width="260" alt="Podium, classement général et feed"></td>
-  </tr>
-  <tr>
-    <th>Profil d'un joueur</th><th>SOS</th><th>Ce qui change dans ton corps</th>
-  </tr>
-  <tr>
-    <td><img src="docs/screenshots/player.png" width="260" alt="Profil public : rang, niveau, badges, défis"></td>
     <td><img src="docs/screenshots/sos.png" width="260" alt="SOS : respiration guidée, soutiens reçus, raisons"></td>
+  </tr>
+  <tr>
+    <th>Classement de la semaine</th><th>Feed et réactions</th><th>Profil d'un joueur</th>
+  </tr>
+  <tr>
+    <td><img src="docs/screenshots/community.png" width="260" alt="Classement de la semaine avec podium et compte à rebours"></td>
+    <td><img src="docs/screenshots/feed.png" width="260" alt="Feed global avec réactions"></td>
+    <td><img src="docs/screenshots/player.png" width="260" alt="Profil public : rang, niveau, badges, défis"></td>
+  </tr>
+  <tr>
+    <th>Ce qui change dans ton corps</th><th></th><th></th>
+  </tr>
+  <tr>
     <td><img src="docs/screenshots/timeline.png" width="260" alt="Timeline santé du snus"></td>
+    <td></td><td></td>
   </tr>
 </table>
 
