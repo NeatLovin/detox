@@ -119,6 +119,8 @@ class HomeScreen extends ConsumerWidget {
                               addiction: addiction,
                               onRelapse: () =>
                                   _relapse(context, ref, addiction),
+                              onOpenTimeline: () =>
+                                  context.push(Routes.timeline(addiction.id)),
                             )
                             .animate()
                             .fadeIn(delay: (80 * index).ms)

@@ -1,0 +1,416 @@
+{
+  "disclaimer": "Repères généraux, pas un avis médical. Chaque corps réagit différemment.",
+  "types": {
+    "cigarette": {
+      "kind": "body",
+      "source": "NHS Wales — Quit smoking timeline",
+      "source_url": "https://111.wales.nhs.uk/LiveWell/QuitSmokingTimeline",
+      "milestones": [
+        {
+          "after_minutes": 20,
+          "emoji": "❤️",
+          "title": "Cœur plus calme",
+          "body": "Ta tension et ton pouls redescendent vers la normale."
+        },
+        {
+          "after_minutes": 480,
+          "emoji": "🫁",
+          "title": "Moins de monoxyde de carbone",
+          "body": "Le taux de monoxyde de carbone et de nicotine dans ton sang a diminué de moitié."
+        },
+        {
+          "after_minutes": 1440,
+          "emoji": "🌬️",
+          "title": "Poumons en nettoyage",
+          "body": "Le monoxyde de carbone est éliminé et tes poumons commencent à se nettoyer."
+        },
+        {
+          "after_minutes": 2880,
+          "emoji": "👃",
+          "title": "Goût et odorat",
+          "body": "Plus de nicotine dans le corps : le goût et l’odorat s’affinent."
+        },
+        {
+          "after_minutes": 4320,
+          "emoji": "⚡",
+          "title": "Respiration plus facile",
+          "body": "Respirer devient plus facile et ton énergie remonte."
+        },
+        {
+          "after_minutes": 20160,
+          "emoji": "🏃",
+          "title": "Circulation et souffle",
+          "body": "Entre 2 et 12 semaines, ta circulation et ta fonction pulmonaire s’améliorent : courir devient plus facile."
+        },
+        {
+          "after_minutes": 129600,
+          "emoji": "🍃",
+          "title": "Moins de toux",
+          "body": "Entre 3 et 9 mois, la toux, la congestion et l’essoufflement diminuent ; ta fonction pulmonaire peut augmenter d’environ 10 %."
+        },
+        {
+          "after_minutes": 525600,
+          "emoji": "🫀",
+          "title": "Un an",
+          "body": "Ton risque de crise cardiaque est environ deux fois plus faible que celui d’un fumeur."
+        },
+        {
+          "after_minutes": 5256000,
+          "emoji": "🛡️",
+          "title": "Dix ans",
+          "body": "Ton risque de cancer du poumon est environ divisé par deux, et continue de baisser."
+        },
+        {
+          "after_minutes": 7884000,
+          "emoji": "🏆",
+          "title": "Quinze ans",
+          "body": "Ton risque de crise cardiaque rejoint celui de quelqu’un qui n’a jamais fumé."
+        }
+      ]
+    },
+    "snus": {
+      "kind": "body",
+      "source": "Repères du sevrage nicotinique (NHS, ex-program)",
+      "source_url": "https://www.exprogram.com/about-quitting/what-to-know/nicotine-withdrawal-timeline/",
+      "milestones": [
+        {
+          "after_minutes": 120,
+          "emoji": "🌊",
+          "title": "Les premières envies",
+          "body": "Normal : une envie dure en général quelques minutes. Respire, bois un verre d’eau, occupe tes mains."
+        },
+        {
+          "after_minutes": 1440,
+          "emoji": "🧭",
+          "title": "24 h sans nicotine",
+          "body": "Irritabilité, nervosité ou difficulté à te concentrer sont des signes classiques du manque : ton corps s’adapte."
+        },
+        {
+          "after_minutes": 2880,
+          "emoji": "🧹",
+          "title": "La nicotine a quitté ton corps",
+          "body": "Après environ 48 h, il n’y a plus de nicotine dans ton organisme."
+        },
+        {
+          "after_minutes": 4320,
+          "emoji": "⛰️",
+          "title": "Le pic du manque",
+          "body": "Les symptômes sont souvent les plus forts entre le 1er et le 3e jour. À partir de maintenant, ça redescend."
+        },
+        {
+          "after_minutes": 10080,
+          "emoji": "📉",
+          "title": "Une semaine",
+          "body": "Les symptômes commencent en général à s’atténuer à la fin de la première semaine."
+        },
+        {
+          "after_minutes": 30240,
+          "emoji": "😴",
+          "title": "Trois semaines",
+          "body": "Beaucoup de gens retrouvent un meilleur sommeil et moins de fatigue vers la 3e semaine."
+        },
+        {
+          "after_minutes": 43200,
+          "emoji": "🏔️",
+          "title": "Un mois",
+          "body": "Le plus dur est généralement passé : les envies deviennent plus rares et moins fortes."
+        },
+        {
+          "after_minutes": 129600,
+          "emoji": "🧠",
+          "title": "Trois mois",
+          "body": "Une envie peut encore surgir dans une situation familière (café, soirée) : c’est normal, elle passe."
+        },
+        {
+          "after_minutes": 525600,
+          "emoji": "🏆",
+          "title": "Un an",
+          "body": "Un an libre de nicotine. Tes réflexes ont vraiment changé."
+        }
+      ]
+    },
+    "vape": {
+      "kind": "body",
+      "source": "Repères du sevrage nicotinique (NHS, ex-program)",
+      "source_url": "https://www.exprogram.com/about-quitting/what-to-know/nicotine-withdrawal-timeline/",
+      "milestones": [
+        {
+          "after_minutes": 120,
+          "emoji": "🌊",
+          "title": "Les premières envies",
+          "body": "Normal : une envie dure en général quelques minutes. Respire, bois un verre d’eau, occupe tes mains."
+        },
+        {
+          "after_minutes": 1440,
+          "emoji": "🧭",
+          "title": "24 h sans nicotine",
+          "body": "Irritabilité, nervosité ou difficulté à te concentrer sont des signes classiques du manque : ton corps s’adapte."
+        },
+        {
+          "after_minutes": 2880,
+          "emoji": "🧹",
+          "title": "La nicotine a quitté ton corps",
+          "body": "Après environ 48 h, il n’y a plus de nicotine dans ton organisme."
+        },
+        {
+          "after_minutes": 4320,
+          "emoji": "⛰️",
+          "title": "Le pic du manque",
+          "body": "Les symptômes sont souvent les plus forts entre le 1er et le 3e jour. À partir de maintenant, ça redescend."
+        },
+        {
+          "after_minutes": 10080,
+          "emoji": "📉",
+          "title": "Une semaine",
+          "body": "Les symptômes commencent en général à s’atténuer à la fin de la première semaine."
+        },
+        {
+          "after_minutes": 30240,
+          "emoji": "😴",
+          "title": "Trois semaines",
+          "body": "Beaucoup de gens retrouvent un meilleur sommeil et moins de fatigue vers la 3e semaine."
+        },
+        {
+          "after_minutes": 43200,
+          "emoji": "🏔️",
+          "title": "Un mois",
+          "body": "Le plus dur est généralement passé : les envies deviennent plus rares et moins fortes."
+        },
+        {
+          "after_minutes": 129600,
+          "emoji": "🧠",
+          "title": "Trois mois",
+          "body": "Une envie peut encore surgir dans une situation familière (café, soirée) : c’est normal, elle passe."
+        },
+        {
+          "after_minutes": 525600,
+          "emoji": "🏆",
+          "title": "Un an",
+          "body": "Un an libre de nicotine. Tes réflexes ont vraiment changé."
+        }
+      ]
+    },
+    "weed": {
+      "kind": "body",
+      "source": "Weedless — Cannabis withdrawal timeline",
+      "source_url": "https://www.weedless.org/withdrawal/timeline/",
+      "milestones": [
+        {
+          "after_minutes": 1440,
+          "emoji": "🌙",
+          "title": "Premier jour",
+          "body": "Sommeil agité, irritabilité ou envies peuvent apparaître dans les 24 h : c’est le sevrage qui commence."
+        },
+        {
+          "after_minutes": 4320,
+          "emoji": "⛰️",
+          "title": "Le pic",
+          "body": "Les symptômes sont souvent au plus fort entre le 2e et le 6e jour. Tiens bon, ça redescend ensuite."
+        },
+        {
+          "after_minutes": 10080,
+          "emoji": "🌤️",
+          "title": "Une semaine",
+          "body": "Les symptômes physiques s’améliorent ; le sommeil et l’appétit peuvent encore être perturbés."
+        },
+        {
+          "after_minutes": 20160,
+          "emoji": "📉",
+          "title": "Deux semaines",
+          "body": "Les symptômes sont moins intenses. Les envies peuvent revenir par vagues, plus espacées."
+        },
+        {
+          "after_minutes": 40320,
+          "emoji": "🧠",
+          "title": "Un mois",
+          "body": "Le plus dur est généralement derrière toi. Les rêves très intenses ou un sommeil irrégulier peuvent durer encore un peu."
+        },
+        {
+          "after_minutes": 129600,
+          "emoji": "✨",
+          "title": "Trois mois",
+          "body": "Pour la plupart des gens, l’humeur, la concentration et le sommeil se sont nettement stabilisés."
+        }
+      ]
+    },
+    "alcohol": {
+      "kind": "body",
+      "source": "Priory — Benefits of giving up alcohol",
+      "source_url": "https://www.priorygroup.com/blog/benefits-of-giving-up-alcohol-for-a-month",
+      "warning": "Si tu buvais beaucoup tous les jours, ne t’arrête pas d’un coup sans avis médical : le sevrage peut être dangereux (convulsions, hallucinations, surtout entre 12 et 72 h). Parles-en à un médecin ou appelle le 144 en cas d’urgence.",
+      "milestones": [
+        {
+          "after_minutes": 1440,
+          "emoji": "💧",
+          "title": "Premier jour",
+          "body": "Bois de l’eau et mange régulièrement : ton corps se réhydrate."
+        },
+        {
+          "after_minutes": 10080,
+          "emoji": "😴",
+          "title": "Une semaine",
+          "body": "Ton sommeil s’améliore : l’alcool réduit fortement le nombre de cycles de sommeil paradoxal."
+        },
+        {
+          "after_minutes": 20160,
+          "emoji": "🍽️",
+          "title": "Deux semaines",
+          "body": "Les remontées acides peuvent diminuer, et tu as déjà évité beaucoup de calories."
+        },
+        {
+          "after_minutes": 30240,
+          "emoji": "⚖️",
+          "title": "Trois semaines",
+          "body": "Moins de calories, parfois quelques kilos en moins : bon pour la tension."
+        },
+        {
+          "after_minutes": 40320,
+          "emoji": "🫀",
+          "title": "Un mois",
+          "body": "La graisse du foie commence à diminuer ; un foie peu atteint peut récupérer en 4 à 8 semaines. La peau est mieux hydratée."
+        },
+        {
+          "after_minutes": 129600,
+          "emoji": "🏆",
+          "title": "Trois mois",
+          "body": "Un nouveau rythme : meilleur sommeil, plus d’énergie et des soirées différentes."
+        }
+      ]
+    },
+    "sugar": {
+      "kind": "progress",
+      "milestones": [
+        {
+          "after_minutes": 1440,
+          "emoji": "🌱",
+          "title": "Premier jour",
+          "body": "Les envies de sucré peuvent être fortes au début, surtout aux heures où tu en prenais d’habitude."
+        },
+        {
+          "after_minutes": 4320,
+          "emoji": "🍎",
+          "title": "Trois jours",
+          "body": "Prévois des alternatives (fruits, noix, yaourt nature) pour les moments à risque."
+        },
+        {
+          "after_minutes": 10080,
+          "emoji": "📅",
+          "title": "Une semaine",
+          "body": "Beaucoup de gens trouvent que les envies diminuent après une à deux semaines."
+        },
+        {
+          "after_minutes": 20160,
+          "emoji": "👅",
+          "title": "Deux semaines",
+          "body": "Ton goût s’habitue : les aliments très sucrés peuvent paraître plus sucrés qu’avant."
+        },
+        {
+          "after_minutes": 43200,
+          "emoji": "🏔️",
+          "title": "Un mois",
+          "body": "Un mois : ton nouveau rythme alimentaire est bien installé."
+        },
+        {
+          "after_minutes": 129600,
+          "emoji": "🏆",
+          "title": "Trois mois",
+          "body": "Trois mois. Les envies ponctuelles restent normales : une rechute ne retire jamais ton XP."
+        }
+      ]
+    },
+    "porn": {
+      "kind": "progress",
+      "milestones": [
+        {
+          "after_minutes": 1440,
+          "emoji": "🌱",
+          "title": "Premier jour",
+          "body": "Le premier jour est souvent le plus dur. Tu l’as fait."
+        },
+        {
+          "after_minutes": 4320,
+          "emoji": "🔥",
+          "title": "Trois jours",
+          "body": "Les premiers jours, les envies sont souvent plus fréquentes. Note-les dans ton journal pour repérer tes moments à risque."
+        },
+        {
+          "after_minutes": 10080,
+          "emoji": "📅",
+          "title": "Une semaine",
+          "body": "Une semaine complète. Les envies commencent souvent à s’espacer."
+        },
+        {
+          "after_minutes": 20160,
+          "emoji": "🧱",
+          "title": "Deux semaines",
+          "body": "Tu construis une nouvelle routine : remplace l’ancien réflexe par une quête (sport, marche, lecture)."
+        },
+        {
+          "after_minutes": 43200,
+          "emoji": "🏔️",
+          "title": "Un mois",
+          "body": "Un mois : l’habitude perd vraiment du terrain."
+        },
+        {
+          "after_minutes": 129600,
+          "emoji": "🧠",
+          "title": "Trois mois",
+          "body": "Une envie peut encore revenir dans une situation familière : c’est normal, elle passe."
+        },
+        {
+          "after_minutes": 525600,
+          "emoji": "🏆",
+          "title": "Un an",
+          "body": "Un an. Respect."
+        }
+      ]
+    },
+    "custom": {
+      "kind": "progress",
+      "milestones": [
+        {
+          "after_minutes": 1440,
+          "emoji": "🌱",
+          "title": "Premier jour",
+          "body": "Le premier jour est souvent le plus dur. Tu l’as fait."
+        },
+        {
+          "after_minutes": 4320,
+          "emoji": "🔥",
+          "title": "Trois jours",
+          "body": "Les premiers jours, les envies sont souvent plus fréquentes. Note-les dans ton journal pour repérer tes moments à risque."
+        },
+        {
+          "after_minutes": 10080,
+          "emoji": "📅",
+          "title": "Une semaine",
+          "body": "Une semaine complète. Les envies commencent souvent à s’espacer."
+        },
+        {
+          "after_minutes": 20160,
+          "emoji": "🧱",
+          "title": "Deux semaines",
+          "body": "Tu construis une nouvelle routine : remplace l’ancien réflexe par une quête (sport, marche, lecture)."
+        },
+        {
+          "after_minutes": 43200,
+          "emoji": "🏔️",
+          "title": "Un mois",
+          "body": "Un mois : l’habitude perd vraiment du terrain."
+        },
+        {
+          "after_minutes": 129600,
+          "emoji": "🧠",
+          "title": "Trois mois",
+          "body": "Une envie peut encore revenir dans une situation familière : c’est normal, elle passe."
+        },
+        {
+          "after_minutes": 525600,
+          "emoji": "🏆",
+          "title": "Un an",
+          "body": "Un an. Respect."
+        }
+      ]
+    }
+  }
+}
