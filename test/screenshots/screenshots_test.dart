@@ -19,6 +19,7 @@ import 'package:detox/features/addictions/domain/addiction.dart';
 import 'package:detox/features/auth/data/auth_repository.dart';
 import 'package:detox/features/community/data/community_repository.dart';
 import 'package:detox/features/community/domain/feed_event.dart';
+import 'package:detox/features/community/domain/feed_reaction.dart';
 import 'package:detox/features/community/domain/leaderboard.dart';
 import 'package:detox/features/community/domain/player_profile.dart';
 import 'package:detox/features/cravings/data/craving_repository.dart';
@@ -138,6 +139,34 @@ final _leaderboard = [
   _entry(6, 'u-tom', 'Tom', '🐯', 4, 1105),
   _entry(7, 'u-jules', 'Jules', '🐸', 3, 720),
   _entry(8, 'u-ines', 'Inès', '🦄', 2, 310),
+];
+
+/// This week: the player leads (XP won since Monday).
+final _weekLeaderboard = [
+  _entry(1, _me, 'NeatLovin', '🦁', 7, 640),
+  _entry(2, 'u-max', 'Maxou', '🐺', 9, 585),
+  _entry(3, _sarah, 'Sarah_fit', '🦊', 12, 470),
+  _entry(4, 'u-tom', 'Tom', '🐯', 4, 310),
+  _entry(5, 'u-yanis', 'Yanis', '🐻', 6, 255),
+  _entry(6, 'u-lina', 'Lina', '🐼', 5, 120, isPrivate: true),
+  _entry(7, 'u-ines', 'Inès', '🦄', 2, 95),
+  _entry(8, 'u-jules', 'Jules', '🐸', 3, 40),
+];
+
+final _reactions = [
+  for (final (event, user, emoji) in [
+    ('f1', _sarah, '❤️'),
+    ('f1', 'u-tom', '❤️'),
+    ('f2', _me, '🔥'),
+    ('f2', 'u-max', '🔥'),
+    ('f2', 'u-tom', '🔥'),
+    ('f2', 'u-yanis', '👏'),
+    ('f2', 'u-ines', '👏'),
+    ('f3', _sarah, '💪'),
+    ('f3', 'u-max', '👏'),
+    ('f4', _me, '👏'),
+  ])
+    FeedReaction(eventId: event, userId: user, emoji: emoji),
 ];
 
 FeedEvent _event(int i, String userId, FeedEventType type, Map<String, dynamic> payload,
@@ -299,7 +328,11 @@ class _FakeCommunity implements CommunityRepository {
   @override
   Future<PlayerProfile> fetchPlayer(String userId) async => _sarahProfile;
   @override
+  Future<List<LeaderboardEntry>> fetchWeekLeaderboard() async => _weekLeaderboard;
+  @override
   Stream<List<FeedEvent>> watchFeed({int limit = 50}) => Stream.value(_feed);
+  @override
+  Stream<List<FeedReaction>> watchReactions({int limit = 1000}) => Stream.value(_reactions);
   @override
   dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
 }
@@ -432,6 +465,7 @@ Future<void> _shoot(
   required String name,
   required String route,
   bool communityAlert = false,
+  double scroll = 0,
 }) async {
   // flutter_test draws shadows as solid outlines unless told otherwise.
   debugDisableShadows = false;
@@ -500,6 +534,12 @@ Future<void> _shoot(
   for (var i = 0; i < 30; i++) {
     await tester.pump(const Duration(milliseconds: 100));
   }
+  if (scroll > 0) {
+    await tester.drag(find.byType(Scrollable).first, Offset(0, -scroll));
+    for (var i = 0; i < 10; i++) {
+      await tester.pump(const Duration(milliseconds: 100));
+    }
+  }
 
   final boundary = tester.renderObject<RenderRepaintBoundary>(find.byKey(_shotKey));
   await tester.runAsync(() async {
@@ -545,6 +585,10 @@ void main() {
 
   testWidgets('community', skip: skip != null, (tester) async {
     await _shoot(tester, name: 'community', route: Routes.community);
+  });
+
+  testWidgets('feed', skip: skip != null, (tester) async {
+    await _shoot(tester, name: 'feed', route: Routes.community, scroll: 640);
   });
 
   testWidgets('player', skip: skip != null, (tester) async {

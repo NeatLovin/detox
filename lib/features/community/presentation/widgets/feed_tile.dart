@@ -4,15 +4,30 @@ import '../../../../core/l10n/l10n.dart';
 import '../../../../core/theme/app_theme.dart';
 import '../../../../core/utils/time_ago.dart';
 import '../../domain/feed_event.dart';
+import '../../domain/feed_reaction.dart';
+import 'reaction_bar.dart';
 
 class FeedTile extends StatelessWidget {
-  const FeedTile({super.key, required this.event, required this.now, this.onTap});
+  const FeedTile({
+    super.key,
+    required this.event,
+    required this.now,
+    this.onTap,
+    this.reactions,
+    this.onReact,
+  });
 
   final FeedEvent event;
   final DateTime now;
 
   /// Opens the author's profile.
   final VoidCallback? onTap;
+
+  /// Null hides the reaction bar.
+  final ReactionSummary? reactions;
+
+  /// Null on the player's own events (they see the counts only).
+  final Future<void> Function(String emoji)? onReact;
 
   static (IconData, Color) _iconFor(FeedEventType type) => switch (type) {
     FeedEventType.joined => (Icons.waving_hand, AppColors.money),
@@ -25,6 +40,7 @@ class FeedTile extends StatelessWidget {
     FeedEventType.sosSupport => (Icons.volunteer_activism, AppColors.xp),
     FeedEventType.sosResolved => (Icons.shield, AppColors.money),
     FeedEventType.questsAllDone => (Icons.task_alt, AppColors.money),
+    FeedEventType.weekWinner => (Icons.workspace_premium, AppColors.gold),
     FeedEventType.unknown => (Icons.bolt, AppColors.silver),
   };
 
@@ -55,6 +71,9 @@ class FeedTile extends StatelessWidget {
       ),
       FeedEventType.sosResolved => l10n.feedSosResolved(event.username, label),
       FeedEventType.questsAllDone => l10n.feedQuestsAllDone(event.username),
+      FeedEventType.weekWinner => event.isTie
+          ? l10n.feedWeekWinnerTie(event.username, event.xp ?? 0)
+          : l10n.feedWeekWinner(event.username, event.xp ?? 0),
       FeedEventType.unknown => l10n.feedUnknown(event.username),
     };
   }
@@ -72,7 +91,7 @@ class FeedTile extends StatelessWidget {
     final l10n = context.l10n;
     final (icon, color) = _iconFor(event.type);
     final bonus = event.type == FeedEventType.milestone ? event.bonusXp : null;
-    return ListTile(
+    final tile = ListTile(
       contentPadding: EdgeInsets.zero,
       onTap: onTap,
       leading: Stack(
@@ -107,6 +126,22 @@ class FeedTile extends StatelessWidget {
                 fontWeight: FontWeight.w700,
               ),
             ),
+    );
+    final reactions = this.reactions;
+    if (reactions == null) return tile;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        tile,
+        Padding(
+          padding: const EdgeInsets.only(left: 56, bottom: 4),
+          child: ReactionBar(
+            summary: reactions,
+            allowed: allowedReactions(event.type),
+            onReact: onReact,
+          ),
+        ),
+      ],
     );
   }
 }

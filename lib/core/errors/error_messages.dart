@@ -74,6 +74,9 @@ String errorMessage(AppLocalizations l10n, Object? error) =>
       'sos_expired' => l10n.errorSosExpired,
       'sos_already_resolved' => l10n.errorSosAlreadyResolved,
       'too_many_motivations' => l10n.errorTooManyMotivations,
+      'own_event' => l10n.errorOwnEvent,
+      'invalid_reaction' => l10n.errorInvalidReaction,
+      'event_not_found' => l10n.errorEventNotFound,
       _ => _withDetail(l10n.errorGeneric, errorDetail(error)),
     };
 

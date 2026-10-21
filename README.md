@@ -9,20 +9,27 @@ Une app mobile pour décrocher du porno, du snus, de la clope, de la beuh, du su
 
 <table>
   <tr>
-    <th>Accueil</th><th>Quêtes du jour</th><th>Classement et feed</th>
+    <th>Accueil</th><th>Quêtes du jour</th><th>SOS</th>
   </tr>
   <tr>
     <td><img src="docs/screenshots/home.png" width="260" alt="Accueil : carte joueur, engagement, timer par addiction"></td>
     <td><img src="docs/screenshots/quests.png" width="260" alt="Quêtes du jour avec séries et Health Connect"></td>
-    <td><img src="docs/screenshots/community.png" width="260" alt="Podium, classement général et feed"></td>
-  </tr>
-  <tr>
-    <th>Profil d'un joueur</th><th>SOS</th><th>Ce qui change dans ton corps</th>
-  </tr>
-  <tr>
-    <td><img src="docs/screenshots/player.png" width="260" alt="Profil public : rang, niveau, badges, défis"></td>
     <td><img src="docs/screenshots/sos.png" width="260" alt="SOS : respiration guidée, soutiens reçus, raisons"></td>
+  </tr>
+  <tr>
+    <th>Classement de la semaine</th><th>Feed et réactions</th><th>Profil d'un joueur</th>
+  </tr>
+  <tr>
+    <td><img src="docs/screenshots/community.png" width="260" alt="Classement de la semaine avec podium et compte à rebours"></td>
+    <td><img src="docs/screenshots/feed.png" width="260" alt="Feed global avec réactions"></td>
+    <td><img src="docs/screenshots/player.png" width="260" alt="Profil public : rang, niveau, badges, défis"></td>
+  </tr>
+  <tr>
+    <th>Ce qui change dans ton corps</th><th></th><th></th>
+  </tr>
+  <tr>
     <td><img src="docs/screenshots/timeline.png" width="260" alt="Timeline santé du snus"></td>
+    <td></td><td></td>
   </tr>
 </table>
 
@@ -37,13 +44,15 @@ Une app mobile pour décrocher du porno, du snus, de la clope, de la beuh, du su
 - **Journal des envies** : intensité, déclencheur, part des envies résistées
 - **Quêtes du jour** : eau, sport, sommeil, pas, méditation, lecture, sans écran, perso ; séries et bonus « journée bouclée » ; pas, sommeil et sport remplis via **Health Connect**
 - **Ce qui change dans ton corps** : étapes santé par addiction (sources citées), avec compte à rebours vers la prochaine
-- **Classement général** (XP total) et **feed global** temps réel ; profils publics : rang, niveau, XP, HP, badges, addictions non privées
+- **Classement de la semaine** (XP gagnée depuis lundi, le gagnant est annoncé chaque lundi) et **classement général** (XP total)
+- **Feed global** temps réel avec **réactions** (👏 🔥 💪 ❤️ 😂 ; seulement 💪 ❤️ sur une rechute ou un SOS) ; profils publics : rang, niveau, XP, HP, badges, addictions non privées
 - **Profil privé** : reste dans le classement (pseudo, niveau, XP), mais profil, feed et SOS invisibles pour les autres
 - **Stats** : jours clean, meilleure série, XP et quêtes bouclées sur la période, moments à risque des envies
 - **Notifications push** : SOS des autres, soutiens reçus, rappels à 9 h (engagement) et 20 h (quêtes restantes)
 - **Paramètres** : confidentialité, notifications, suppression du compte (effacement complet côté serveur), don TWINT
 - **13 badges**, rechute en 2 taps : elle coûte des HP, jamais d'XP (le nom d'une addiction privée ne sort jamais)
 - **Mises à jour dans l'app** : chaque build de `main` est proposé directement aux joueurs
+- **Remontée des plantages** : les erreurs inattendues de l'app sont regroupées dans Supabase (30 jours) et lisibles via le workflow `Supabase db push`, mode `errors-log`
 
 Toute la gamification (XP, HP, niveaux, paliers, badges, feed) est calculée **côté serveur** par des fonctions et triggers Postgres, avec des plafonds journaliers anti-farming.
 

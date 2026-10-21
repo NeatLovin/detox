@@ -8,6 +8,8 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'app.dart';
 import 'core/env/env.dart';
 import 'core/startup/startup_error_app.dart';
+import 'features/diagnostics/data/crash_repository.dart';
+import 'features/diagnostics/data/error_reporter.dart';
 
 /// Anything that throws or hangs before runApp() leaves the user frozen on the
 /// native splash icon, with no way to know why. Every startup step is therefore
@@ -56,5 +58,14 @@ Future<void> main() async {
     return;
   }
 
-  runApp(const ProviderScope(child: DetoxApp()));
+  final reporter = ErrorReporter(
+    CrashRepository(Supabase.instance.client, build: Env.buildNumber),
+  )..install();
+
+  runApp(
+    ProviderScope(
+      observers: [ErrorReportingObserver(reporter)],
+      child: const DetoxApp(),
+    ),
+  );
 }
