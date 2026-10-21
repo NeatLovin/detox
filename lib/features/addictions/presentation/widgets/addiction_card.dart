@@ -9,6 +9,7 @@ import '../../../../shared/widgets/stat_tile.dart';
 import '../../../../shared/widgets/xp_bar.dart';
 import '../../domain/addiction.dart';
 import '../../domain/addiction_catalog.dart';
+import '../../../health_timeline/presentation/timeline_widgets.dart';
 import '../../domain/addiction_progress.dart';
 
 /// Live card: re-renders every second from a local ticker, no network call.
@@ -17,11 +18,16 @@ class AddictionCard extends ConsumerWidget {
     super.key,
     required this.addiction,
     this.onRelapse,
+    this.onOpenTimeline,
   });
 
   final Addiction addiction;
+
   /// Null on someone else's profile: no relapse button.
   final VoidCallback? onRelapse;
+
+  /// Null on someone else's profile: no health timeline.
+  final VoidCallback? onOpenTimeline;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -30,6 +36,7 @@ class AddictionCard extends ConsumerWidget {
       addiction: addiction,
       now: now,
       onRelapse: onRelapse,
+      onOpenTimeline: onOpenTimeline,
     );
   }
 }
@@ -40,12 +47,17 @@ class AddictionCardView extends StatelessWidget {
     required this.addiction,
     required this.now,
     this.onRelapse,
+    this.onOpenTimeline,
   });
 
   final Addiction addiction;
   final DateTime now;
+
   /// Null on someone else's profile: no relapse button.
   final VoidCallback? onRelapse;
+
+  /// Null on someone else's profile: no health timeline.
+  final VoidCallback? onOpenTimeline;
 
   @override
   Widget build(BuildContext context) {
@@ -186,6 +198,10 @@ class AddictionCardView extends StatelessWidget {
                 textAlign: TextAlign.center,
                 style: theme.textTheme.labelLarge,
               ),
+            if (onOpenTimeline != null) ...[
+              const SizedBox(height: 8),
+              TimelineTeaser(addiction: addiction, now: now, onTap: onOpenTimeline!),
+            ],
             if (onRelapse != null) ...[
               const SizedBox(height: 12),
               Align(

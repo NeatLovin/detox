@@ -1055,4 +1055,99 @@ class AppLocalizationsFr extends AppLocalizations {
   String notifyRemindersHint(int pledge, int quests) {
     return 'Engagement à $pledge h, quêtes restantes à $quests h.';
   }
+
+  @override
+  String get timelineBodyTitle => 'Ce qui change dans ton corps';
+
+  @override
+  String get timelineProgressTitle => 'Ta progression';
+
+  @override
+  String timelineHeader(String label, int reached, int total) {
+    return '$label : $reached/$total étapes franchies';
+  }
+
+  @override
+  String get timelineAllReached => 'Toutes les étapes franchies';
+
+  @override
+  String get timelineEmpty => 'Pas encore de repères pour cette addiction.';
+
+  @override
+  String timelineSource(String source) {
+    return 'Source : $source';
+  }
+
+  @override
+  String timelineInMinutes(int count) {
+    return 'dans $count min';
+  }
+
+  @override
+  String timelineInHours(int count) {
+    return 'dans $count h';
+  }
+
+  @override
+  String timelineInDays(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'dans $count jours',
+      one: 'dans 1 jour',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String timelineAfterMinutes(int count) {
+    return '$count min';
+  }
+
+  @override
+  String timelineAfterHours(int count) {
+    return '$count h';
+  }
+
+  @override
+  String timelineAfterDays(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count jours',
+      one: '1 jour',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String timelineAfterWeeks(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count semaines',
+      one: '1 semaine',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String timelineAfterMonths(int count) {
+    return '$count mois';
+  }
+
+  @override
+  String timelineAfterYears(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count ans',
+      one: '1 an',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get alcoholSafetyNote =>
+      'Si tu bois beaucoup tous les jours, ne t’arrête pas d’un coup sans en parler à un médecin : le sevrage d’alcool peut être dangereux.';
 }

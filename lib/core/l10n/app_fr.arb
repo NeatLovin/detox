@@ -767,5 +767,104 @@
         "type": "int"
       }
     }
-  }
+  },
+  "timelineBodyTitle": "Ce qui change dans ton corps",
+  "timelineProgressTitle": "Ta progression",
+  "timelineHeader": "{label} : {reached}/{total} étapes franchies",
+  "@timelineHeader": {
+    "placeholders": {
+      "label": {
+        "type": "String"
+      },
+      "reached": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "timelineAllReached": "Toutes les étapes franchies",
+  "timelineEmpty": "Pas encore de repères pour cette addiction.",
+  "timelineSource": "Source : {source}",
+  "@timelineSource": {
+    "placeholders": {
+      "source": {
+        "type": "String"
+      }
+    }
+  },
+  "timelineInMinutes": "dans {count} min",
+  "@timelineInMinutes": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "timelineInHours": "dans {count} h",
+  "@timelineInHours": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "timelineInDays": "{count, plural, =1{dans 1 jour} other{dans {count} jours}}",
+  "@timelineInDays": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "timelineAfterMinutes": "{count} min",
+  "@timelineAfterMinutes": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "timelineAfterHours": "{count} h",
+  "@timelineAfterHours": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "timelineAfterDays": "{count, plural, =1{1 jour} other{{count} jours}}",
+  "@timelineAfterDays": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "timelineAfterWeeks": "{count, plural, =1{1 semaine} other{{count} semaines}}",
+  "@timelineAfterWeeks": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "timelineAfterMonths": "{count} mois",
+  "@timelineAfterMonths": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "timelineAfterYears": "{count, plural, =1{1 an} other{{count} ans}}",
+  "@timelineAfterYears": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "alcoholSafetyNote": "Si tu bois beaucoup tous les jours, ne t’arrête pas d’un coup sans en parler à un médecin : le sevrage d’alcool peut être dangereux."
 }

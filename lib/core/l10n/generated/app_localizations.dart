@@ -1659,6 +1659,102 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Engagement à {pledge} h, quêtes restantes à {quests} h.'**
   String notifyRemindersHint(int pledge, int quests);
+
+  /// No description provided for @timelineBodyTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ce qui change dans ton corps'**
+  String get timelineBodyTitle;
+
+  /// No description provided for @timelineProgressTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ta progression'**
+  String get timelineProgressTitle;
+
+  /// No description provided for @timelineHeader.
+  ///
+  /// In fr, this message translates to:
+  /// **'{label} : {reached}/{total} étapes franchies'**
+  String timelineHeader(String label, int reached, int total);
+
+  /// No description provided for @timelineAllReached.
+  ///
+  /// In fr, this message translates to:
+  /// **'Toutes les étapes franchies'**
+  String get timelineAllReached;
+
+  /// No description provided for @timelineEmpty.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pas encore de repères pour cette addiction.'**
+  String get timelineEmpty;
+
+  /// No description provided for @timelineSource.
+  ///
+  /// In fr, this message translates to:
+  /// **'Source : {source}'**
+  String timelineSource(String source);
+
+  /// No description provided for @timelineInMinutes.
+  ///
+  /// In fr, this message translates to:
+  /// **'dans {count} min'**
+  String timelineInMinutes(int count);
+
+  /// No description provided for @timelineInHours.
+  ///
+  /// In fr, this message translates to:
+  /// **'dans {count} h'**
+  String timelineInHours(int count);
+
+  /// No description provided for @timelineInDays.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count, plural, =1{dans 1 jour} other{dans {count} jours}}'**
+  String timelineInDays(int count);
+
+  /// No description provided for @timelineAfterMinutes.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count} min'**
+  String timelineAfterMinutes(int count);
+
+  /// No description provided for @timelineAfterHours.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count} h'**
+  String timelineAfterHours(int count);
+
+  /// No description provided for @timelineAfterDays.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count, plural, =1{1 jour} other{{count} jours}}'**
+  String timelineAfterDays(int count);
+
+  /// No description provided for @timelineAfterWeeks.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count, plural, =1{1 semaine} other{{count} semaines}}'**
+  String timelineAfterWeeks(int count);
+
+  /// No description provided for @timelineAfterMonths.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count} mois'**
+  String timelineAfterMonths(int count);
+
+  /// No description provided for @timelineAfterYears.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count, plural, =1{1 an} other{{count} ans}}'**
+  String timelineAfterYears(int count);
+
+  /// No description provided for @alcoholSafetyNote.
+  ///
+  /// In fr, this message translates to:
+  /// **'Si tu bois beaucoup tous les jours, ne t’arrête pas d’un coup sans en parler à un médecin : le sevrage d’alcool peut être dangereux.'**
+  String get alcoholSafetyNote;
 }
 
 class _AppLocalizationsDelegate

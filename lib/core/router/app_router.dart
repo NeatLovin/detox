@@ -6,6 +6,7 @@ import '../../features/addictions/presentation/home_screen.dart';
 import '../../features/auth/presentation/auth_screen.dart';
 import '../../features/community/presentation/community_screen.dart';
 import '../../features/community/presentation/player_screen.dart';
+import '../../features/health_timeline/presentation/timeline_screen.dart';
 import '../../features/onboarding/presentation/onboarding_screen.dart';
 import '../../features/cravings/presentation/cravings_journal_screen.dart';
 import '../../features/profile/presentation/addiction_form_screen.dart';
@@ -61,6 +62,13 @@ GoRouter appRouter(Ref ref) {
               GoRoute(
                 path: Routes.home,
                 builder: (context, state) => const HomeScreen(),
+                routes: [
+                  GoRoute(
+                    path: 'timeline/:id',
+                    builder: (context, state) =>
+                        TimelineScreen(addictionId: state.pathParameters['id']!),
+                  ),
+                ],
               ),
             ],
           ),

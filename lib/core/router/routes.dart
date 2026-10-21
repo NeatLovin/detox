@@ -5,6 +5,7 @@ abstract final class Routes {
   static const auth = '/auth';
   static const onboarding = '/onboarding';
   static const home = '/home';
+  static String timeline(String addictionId) => '/home/timeline/$addictionId';
   static const quests = '/quests';
   static const community = '/community';
   static String player(String userId) => '/community/players/$userId';

@@ -83,6 +83,16 @@ class _AddictionDraftFormState extends State<AddictionDraftForm> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
+        if (widget.draft.type == AddictionType.alcohol) ...[
+          Card(
+            color: Colors.orange.withValues(alpha: 0.15),
+            child: ListTile(
+              leading: const Icon(Icons.warning_amber_rounded, color: Colors.orange),
+              title: Text(l10n.alcoholSafetyNote),
+            ),
+          ),
+          const SizedBox(height: 12),
+        ],
         TextFormField(
           controller: _label,
           maxLength: 40,
