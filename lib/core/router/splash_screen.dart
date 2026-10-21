@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../shared/widgets/brand_subtitle.dart';
 import '../errors/error_messages.dart';
 import '../l10n/l10n.dart';
 import '../session/session_gate.dart';
@@ -46,6 +47,7 @@ class SplashScreen extends ConsumerWidget {
                         color: Theme.of(context).colorScheme.primary,
                       ),
                     ),
+                    const BrandSubtitle(),
                     const SizedBox(height: 24),
                     const CircularProgressIndicator(),
                   ],

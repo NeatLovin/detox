@@ -13,8 +13,12 @@ on:
       mode:
         description: "dry-run = show pending migrations only, apply = push them"
         type: choice
-        options: [dry-run, apply, verify, auth-logs, auth-config, deploy-push, push-log, test-push]
+        options: [dry-run, apply, verify, auth-logs, auth-config, deploy-push, push-log, test-push, set-twint]
         default: dry-run
+      twint_phone:
+        description: "set-twint only: TWINT number shown in Paramètres (e.g. 079 123 45 67). Empty = hide the donation card."
+        type: string
+        required: false
 
 concurrency:
   group: supabase-db-push
@@ -136,6 +140,7 @@ jobs:
           q "select (select count(*) from private.push_config) || ' config, pg_net=' || exists(select 1 from pg_extension where extname='pg_net')::text" "push"
           q "select string_agg(jobname, ' ') from cron.job" "cron"
           q "select coalesce(string_agg(id || ':' || public::text, ' '), 'none') from storage.buckets" "buckets"
+          q "select 'delete_my_account=' || exists(select 1 from pg_proc where proname = 'delete_my_account')::text || ' twint set=' || coalesce((select (twint_phone is not null)::text from public.app_config), 'no table')" "settings"
 
       # Deploys the push Edge Function and points the database at it. The
       # shared secret is derived from the DB password (stable, never printed).
@@ -188,6 +193,26 @@ jobs:
           q "select coalesce(string_agg(status || '@' || to_char(start_time at time zone 'Europe/Zurich', 'DD HH24:MI') || coalesce(' ' || left(return_message, 60), ''), ' | '), 'none') from (select d.* from cron.job_run_details d join cron.job j using (jobid) where j.jobname = 'push-reminders' order by start_time desc limit 4) r" "reminder runs"
           q "select 'pledged today=' || count(*) from public.pledges where day = (now() at time zone 'Europe/Zurich')::date" "pledges"
           q "select 'notify_reminders=' || string_agg(notify_reminders::text, ',') || ' notify_sos=' || string_agg(notify_sos::text, ',') from public.profiles p where exists (select 1 from public.push_tokens t where t.user_id = p.id)" "prefs"
+
+      # Sets (or clears) the TWINT number of the donation card. The value is
+      # validated before reaching SQL, so it can only be digits, spaces and +.
+      - name: Set TWINT number
+        if: inputs.mode == 'set-twint'
+        env:
+          TWINT_PHONE: ${{ inputs.twint_phone }}
+        run: |
+          set -euo pipefail
+          phone=$(printf '%s' "$TWINT_PHONE" | sed -E 's/^ +| +$//g')
+          if [ -z "$phone" ]; then
+            value=null
+          elif [[ "$phone" =~ ^\+?[0-9\ ]{9,20}$ ]]; then
+            value="'$phone'"
+          else
+            echo "::error::Invalid number: only digits, spaces and a leading + (9 to 20 characters)"; exit 1
+          fi
+          supabase db query --linked "update public.app_config set twint_phone = $value, updated_at = now()" > /dev/null
+          out=$(supabase db query --linked --output csv "select coalesce(twint_phone, '(hidden)') from public.app_config" 2>&1 || true)
+          echo "::notice::TWINT number now: $(echo "$out" | tail -n +2 | tr '\n' ' ')"
 
       - name: Push migrations
         if: inputs.mode == 'apply'

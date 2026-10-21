@@ -5,7 +5,6 @@ import '../../../core/errors/error_messages.dart';
 import '../../../core/l10n/l10n.dart';
 import '../../../core/session/session_providers.dart';
 import '../../../shared/widgets/button_spinner.dart';
-import '../../notifications/domain/notification_prefs.dart';
 import '../../onboarding/domain/profile_rules.dart';
 import '../../onboarding/presentation/widgets/emoji_grid.dart';
 import '../data/profile_repository.dart';
@@ -25,12 +24,6 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
   late String _avatar =
       ref.read(currentProfileProvider).value?.avatarEmoji ??
       ProfileRules.avatarEmojis.first;
-  late bool _isPrivate =
-      ref.read(currentProfileProvider).value?.isPrivate ?? false;
-  late bool _notifySos =
-      ref.read(currentProfileProvider).value?.notifySos ?? true;
-  late bool _notifyReminders =
-      ref.read(currentProfileProvider).value?.notifyReminders ?? true;
   bool _busy = false;
   String? _error;
 
@@ -65,9 +58,6 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
         userId: profile.id,
         username: username,
         avatarEmoji: _avatar,
-        isPrivate: _isPrivate,
-        notifySos: _notifySos,
-        notifyReminders: _notifyReminders,
       );
       ref.invalidate(currentProfileProvider);
       if (!mounted) return;
@@ -118,51 +108,6 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
             EmojiGrid(
               selected: _avatar,
               onSelected: (emoji) => setState(() => _avatar = emoji),
-            ),
-            const SizedBox(height: 16),
-            Card(
-              child: SwitchListTile(
-                value: _isPrivate,
-                secondary: Icon(_isPrivate ? Icons.lock : Icons.public),
-                title: Text(l10n.profilePrivateToggle),
-                subtitle: Text(
-                  _isPrivate ? l10n.profilePrivateOn : l10n.profilePrivateOff,
-                ),
-                onChanged: _busy
-                    ? null
-                    : (value) => setState(() => _isPrivate = value),
-              ),
-            ),
-            const SizedBox(height: 12),
-            Card(
-              child: Column(
-                children: [
-                  SwitchListTile(
-                    value: _notifySos,
-                    secondary: const Icon(Icons.sos),
-                    title: Text(l10n.notifySosToggle),
-                    subtitle: Text(l10n.notifySosHint),
-                    onChanged: _busy
-                        ? null
-                        : (value) => setState(() => _notifySos = value),
-                  ),
-                  const Divider(height: 1),
-                  SwitchListTile(
-                    value: _notifyReminders,
-                    secondary: const Icon(Icons.notifications_active_outlined),
-                    title: Text(l10n.notifyRemindersToggle),
-                    subtitle: Text(
-                      l10n.notifyRemindersHint(
-                        ReminderHours.pledge,
-                        ReminderHours.quests,
-                      ),
-                    ),
-                    onChanged: _busy
-                        ? null
-                        : (value) => setState(() => _notifyReminders = value),
-                  ),
-                ],
-              ),
             ),
             if (_error != null) ...[
               const SizedBox(height: 16),
