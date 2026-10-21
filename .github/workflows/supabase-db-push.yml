@@ -13,7 +13,7 @@ on:
       mode:
         description: "dry-run = show pending migrations only, apply = push them"
         type: choice
-        options: [dry-run, apply, verify, auth-logs, auth-config, deploy-push, push-log]
+        options: [dry-run, apply, verify, auth-logs, auth-config, deploy-push, push-log, test-push]
         default: dry-run
 
 concurrency:
@@ -163,6 +163,16 @@ jobs:
             -H "Content-Type: application/json" -d '{"user_ids":[],"title":""}')
           echo "::notice::push function answered $code: $(head -c 100 resp.txt)"
           [ "$code" = 200 ] || exit 1
+
+      # Sends one test notification to every registered device, then shows
+      # what FCM answered (through the function's response).
+      - name: Test push
+        if: inputs.mode == 'test-push'
+        run: |
+          supabase db query --linked "select private.notify('test', (select array_agg(distinct user_id) from public.push_tokens), '✅ Test Detox', 'Les notifications marchent ! Tu recevras les SOS et les rappels ici.', '{\"route\":\"/home\"}'::jsonb)" > /dev/null
+          sleep 8
+          out=$(supabase db query --linked --output csv "select status_code || ' ' || left(content, 200) from net._http_response order by created desc limit 1" 2>&1 || true)
+          echo "::notice::function: $(echo "$out" | tail -n +2 | tr '\n' ' ')"
 
       - name: Push log (read-only)
         if: inputs.mode == 'push-log'
