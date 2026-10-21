@@ -13,7 +13,7 @@ on:
       mode:
         description: "dry-run = show pending migrations only, apply = push them"
         type: choice
-        options: [dry-run, apply, verify, auth-logs, auth-config, deploy-push]
+        options: [dry-run, apply, verify, auth-logs, auth-config, deploy-push, push-log, test-push]
         default: dry-run
 
 concurrency:
@@ -163,6 +163,31 @@ jobs:
             -H "Content-Type: application/json" -d '{"user_ids":[],"title":""}')
           echo "::notice::push function answered $code: $(head -c 100 resp.txt)"
           [ "$code" = 200 ] || exit 1
+
+      # Sends one test notification to every registered device, then shows
+      # what FCM answered (through the function's response).
+      - name: Test push
+        if: inputs.mode == 'test-push'
+        run: |
+          supabase db query --linked "select private.notify('test', (select array_agg(distinct user_id) from public.push_tokens), '✅ Test Detox', 'Les notifications marchent ! Tu recevras les SOS et les rappels ici.', '{\"route\":\"/home\"}'::jsonb)" > /dev/null
+          sleep 8
+          out=$(supabase db query --linked --output csv "select status_code || ' ' || left(content, 200) from net._http_response order by created desc limit 1" 2>&1 || true)
+          echo "::notice::function: $(echo "$out" | tail -n +2 | tr '\n' ' ')"
+
+      - name: Push log (read-only)
+        if: inputs.mode == 'push-log'
+        run: |
+          q() {
+            out=$(supabase db query --linked --output csv "$1" 2>&1) || true
+            echo "::notice::$2: $(echo "$out" | tail -n +2 | tr '\n' ' ' | cut -c1-400)"
+          }
+          q "select count(*) || ' devices / ' || count(distinct user_id) || ' players' from public.push_tokens" "tokens"
+          q "select string_agg(kind || '@' || to_char(created_at at time zone 'Europe/Zurich', 'DD HH24:MI') || ' to=' || cardinality(user_ids) || ' sent=' || sent, ' | ' order by created_at desc) from (select * from private.push_log order by created_at desc limit 8) l" "last pushes"
+          q "select coalesce(string_agg(status_code::text, ' '), 'none') from (select status_code from net._http_response order by created desc limit 8) r" "pg_net responses"
+          q "select coalesce(string_agg(left(content, 80), ' | '), 'none') from (select content from net._http_response order by created desc limit 3) r" "function answers"
+          q "select coalesce(string_agg(status || '@' || to_char(start_time at time zone 'Europe/Zurich', 'DD HH24:MI') || coalesce(' ' || left(return_message, 60), ''), ' | '), 'none') from (select d.* from cron.job_run_details d join cron.job j using (jobid) where j.jobname = 'push-reminders' order by start_time desc limit 4) r" "reminder runs"
+          q "select 'pledged today=' || count(*) from public.pledges where day = (now() at time zone 'Europe/Zurich')::date" "pledges"
+          q "select 'notify_reminders=' || string_agg(notify_reminders::text, ',') || ' notify_sos=' || string_agg(notify_sos::text, ',') from public.profiles p where exists (select 1 from public.push_tokens t where t.user_id = p.id)" "prefs"
 
       - name: Push migrations
         if: inputs.mode == 'apply'
