@@ -43,8 +43,16 @@ jobs:
           cp "$FLUTTER_ROOT"/bin/cache/artifacts/material_fonts/Roboto-*.ttf \
              "$FLUTTER_ROOT"/bin/cache/artifacts/material_fonts/MaterialIcons-Regular.otf \
              "$RUNNER_TEMP/fonts/"
-          curl -sSfL -o "$RUNNER_TEMP/fonts/NotoColorEmoji.ttf" \
-            https://github.com/googlefonts/noto-emoji/raw/main/fonts/Noto-COLRv1.ttf
+          # COLRv1 first (vector, drawn by Skia), the bitmap CBDT font as fallback.
+          for url in \
+            https://raw.githubusercontent.com/google/fonts/main/ofl/notocoloremoji/NotoColorEmoji-Regular.ttf \
+            https://raw.githubusercontent.com/googlefonts/noto-emoji/main/fonts/Noto-COLRv1.ttf \
+            https://raw.githubusercontent.com/googlefonts/noto-emoji/main/fonts/NotoColorEmoji.ttf; do
+            if curl -sSfL -o "$RUNNER_TEMP/fonts/NotoColorEmoji.ttf" "$url"; then
+              echo "::notice::emoji font: $url"; break
+            fi
+          done
+          test -s "$RUNNER_TEMP/fonts/NotoColorEmoji.ttf"
           ls -la "$RUNNER_TEMP/fonts"
 
       - name: Render
