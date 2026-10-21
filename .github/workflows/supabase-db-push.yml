@@ -175,6 +175,9 @@ jobs:
           q "select string_agg(kind || '@' || to_char(created_at at time zone 'Europe/Zurich', 'DD HH24:MI') || ' to=' || cardinality(user_ids) || ' sent=' || sent, ' | ' order by created_at desc) from (select * from private.push_log order by created_at desc limit 8) l" "last pushes"
           q "select coalesce(string_agg(status_code::text, ' '), 'none') from (select status_code from net._http_response order by created desc limit 8) r" "pg_net responses"
           q "select coalesce(string_agg(left(content, 80), ' | '), 'none') from (select content from net._http_response order by created desc limit 3) r" "function answers"
+          q "select coalesce(string_agg(status || '@' || to_char(start_time at time zone 'Europe/Zurich', 'DD HH24:MI') || coalesce(' ' || left(return_message, 60), ''), ' | '), 'none') from (select d.* from cron.job_run_details d join cron.job j using (jobid) where j.jobname = 'push-reminders' order by start_time desc limit 4) r" "reminder runs"
+          q "select 'pledged today=' || count(*) from public.pledges where day = (now() at time zone 'Europe/Zurich')::date" "pledges"
+          q "select 'notify_reminders=' || string_agg(notify_reminders::text, ',') || ' notify_sos=' || string_agg(notify_sos::text, ',') from public.profiles p where exists (select 1 from public.push_tokens t where t.user_id = p.id)" "prefs"
 
       - name: Push migrations
         if: inputs.mode == 'apply'
