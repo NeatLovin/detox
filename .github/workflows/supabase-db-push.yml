@@ -13,8 +13,12 @@ on:
       mode:
         description: "dry-run = show pending migrations only, apply = push them"
         type: choice
-        options: [dry-run, apply, verify, auth-logs, auth-config, deploy-push, push-log, test-push, set-twint, errors-log]
+        options: [dry-run, apply, verify, auth-logs, auth-config, deploy-push, push-log, test-push, set-twint, errors-log, player-public]
         default: dry-run
+      player:
+        description: "player-public only: username, or part of it. Makes that player's profile public (only when exactly one player matches; ask them first)."
+        type: string
+        required: false
       twint_phone:
         description: "set-twint only: TWINT number shown in Paramètres (e.g. 079 123 45 67). Empty = hide the donation card."
         type: string
@@ -223,6 +227,33 @@ jobs:
           echo "::notice::$(q "select count(*) || ' kinds, ' || coalesce(sum(count), 0) || ' errors, ' || count(distinct user_id) || ' players (7 days)' from private.client_errors where last_seen > now() - interval '7 days'")"
           q "select 'x' || sum(count) || ' · ' || count(distinct user_id) || 'p · build ' || max(build) || ' · ' || to_char(max(last_seen) at time zone 'Europe/Zurich', 'DD.MM HH24:MI') || ' · ' || coalesce(max(context), '-') || ' · ' || left(replace(message, chr(10), ' '), 160) || ' @ ' || coalesce((select string_agg(l, ' < ') from (select btrim(l) l from unnest(string_to_array(max(stack), chr(10))) l where l ~ 'package:detox' limit 3) f), '-') from private.client_errors where last_seen > now() - interval '7 days' group by fingerprint, message order by sum(count) desc limit 8" \
             | while IFS= read -r line; do echo "::notice::${line:0:600}"; done
+
+      # Turns a private profile public on the player's request (they could not
+      # find the setting). Acts only on a single match; otherwise lists them.
+      - name: Make a player public
+        if: inputs.mode == 'player-public'
+        env:
+          PLAYER: ${{ inputs.player }}
+        run: |
+          set -euo pipefail
+          name=$(printf '%s' "$PLAYER" | sed -E 's/^ +| +$//g')
+          if ! [[ "$name" =~ ^[A-Za-z0-9_.-]{2,20}$ ]]; then
+            echo "::error::Invalid username: letters, digits, _ . - (2 to 20)"; exit 1
+          fi
+          q() { supabase db query --linked --output csv "$1" 2>&1 | tail -n +2; }
+          exact=$(q "select count(*) from public.profiles where lower(username) = lower('$name')")
+          if [ "$exact" = 1 ]; then
+            where="lower(username) = lower('$name')"
+          else
+            where="username ilike '%$name%'"
+          fi
+          matches=$(q "select count(*) from public.profiles where $where")
+          echo "::notice::matches: $(q "select coalesce(string_agg(username || case when is_private then ' (privé)' else ' (public)' end, ', ' order by username), 'none') from public.profiles where $where")"
+          if [ "$matches" != 1 ]; then
+            echo "::warning::$matches players match: nothing changed. Run again with the exact username."; exit 0
+          fi
+          q "update public.profiles set is_private = false where $where and is_private returning username" > /dev/null
+          echo "::notice::now: $(q "select username || case when is_private then ' (privé)' else ' (public)' end from public.profiles where $where")"
 
       - name: Push migrations
         if: inputs.mode == 'apply'
